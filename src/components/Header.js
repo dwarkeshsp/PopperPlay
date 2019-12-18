@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
@@ -10,7 +11,7 @@ import MenuBookSharpIcon from "@material-ui/icons/MenuBookSharp";
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "center"
   }
 });
 
@@ -28,14 +29,28 @@ export default function SimpleBottomNavigation() {
       className={classes.root}
     >
       <BottomNavigationAction
+        label="Philosophy"
+        icon={<MenuBookSharpIcon />}
+        component={Link}
+        to="/philosophy"
+      />
+      <BottomNavigationAction
         label="Conjectures"
         icon={<WbIncandescentSharpIcon />}
+        component={Link}
+        to="/conjectures"
       />
-      <BottomNavigationAction label="Problems" icon={<BuildSharpIcon />} />
-      <BottomNavigationAction label="Philosophy" icon={<MenuBookSharpIcon />} />
+      <BottomNavigationAction
+        label="Problems"
+        icon={<BuildSharpIcon />}
+        component={Link}
+        to="/problems"
+      />
       <BottomNavigationAction
         label="Feedback"
         icon={<ChatBubbleOutlineSharpIcon />}
+        component={Link}
+        to="/feedback"
       />
     </BottomNavigation>
   );
