@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import ChatBubbleOutlineSharpIcon from "@material-ui/icons/ChatBubbleOutlineSharp";
 import BuildSharpIcon from "@material-ui/icons/BuildSharp";
 import WbIncandescentSharpIcon from "@material-ui/icons/WbIncandescentSharp";
 import MenuBookSharpIcon from "@material-ui/icons/MenuBookSharp";
+import MessageIcon from "@material-ui/icons/Message";
 
 const useStyles = makeStyles({
   root: {
@@ -48,7 +48,7 @@ export default function SimpleBottomNavigation() {
       />
       <BottomNavigationAction
         label="Feedback"
-        icon={<ChatBubbleOutlineSharpIcon />}
+        icon={<MessageIcon />}
         component={Link}
         to="/feedback"
       />

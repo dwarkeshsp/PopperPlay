@@ -8,6 +8,7 @@ import Conjectures from "./Conjectures";
 import Problems from "./Problems";
 import Feedback from "./Feedback";
 import Login from "./Login"
+import Signup from "./Signup";
 
 export default function App() {
   return (
@@ -30,6 +31,9 @@ export default function App() {
           </Route>
           <Route path="/feedback">
             <Feedback />
+          </Route>
+          <Route path="/signup">
+            <Signup />
           </Route>
           <Route path="/login">
             <Login />

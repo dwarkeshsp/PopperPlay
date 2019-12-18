@@ -7,6 +7,8 @@ import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import ForumIcon from "@material-ui/icons/Forum";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,14 +17,19 @@ const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2)
   },
+  icon: {
+    marginRight: theme.spacing(2)
+  },
   title: {
-    flexGrow: 1,
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block"
     },
     color: theme.palette.background.paper,
     textDecoration: "none"
+  },
+  subtitle: {
+    flexGrow: 1
   },
   search: {
     position: "relative",
@@ -70,6 +77,8 @@ export default function SearchAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
+          <ForumIcon className={classes.icon} />
+
           <Typography
             className={classes.title}
             variant="h6"
@@ -79,6 +88,8 @@ export default function SearchAppBar() {
           >
             Creative Conjectures
           </Typography>
+          <Box m={0.5}></Box>
+          <Typography className={classes.subtitle}>BETA</Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -92,8 +103,8 @@ export default function SearchAppBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          <Button color="inherit" component={Link} to="/login">
-            Login
+          <Button color="inherit" component={Link} to="/signup">
+            Sign up / Log in
           </Button>
         </Toolbar>
       </AppBar>
