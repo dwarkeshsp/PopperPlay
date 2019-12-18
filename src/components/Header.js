@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 export default function SimpleBottomNavigation() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(-1);
 
   return (
     <BottomNavigation
@@ -29,12 +29,6 @@ export default function SimpleBottomNavigation() {
       className={classes.root}
     >
       <BottomNavigationAction
-        label="Philosophy"
-        icon={<MenuBookSharpIcon />}
-        component={Link}
-        to="/philosophy"
-      />
-      <BottomNavigationAction
         label="Conjectures"
         icon={<WbIncandescentSharpIcon />}
         component={Link}
@@ -45,6 +39,12 @@ export default function SimpleBottomNavigation() {
         icon={<BuildSharpIcon />}
         component={Link}
         to="/problems"
+      />
+      <BottomNavigationAction
+        label="Philosophy"
+        icon={<MenuBookSharpIcon />}
+        component={Link}
+        to="/philosophy"
       />
       <BottomNavigationAction
         label="Feedback"
