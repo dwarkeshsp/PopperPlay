@@ -1,16 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./Home";
+import AppBar from "./AppBar"
 import Header from "./Header";
 import Philosophy from "./Philosophy";
 import Conjectures from "./Conjectures";
 import Problems from "./Problems";
 import Feedback from "./Feedback";
-import Home from "./Home";
+import Login from "./Login"
 
 export default function App() {
   return (
     <Router>
       <div>
+        <AppBar />
         <Header />
         <Switch>
           <Route exact path="/">
@@ -27,6 +30,9 @@ export default function App() {
           </Route>
           <Route path="/feedback">
             <Feedback />
+          </Route>
+          <Route path="/login">
+            <Login />
           </Route>
         </Switch>
       </div>
