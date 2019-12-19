@@ -29,9 +29,6 @@ function Copyright() {
 }
 
 const useStyles = makeStyles(theme => ({
-  icon: {
-    marginRight: theme.spacing(2)
-  },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6)
@@ -87,7 +84,8 @@ export default function Album() {
               color="textSecondary"
               paragraph
             >
-              An online institution of error correction, where we help each other create new ideas and correct mistakes
+              News, academia, and social media are broken. We need a system that incentivizes the creation of new ideas and the correction
+              of errors.
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">

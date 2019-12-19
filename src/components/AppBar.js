@@ -6,9 +6,15 @@ import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
+import HomeIcon from '@material-ui/icons/Home';
+import FeedbackIcon from '@material-ui/icons/Feedback';
+import ForumIcon from "@material-ui/icons/Forum";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import ForumIcon from "@material-ui/icons/Forum";
+import IconButton from "@material-ui/core/IconButton";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.background.paper,
     textDecoration: "none"
   },
-  subtitle: {
+  titleBuffer: {
     flexGrow: 1
   },
   search: {
@@ -70,26 +76,54 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar(props) {
   const classes = useStyles();
+  const [auth, setAuth] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleChange = event => {
+    setAuth(event.target.checked);
+  };
+
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
+          {/* <Button
+            variant="outlined"
+            color="inherit"
+            component={Link}
+            to="/"
+          > */}
           <ForumIcon className={classes.icon} />
-
           <Typography
             className={classes.title}
             variant="h6"
             noWrap
-            component={Link}
-            to="/"
+            // component={Link}
+            // to="/"
           >
-            Creative Conjectures
+            PopperPlay
           </Typography>
-          <Box m={0.5}></Box>
-          <Typography className={classes.subtitle}>BETA</Typography>
+          {/* </Button> */}
+          <Box className={classes.titleBuffer}></Box>
+          <IconButton aria-label="home" color="inherit" component={Link}
+            to="/">
+            <HomeIcon />
+          </IconButton>
+          <Box m={1}></Box>
+          {/* <IconButton aria-label="feeback" color="inherit">
+            <FeedbackIcon />
+          </IconButton> */}
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -103,9 +137,58 @@ export default function SearchAppBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
-          <Button color="inherit" component={Link} to="/signup">
-            Sign up / Log in
-          </Button>
+          <Box m={1}></Box>
+          {!auth && (
+            <div>
+              {/* <Button
+                variant="outlined"
+                color="inherit"
+                component={Link}
+                to="/signup"
+              >
+                Signup
+              </Button> */}
+              <Button
+                color="inherit"
+                // variant="contained"
+                component={Link}
+                to="/signup"
+              >
+                Signup / Login
+              </Button>
+            </div>
+          )}
+          {auth && (
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+              </Menu>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </div>
