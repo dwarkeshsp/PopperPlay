@@ -104,7 +104,7 @@ export default function SearchAppBar(props) {
             component={Link}
             to="/"
           > */}
-          <ForumIcon className={classes.icon} />
+          {/* <ForumIcon className={classes.icon} /> */}
           <Typography
             className={classes.title}
             variant="h6"
@@ -115,11 +115,12 @@ export default function SearchAppBar(props) {
             PopperPlay
           </Typography>
           {/* </Button> */}
-          <Box className={classes.titleBuffer}></Box>
           <IconButton aria-label="home" color="inherit" component={Link}
             to="/">
             <HomeIcon />
           </IconButton>
+          <Box className={classes.titleBuffer}></Box>
+
           <Box m={1}></Box>
           {/* <IconButton aria-label="feeback" color="inherit">
             <FeedbackIcon />
@@ -140,21 +141,21 @@ export default function SearchAppBar(props) {
           <Box m={1}></Box>
           {!auth && (
             <div>
-              {/* <Button
+              <Button
                 variant="outlined"
                 color="inherit"
                 component={Link}
                 to="/signup"
               >
-                Signup
-              </Button> */}
+                Sign up
+              </Button>
               <Button
                 color="inherit"
                 // variant="contained"
                 component={Link}
-                to="/signup"
+                to="/login"
               >
-                Signup / Login
+                Log in
               </Button>
             </div>
           )}
