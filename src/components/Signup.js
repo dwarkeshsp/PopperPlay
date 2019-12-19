@@ -49,6 +49,36 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [emailValid, setEmailValid] = React.useState(false);
+  const [password, setPassword] = React.useState("");
+  const [passwordValid, setPasswordValid] = React.useState(false);
+  const [submitted, setSubmitted] = React.useState(false);
+  const [isInvalid, setIsInvalid] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsInvalid(
+      !validatePassword() ||
+        !validateEmail() ||
+        firstName === "" ||
+        lastName === ""
+    );
+
+    console.log(firstName);
+  });
+
+  function validateEmail() {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    setEmailValid(re.test(email));
+    return emailValid;
+  }
+
+  function validatePassword() {
+    setPasswordValid(password.length > 5);
+    return passwordValid;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -72,6 +102,7 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={event => setFirstName(event.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -83,6 +114,7 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={event => setLastName(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,8 +126,16 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={event => setEmail(event.target.value)}
               />
             </Grid>
+            {!emailValid && (
+              <Grid item xs={12}>
+                <Typography variant="caption" color="secondary">
+                  * Email not valid
+                </Typography>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -106,8 +146,14 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={event => setPassword(event.target.value)}
               />
             </Grid>
+            {!passwordValid && (
+              <Grid item xs={12}>
+                <Typography variant="caption" color="secondary">* Password must be at least 7 characters long</Typography>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -121,6 +167,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={isInvalid}
           >
             Sign Up
           </Button>
