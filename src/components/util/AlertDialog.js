@@ -6,16 +6,20 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-export default function AlertDialog(props) {
-  const [open, setOpen] = React.useState(true);
+const { forwardRef, useImperativeHandle } = React;
 
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
+const AlertDialog = forwardRef((props, ref) => {
+  const [open, setOpen] = React.useState(false);
 
-  const handleClose = () => {
+  useImperativeHandle(ref, () => ({
+    handleOpen() {
+      setOpen(true);
+    }
+  }));
+
+  function handleClose() {
     setOpen(false);
-  };
+  }
 
   return (
     <div>
@@ -35,11 +39,10 @@ export default function AlertDialog(props) {
           <Button onClick={handleClose} color="primary">
             {props.button}
           </Button>
-          {/* <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
-          </Button> */}
         </DialogActions>
       </Dialog>
     </div>
   );
-}
+});
+
+export default AlertDialog;

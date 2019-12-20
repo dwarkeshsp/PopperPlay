@@ -2,7 +2,7 @@ import React from "react";
 import { Link as RouterLink, withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { withFirebase } from "../firebase";
-import Dialog from "../util/Dialog";
+import Dialog from "../util/AlertDialog";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%", 
     marginTop: theme.spacing(3)
   },
   submit: {
@@ -41,6 +41,7 @@ const SignUp = compose(withRouter, withFirebase)(SignUpBase);
 
 function SignUpBase(props) {
   const classes = useStyles();
+  const alertRef = React.useRef();
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -49,7 +50,6 @@ function SignUpBase(props) {
   const [passwordValid, setPasswordValid] = React.useState(false);
   const [checkedBox, setCheckedBox] = React.useState(false);
   const [isInvalid, setIsInvalid] = React.useState(false);
-  const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
 
   React.useEffect(() => {
@@ -87,44 +87,9 @@ function SignUpBase(props) {
         }
       })
       .catch(error => {
-        setError(true);
         setErrorMessage(error.message);
+        alertRef.current.handleOpen();
       });
-
-    //   setFirstName("");
-    //   setLastName("");
-    //   setEmail("");
-    //   setEmailValid(false);
-    //   setPassword("");
-    //   setPasswordValid(false);
-    //   setIsInvalid(false);
-    //   setCheckedBox(false);
-    // })
-    // .catch(error => {
-    //   console.warn(error);
-    // })
-    // .then(
-    //   props.firebase
-    //     .doSignInWithEmailAndPassword(email, password)
-    //     .catch(error => console.warn(error))
-    // )
-    // .then(
-    //   props.firebase
-    //     .currentUser()
-    //     .updateProfile({
-    //       displayName: firstName.concat(" ", lastName)
-    //       // photoURL: "https://example.com/jane-q-user/profile.jpg"
-    //     })
-    //     .then(function() {
-    //       // Update successful.
-    //       console.log("update succesful");
-    //       console.log(this.firebase.UserInfo())
-    //     })
-    //     .catch(function(error) {
-    //       // An error happened.
-    //       console.log("update unsuccesful");
-    //     })
-
     event.preventDefault();
   };
 
@@ -244,7 +209,12 @@ function SignUpBase(props) {
           </form>
         </div>
       </Container>
-      {error && <Dialog title="Error" message={errorMessage} button="Okay" />}
+      <Dialog
+        ref={alertRef}
+        title="Error"
+        message={errorMessage}
+        button="Okay"
+      />
     </div>
   );
 }
