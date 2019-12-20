@@ -7,8 +7,8 @@ import Philosophy from "./Philosophy";
 import Conjectures from "./Conjectures";
 import Problems from "./Problems";
 import Feedback from "./Feedback";
-import Login from "./Login"
-import Signup from "./Signup";
+import Login from "./login/Login"
+import Signup from "./login/Signup";
 
 export default function App() {
   return (

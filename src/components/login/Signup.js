@@ -1,5 +1,7 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import { withFirebase } from "../firebase";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,19 +15,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -47,7 +36,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignUp() {
+const SignUp = compose(withRouter, withFirebase)(SignUpBase);
+
+function SignUpBase(props) {
   const classes = useStyles();
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -55,29 +46,44 @@ export default function SignUp() {
   const [emailValid, setEmailValid] = React.useState(false);
   const [password, setPassword] = React.useState("");
   const [passwordValid, setPasswordValid] = React.useState(false);
-  const [submitted, setSubmitted] = React.useState(false);
   const [isInvalid, setIsInvalid] = React.useState(false);
+  const [checkedBox, setCheckedBox] = React.useState(false);
 
   React.useEffect(() => {
     setIsInvalid(
-      !validatePassword() ||
-        !validateEmail() ||
+      !passwordValid ||
+        !emailValid ||
         firstName === "" ||
-        lastName === ""
+        lastName === "" ||
+        !checkedBox
     );
-
-    console.log(firstName);
   });
 
-  function validateEmail() {
+  React.useEffect(() => {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     setEmailValid(re.test(email));
-    return emailValid;
-  }
+  }, [email]);
 
-  function validatePassword() {
+  React.useEffect(() => {
     setPasswordValid(password.length > 5);
-    return passwordValid;
+  }, [password]);
+
+  function onSubmit() {
+    props.firebase
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then(authUser => {
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setEmailValid(false);
+        setPassword("");
+        setPasswordValid(false);
+        setIsInvalid(false);
+        setCheckedBox(false);
+      })
+      .catch(error => {
+        console.alert(error);
+      });
   }
 
   return (
@@ -129,7 +135,7 @@ export default function SignUp() {
                 onChange={event => setEmail(event.target.value)}
               />
             </Grid>
-            {!emailValid && (
+            {email !== "" && !emailValid && (
               <Grid item xs={12}>
                 <Typography variant="caption" color="secondary">
                   * Email not valid
@@ -149,15 +155,23 @@ export default function SignUp() {
                 onChange={event => setPassword(event.target.value)}
               />
             </Grid>
-            {!passwordValid && (
+            {password !== "" && !passwordValid && (
               <Grid item xs={12}>
-                <Typography variant="caption" color="secondary">* Password must be at least 7 characters long</Typography>
+                <Typography variant="caption" color="secondary">
+                  * Password must be at least 7 characters long
+                </Typography>
               </Grid>
             )}
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                control={
+                  <Checkbox
+                    value="vow"
+                    color="primary"
+                    onChange={event => setCheckedBox(event.target.checked)}
+                  />
+                }
+                label="I will not be indecent, dishonest, or boring"
               />
             </Grid>
           </Grid>
@@ -168,6 +182,7 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
             disabled={isInvalid}
+            onClick={() => onSubmit()}
           >
             Sign Up
           </Button>
@@ -180,9 +195,8 @@ export default function SignUp() {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }
+
+export default SignUp;
