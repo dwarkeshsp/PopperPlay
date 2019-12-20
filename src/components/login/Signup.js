@@ -82,6 +82,7 @@ function SignUpBase(props) {
             })
             .then(s => {
               console.log(authUser.user.displayName);
+              console.log("current user", props.firebase.currentUser());
               console.log("move one");
             });
         }
@@ -129,6 +130,18 @@ function SignUpBase(props) {
                   name="lastName"
                   autoComplete="lname"
                   onChange={event => setLastName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  onChange={event => setEmail(event.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
