@@ -27,6 +27,8 @@ class Firebase {
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
   // *** User API ***
+  currentUser = () => this.auth.currentUser;
+  UserInfo = () => this.auth.UserInfo;
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref("users");
 }
