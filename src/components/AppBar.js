@@ -2,11 +2,13 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { withFirebase } from "./firebase";
+import PropTypes from "prop-types";
 import Header from "./Header";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
@@ -16,6 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,18 +83,17 @@ const useStyles = makeStyles(theme => ({
 
 function AppBarBase(props) {
   const classes = useStyles();
-  const [user, setUser] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [authUser, setAuthUser] = React.useState(null);
 
   React.useEffect(() => {
     const unlisten = props.firebase.auth.onAuthStateChanged(authUser => {
-      authUser ? setUser(authUser) : setUser(null);
+      authUser ? setAuthUser(authUser) : setAuthUser(null);
     });
     return () => {
       unlisten();
-    }
-    return user;
+    };
   });
 
   // const handleChange = event => {
@@ -108,102 +110,107 @@ function AppBarBase(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          {/* <Button
+        <AppBar position="static">
+          <Toolbar>
+            {/* <Button
             variant="outlined"
             color="inherit"
             component={Link}
             to="/"
           > */}
-          {/* <ForumIcon className={classes.icon} /> */}
-          <IconButton aria-label="home" color="inherit" component={Link} to="/">
-            <HomeIcon />
-          </IconButton>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            noWrap
-            // component={Link}
-            // to="/"
-          >
-            PopperPlay
-          </Typography>
-          {/* </Button> */}
+            {/* <ForumIcon className={classes.icon} /> */}
+            <IconButton
+              aria-label="home"
+              color="inherit"
+              component={Link}
+              to="/"
+            >
+              <HomeIcon />
+            </IconButton>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              noWrap
+              // component={Link}
+              // to="/"
+            >
+              PopperPlay
+            </Typography>
+            {/* </Button> */}
 
-          {/* <Box className={classes.titleBuffer}></Box> */}
-          <Header />
-          {/* <Box m={1}></Box> */}
-          {/* <IconButton aria-label="feeback" color="inherit">
+            {/* <Box className={classes.titleBuffer}></Box> */}
+            <Header />
+            {/* <Box m={1}></Box> */}
+            {/* <IconButton aria-label="feeback" color="inherit">
             <FeedbackIcon />
           </IconButton> */}
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
-          <Box m={1}></Box>
-          {user != null && (
-            <div>
-              <Button
-                variant="outlined"
-                color="inherit"
-                component={Link}
-                to="/signup"
-              >
-                Signup
-              </Button>
-              <Button
-                color="inherit"
-                // variant="contained"
-                component={Link}
-                to="/login"
-              >
-                Login
-              </Button>
-            </div>
-          )}
-          {user == null && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
+                inputProps={{ "aria-label": "search" }}
+              />
             </div>
-          )}
-        </Toolbar>
-      </AppBar>
+            <Box m={1}></Box>
+            {authUser != null && (
+              <div>
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  component={Link}
+                  to="/signup"
+                >
+                  Signup
+                </Button>
+                <Button
+                  color="inherit"
+                  // variant="contained"
+                  component={Link}
+                  to="/login"
+                >
+                  Login
+                </Button>
+              </div>
+            )}
+            {authUser == null && (
+              <div>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  open={open}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                </Menu>
+              </div>
+            )}
+          </Toolbar>
+        </AppBar>
     </div>
   );
 }

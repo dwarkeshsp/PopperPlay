@@ -76,7 +76,7 @@ function LoginBase(props) {
 
   const onSubmit = event => {
     props.firebase.setPersistence(persistence).then(function() {
-      return props.firebase
+        props.firebase
         .doSignInWithEmailAndPassword(email, password)
         .then(() => {
           history.push("/");
