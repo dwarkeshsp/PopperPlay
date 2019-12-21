@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink, withRouter } from "react-router-dom";
+import { Link as RouterLink, withRouter, useHistory  } from "react-router-dom";
 import { compose } from "recompose";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
@@ -63,6 +63,8 @@ function LoginBase(props) {
   const [errorMessage, setErrorMessage] = React.useState(null);
   const [persistence, setPersistence] = React.useState(props.firebase.SESSION);
 
+  let history = useHistory();
+
   React.useEffect(() => {
     setIsInvalid(!emailValid || password === "");
   });
@@ -77,10 +79,7 @@ function LoginBase(props) {
       return props.firebase
         .doSignInWithEmailAndPassword(email, password)
         .then(() => {
-          console.log(persistence);
-          console.log(props.firebase.currentUser());
-          //  this.setState({ ...INITIAL_STATE });
-          //  this.props.history.push(ROUTES.HOME);
+          history.push("/");
         })
         .catch(error => {
           setErrorMessage(error.message);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink, withRouter } from "react-router-dom";
+import { Link as RouterLink, withRouter, useHistory } from "react-router-dom";
 import { compose } from "recompose";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
@@ -37,11 +37,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = compose(withRouter, withFirebase)(SignUpBase);
-
 function SignUpBase(props) {
   const classes = useStyles();
-  
+
   const alertRef = React.useRef();
 
   const [firstName, setFirstName] = React.useState("");
@@ -54,6 +52,8 @@ function SignUpBase(props) {
   const [checkedBox, setCheckedBox] = React.useState(false);
   const [isInvalid, setIsInvalid] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState(null);
+
+  let history = useHistory();
 
   React.useEffect(() => {
     setIsInvalid(
@@ -85,9 +85,7 @@ function SignUpBase(props) {
               // displayName: firstName.concat(" ", lastName)
             })
             .then(s => {
-              console.log(authUser.user.displayName);
-              console.log("current user", props.firebase.currentUser());
-              console.log("move one");
+              history.push("/");
             });
         }
       })
@@ -235,5 +233,7 @@ function SignUpBase(props) {
     </div>
   );
 }
+
+const SignUp = compose(withRouter, withFirebase)(SignUpBase);
 
 export default SignUp;

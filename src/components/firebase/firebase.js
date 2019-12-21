@@ -1,7 +1,7 @@
 import app from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
-import config from "./config"
+import config from "./config";
 
 class Firebase {
   constructor() {
@@ -18,11 +18,12 @@ class Firebase {
   doSignOut = () => this.auth.signOut();
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+
   // *** Persistence API ***
-  setPersistence = (persistence) => this.auth.setPersistence(persistence);
+
+  setPersistence = persistence => this.auth.setPersistence(persistence);
   SESSION = app.auth.Auth.Persistence.SESSION;
   LOCAL = app.auth.Auth.Persistence.LOCAL;
-
 
   // *** User API ***
   currentUser = () => this.auth.currentUser;
@@ -30,4 +31,5 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref("users");
 }
+
 export default Firebase;

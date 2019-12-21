@@ -15,7 +15,7 @@ export default function App() {
     <Router>
       <div>
         <AppBar />
-        <Header />
+        {/* <Header /> */}
         <Switch>
           <Route exact path="/">
             <Home />

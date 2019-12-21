@@ -1,14 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import { withFirebase } from "./firebase";
+import Header from "./Header";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
-import HomeIcon from '@material-ui/icons/Home';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import ForumIcon from "@material-ui/icons/Forum";
+import HomeIcon from "@material-ui/icons/Home";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
@@ -32,7 +33,8 @@ const useStyles = makeStyles(theme => ({
       display: "block"
     },
     color: theme.palette.background.paper,
-    textDecoration: "none"
+    textDecoration: "none",
+    flexGrow: 1
   },
   titleBuffer: {
     flexGrow: 1
@@ -76,15 +78,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SearchAppBar(props) {
+function AppBarBase(props) {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(false);
+  const [user, setUser] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleChange = event => {
-    setAuth(event.target.checked);
-  };
+  React.useEffect(() => {
+    const unlisten = props.firebase.auth.onAuthStateChanged(authUser => {
+      authUser ? setUser(authUser) : setUser(null);
+    });
+    return () => {
+      unlisten();
+    }
+    return user;
+  });
+
+  // const handleChange = event => {
+  //   setAuth(event.target.checked);
+  // };
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -119,8 +131,8 @@ export default function SearchAppBar(props) {
           </Typography>
           {/* </Button> */}
 
-          <Box className={classes.titleBuffer}></Box>
-
+          {/* <Box className={classes.titleBuffer}></Box> */}
+          <Header />
           {/* <Box m={1}></Box> */}
           {/* <IconButton aria-label="feeback" color="inherit">
             <FeedbackIcon />
@@ -139,7 +151,7 @@ export default function SearchAppBar(props) {
             />
           </div>
           <Box m={1}></Box>
-          {!auth && (
+          {user != null && (
             <div>
               <Button
                 variant="outlined"
@@ -159,7 +171,7 @@ export default function SearchAppBar(props) {
               </Button>
             </div>
           )}
-          {auth && (
+          {user == null && (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -195,3 +207,7 @@ export default function SearchAppBar(props) {
     </div>
   );
 }
+
+const AppBarFull = compose(withRouter, withFirebase)(AppBarBase);
+
+export default AppBarFull;

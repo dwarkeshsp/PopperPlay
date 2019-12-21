@@ -8,12 +8,13 @@ import WbIncandescentSharpIcon from "@material-ui/icons/WbIncandescentSharp";
 import MenuBookSharpIcon from "@material-ui/icons/MenuBookSharp";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme =>({
   root: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: theme.palette.secondary
   }
-});
+}));
 
 const RoutedHeader = withRouter(props => <Header {...props} />);
 
