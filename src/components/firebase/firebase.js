@@ -14,9 +14,16 @@ class Firebase {
     this.auth.createUserWithEmailAndPassword(email, password);
   doSignInWithEmailAndPassword = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
+
   doSignOut = () => this.auth.signOut();
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+  // *** Persistence API ***
+  setPersistence = (persistence) => this.auth.setPersistence(persistence);
+  SESSION = app.auth.Auth.Persistence.SESSION;
+  LOCAL = app.auth.Auth.Persistence.LOCAL;
+
+
   // *** User API ***
   currentUser = () => this.auth.currentUser;
   UserInfo = () => this.auth.UserInfo;

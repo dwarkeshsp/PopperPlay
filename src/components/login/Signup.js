@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", 
+    width: "100%",
     marginTop: theme.spacing(3)
   },
   submit: {
@@ -41,15 +41,18 @@ const SignUp = compose(withRouter, withFirebase)(SignUpBase);
 
 function SignUpBase(props) {
   const classes = useStyles();
+  
   const alertRef = React.useRef();
+
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
+  const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [emailValid, setEmailValid] = React.useState(false);
   const [password, setPassword] = React.useState("");
   const [passwordValid, setPasswordValid] = React.useState(false);
   const [checkedBox, setCheckedBox] = React.useState(false);
-  const [isInvalid, setIsInvalid] = React.useState(false);
+  const [isInvalid, setIsInvalid] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState(null);
 
   React.useEffect(() => {
@@ -78,7 +81,8 @@ function SignUpBase(props) {
         if (authUser.user) {
           authUser.user
             .updateProfile({
-              displayName: firstName.concat(" ", lastName)
+              displayName: username
+              // displayName: firstName.concat(" ", lastName)
             })
             .then(s => {
               console.log(authUser.user.displayName);
@@ -141,7 +145,7 @@ function SignUpBase(props) {
                   label="Username"
                   name="username"
                   autoComplete="username"
-                  onChange={event => setEmail(event.target.value)}
+                  onChange={event => setUsername(event.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>

@@ -1,5 +1,8 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import { withFirebase } from "../firebase";
+import Dialog from "../util/AlertDialog";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -48,8 +51,45 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignInSide() {
+function LoginBase(props) {
   const classes = useStyles();
+
+  const alertRef = React.useRef();
+
+  const [email, setEmail] = React.useState("");
+  const [emailValid, setEmailValid] = React.useState(false);
+  const [password, setPassword] = React.useState("");
+  const [isInvalid, setIsInvalid] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(null);
+  const [persistence, setPersistence] = React.useState(props.firebase.SESSION);
+
+  React.useEffect(() => {
+    setIsInvalid(!emailValid || password === "");
+  });
+
+  React.useEffect(() => {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    setEmailValid(re.test(email));
+  }, [email]);
+
+  const onSubmit = event => {
+    props.firebase.setPersistence(persistence).then(function() {
+      return props.firebase
+        .doSignInWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log(persistence);
+          console.log(props.firebase.currentUser());
+          //  this.setState({ ...INITIAL_STATE });
+          //  this.props.history.push(ROUTES.HOME);
+        })
+        .catch(error => {
+          setErrorMessage(error.message);
+          alertRef.current.handleOpen();
+        });
+    });
+
+    event.preventDefault();
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -74,6 +114,7 @@ export default function SignInSide() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={event => setEmail(event.target.value)}
             />
             <TextField
               variant="outlined"
@@ -85,9 +126,22 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={event => setPassword(event.target.value)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  value="remember"
+                  color="primary"
+                  onChange={event => {
+                    if (event.target.checked) {
+                      setPersistence(props.firebase.LOCAL);
+                    } else {
+                      setPersistence(props.firebase.SESSION);
+                    }
+                  }}
+                />
+              }
               label="Remember me"
             />
             <Button
@@ -96,6 +150,8 @@ export default function SignInSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={isInvalid}
+              onClick={event => onSubmit(event)}
             >
               Sign In
             </Button>
@@ -119,6 +175,16 @@ export default function SignInSide() {
           </form>
         </div>
       </Grid>
+      <Dialog
+        ref={alertRef}
+        title="Error"
+        message={errorMessage}
+        button="Okay"
+      />
     </Grid>
   );
 }
+
+const Login = compose(withRouter, withFirebase)(LoginBase);
+
+export default Login;
