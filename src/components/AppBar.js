@@ -18,7 +18,9 @@ import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import CssBaseline from '@material-ui/core/CssBaseline';
+import Slide from "@material-ui/core/Slide";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -81,6 +83,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function HideOnScroll(props) {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({ target: window ? window() : undefined });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+HideOnScroll.propTypes = {
+  children: PropTypes.element.isRequired,
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func
+};
+
 function AppBarBase(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -108,9 +133,12 @@ function AppBarBase(props) {
     setAnchorEl(null);
   };
 
+  const signOut = () => {}
+
   return (
     <div className={classes.root}>
-        <AppBar position="static">
+      <HideOnScroll {...props}>
+        <AppBar>
           <Toolbar>
             {/* <Button
             variant="outlined"
@@ -158,7 +186,7 @@ function AppBarBase(props) {
               />
             </div>
             <Box m={1}></Box>
-            {authUser != null && (
+            {!authUser && (
               <div>
                 <Button
                   variant="outlined"
@@ -178,7 +206,7 @@ function AppBarBase(props) {
                 </Button>
               </div>
             )}
-            {authUser == null && (
+            {authUser && (
               <div>
                 <IconButton
                   aria-label="account of current user"
@@ -206,11 +234,13 @@ function AppBarBase(props) {
                 >
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                   <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleClose}>Sign Out</MenuItem>
                 </Menu>
               </div>
             )}
           </Toolbar>
         </AppBar>
+      </HideOnScroll>
     </div>
   );
 }

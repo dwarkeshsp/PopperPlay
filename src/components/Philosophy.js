@@ -151,29 +151,23 @@ export default function Pricing() {
 
   return (
     <React.Fragment>
-      <CssBaseline />
-      <Grid container spacing={2}></Grid>
-      <Container maxWidth="sm" component="main" className={classes.heroContent}>
-        <Typography
-          component="h1"
-          variant="h2"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-        >
-          Pricing
-        </Typography>
-        <Typography
-          variant="h5"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          Quickly build an effective pricing table for your potential customers
-          with this layout. It&apos;s built with default Material-UI components
-          with little customization.
-        </Typography>
+      {/* <Grid container spacing={3}>
+        <Grid item xs={6}> */}
+      <Container maxWidth="md" component="main" className={classes.heroContent}>
+        <SubTitle text="Error correction" />
+
+        <SubTitle text="Unity of knowledge" />
+
+        <SubTitle text="Reason is fun" />
+        <Text text="Solving problems is fun!" />
+        <SubTitle text="Open source" />
       </Container>
+      <Container maxWidth="md" component="main" className={classes.heroContent}>
+        <SubTitle text="Non-coercive learning" />
+        <Text text="Imagine you in high school again. Your education consists of pursuing the problems you find interesting. Instead of recieving conjectures as dogma, you get to contribute to their criticism. Someone just asked why.... You find the question interesting, so you teach yourself the background knowledge necessary to conjecture more knowledge about the problem. Far from needing permission to go to the bathroom, you are encouraged to refute experts. It is hard to overstate how much creativity the education system supresses. This platform can provide the open-ended non-coercive learning that we all wish we could have had." />
+      </Container>
+      {/* </Grid> */}
+      {/* </Grid> */}
       {/* End hero unit */}
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
@@ -259,3 +253,25 @@ export default function Pricing() {
     </React.Fragment>
   );
 }
+
+const SubTitle = props => {
+  return (
+    <Typography
+      component="h1"
+      variant="h3"
+      align="center"
+      color="textPrimary"
+      gutterBottom
+    >
+      {props.text}
+    </Typography>
+  );
+};
+
+const Text = props => {
+  return (
+    <Typography variant="h5" align="left" color="textSecondary" component="p">
+      {props.text}
+    </Typography>
+  );
+};
