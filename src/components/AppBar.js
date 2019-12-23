@@ -21,6 +21,7 @@ import Menu from "@material-ui/core/Menu";
 import Slide from "@material-ui/core/Slide";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import UserContext from "./session/UserContext";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -110,6 +111,7 @@ function AppBarBase(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const [authUser, setAuthUser] = React.useState(null);
 
   React.useEffect(() => {
@@ -120,6 +122,10 @@ function AppBarBase(props) {
       unlisten();
     };
   });
+
+  React.useEffect(() => {
+    console.log(authUser != null);
+  }, [authUser]);
 
   // const handleChange = event => {
   //   setAuth(event.target.checked);
@@ -133,7 +139,7 @@ function AppBarBase(props) {
     setAnchorEl(null);
   };
 
-  const signOut = () => {}
+  const signOut = () => {};
 
   return (
     <div className={classes.root}>
@@ -234,7 +240,9 @@ function AppBarBase(props) {
                 >
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                   <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Sign Out</MenuItem>
+                  <MenuItem onClick={props.firebase.doSignOut}>
+                    Sign Out
+                  </MenuItem>
                 </Menu>
               </div>
             )}
