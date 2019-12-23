@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Home";
-import AppBar from "./AppBar"
+import AppBar from "./AppBar";
 import Header from "./Header";
 import Philosophy from "./Philosophy";
 import Conjectures from "./Conjectures";
-import Problems from "./Problems";
+import Problems from "./problems/Problems";
 import Feedback from "./Feedback";
-import Login from "./login/Login"
+import Login from "./login/Login";
 import Signup from "./login/Signup";
 
 export default function App() {

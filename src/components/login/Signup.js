@@ -101,6 +101,8 @@ function SignUpBase(props) {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
+          {/* buffer */}
+          <h1 > </h1>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>

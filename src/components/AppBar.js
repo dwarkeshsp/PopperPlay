@@ -21,7 +21,6 @@ import Menu from "@material-ui/core/Menu";
 import Slide from "@material-ui/core/Slide";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import UserContext from "./session/UserContext";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -142,7 +141,7 @@ function AppBarBase(props) {
   const signOut = () => {};
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
@@ -249,6 +248,7 @@ function AppBarBase(props) {
           </Toolbar>
         </AppBar>
       </HideOnScroll>
+      <Box mt={"4rem"}></Box>
     </div>
   );
 }
