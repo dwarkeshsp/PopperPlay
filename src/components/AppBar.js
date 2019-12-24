@@ -162,7 +162,7 @@ function AppBarBase(props) {
             </IconButton>
             <Typography
               className={classes.title}
-              variant="h6"
+              variant="h5"
               noWrap
               // component={Link}
               // to="/"

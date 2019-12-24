@@ -4,7 +4,7 @@ import Home from "./Home";
 import AppBar from "./AppBar";
 import Header from "./Header";
 import Philosophy from "./Philosophy";
-import Conjectures from "./Conjectures";
+import Conjectures from "./conjectures/Conjectures";
 import Problems from "./problems/Problems";
 import Feedback from "./Feedback";
 import Login from "./login/Login";
