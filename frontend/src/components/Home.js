@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
-  }
+  }, 
 }));
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -84,8 +84,9 @@ export default function Album() {
               color="textSecondary"
               paragraph
             >
-              News, academia, and social media are broken. We need a system that incentivizes the creation of new ideas and the correction
-              of errors.
+              News, academia, and social media are broken. We need a system that
+              incentivizes the creation of new ideas and the correction of
+              errors.
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
@@ -113,7 +114,7 @@ export default function Album() {
             </div>
           </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
+        <Container className={classes.cardGrid}>
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map(card => (

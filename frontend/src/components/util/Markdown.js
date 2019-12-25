@@ -35,6 +35,7 @@ const options = {
       )),
     },
   },
+  // add blockquote
 };
 
 export default function Markdown(props) {

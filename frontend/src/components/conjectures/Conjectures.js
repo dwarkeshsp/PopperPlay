@@ -94,7 +94,6 @@ export default function Blog() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="lg">
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
           <Grid container spacing={4}>
@@ -112,7 +111,6 @@ export default function Blog() {
             />
           </Grid>
         </main>
-      </Container>
       <Footer
         title="Footer"
         description="Something here to give the footer a purpose!"
