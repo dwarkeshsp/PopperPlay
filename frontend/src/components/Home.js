@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
-  }, 
+  }
 }));
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -70,13 +70,13 @@ export default function Album() {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography
-              component="h1"
-              variant="h2"
+              variant="h4"
               align="center"
               color="textPrimary"
               gutterBottom
             >
-              A platform for knowledge creation
+              "Discovery: first a problem, then conjecture, then criticism, then
+              new problem."
             </Typography>
             <Typography
               variant="h5"
@@ -84,9 +84,10 @@ export default function Album() {
               color="textSecondary"
               paragraph
             >
-              News, academia, and social media are broken. We need a system that
+              David Deutsch
+              {/* News, academia, and social media are broken. We need a system that
               incentivizes the creation of new ideas and the correction of
-              errors.
+              errors. */}
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
