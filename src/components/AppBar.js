@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       display: "block"
     },
-    color: theme.palette.background.paper,
+    color: theme.palette.primary,
     textDecoration: "none",
     flexGrow: 1
   },
@@ -141,9 +141,9 @@ function AppBarBase(props) {
   const signOut = () => {};
 
   return (
-    <div className={classes.root} >
+    <div className={classes.root}>
       <HideOnScroll {...props}>
-        <AppBar>
+        <AppBar color="white">
           <Toolbar>
             {/* <Button
             variant="outlined"
