@@ -143,7 +143,7 @@ function AppBarBase(props) {
   return (
     <div className={classes.root}>
       <HideOnScroll {...props}>
-        <AppBar color="white">
+        <AppBar color="theme.palette.background.paper">
           <Toolbar>
             {/* <Button
             variant="outlined"

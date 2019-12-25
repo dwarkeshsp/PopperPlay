@@ -1,5 +1,6 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
+import CreateProblem from "./CreateProblem";
 import TagSearch from "./TagSearch";
 import Fab from "@material-ui/core/Fab";
 import Button from "@material-ui/core/Button";
@@ -41,29 +42,6 @@ const useStyles = makeStyles(theme => ({
   heroButtons: {
     marginTop: theme.spacing(2)
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
-    },
-    marginLeft: 0,
-    width: "50%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto"
-    }
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "left",
-    justifyContent: "left"
-  },
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8)
@@ -87,122 +65,113 @@ const useStyles = makeStyles(theme => ({
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function Album() {
+export default function Problems() {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography
-              variant="h5"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
-              All life is problem solving
-            </Typography>
-            <Typography
-              variant="h6"
-              align="center"
-              color="textSecondary"
-              paragraph
-            >
-              Karl Popper
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <div className={classes.search}>
-                    <div className={classes.searchIcon}>
-                      <SearchIcon />
-                    </div>
-                    <InputBase
-                      placeholder="Search…"
-                      classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput
-                      }}
-                      inputProps={{ "aria-label": "search" }}
-                    />
-                  </div>
-                </Grid>
+    <div>
+      <ProblemsHeader />
+    </div>
+  );
+}
 
-                <Grid item>
-                  <TagSearch />
-                </Grid>
-              </Grid>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  {/* <Fab color="primary" aria-label="add">
+function ProblemsHeader() {
+  const classes = useStyles();
+
+  const alertRef = React.useRef();
+
+  return (
+    <div className={classes.heroContent}>
+      <CssBaseline />
+
+      <Container maxWidth="sm">
+        <Typography
+          variant="h5"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          All life is problem solving
+        </Typography>
+        <Typography variant="h6" align="center" color="textSecondary" paragraph>
+          Karl Popper
+        </Typography>
+        <div className={classes.heroButtons}>
+          <Grid container spacing={2} justify="center">
+            <Grid item>
+              <TextField id="search" label="Search" type="search" />
+            </Grid>
+
+            <Grid item>
+              <TagSearch />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} justify="center">
+            <div className={classes.heroButtons}>
+              <Grid item>
+                {/* <Fab color="primary" aria-label="add">
                   <AddIcon />
                 </Fab> */}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<AddIcon />}
-                  >
-                    New problem
-                  </Button>
-                </Grid>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<AddIcon />}
+                  onClick={() => {
+                    alertRef.current.handleOpen();
+                  }}
+                >
+                  New problem
+                </Button>
+                <CreateProblem ref={alertRef} />
               </Grid>
             </div>
-          </Container>
-        </div>
-        <Container className={classes.cardGrid}>
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map(card => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
           </Grid>
-        </Container>
-      </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </footer>
-      {/* End footer */}
-    </React.Fragment>
+        </div>
+      </Container>
+    </div>
+  );
+}
+
+function ProblemsContent() {
+  const classes = useStyles();
+
+  return (
+    <div>
+      {" "}
+      <Container className={classes.cardGrid}>
+        {/* End hero unit */}
+        <Grid container spacing={4}>
+          {cards.map(card => (
+            <Grid item key={card} xs={12} sm={6} md={4}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image="https://source.unsplash.com/random"
+                  title="Image title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Heading
+                  </Typography>
+                  <Typography>
+                    This is a media card. You can use this section to describe
+                    the content.
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    View
+                  </Button>
+                  <Button size="small" color="primary">
+                    Edit
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </div>
   );
 }
 
