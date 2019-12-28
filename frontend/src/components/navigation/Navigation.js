@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Account from "./Account";
-import PropTypes from "prop-types";
 import Header from "./Header";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";

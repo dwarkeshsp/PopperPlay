@@ -40,11 +40,14 @@ const useStyles = makeStyles(theme => ({
 function SignUpBase(props) {
   const classes = useStyles();
 
+  let history = useHistory();
+
   const alertRef = React.useRef();
 
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [username, setUsername] = React.useState("");
+  const [usernameValid, setUsernameValid] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [emailValid, setEmailValid] = React.useState(false);
   const [password, setPassword] = React.useState("");
@@ -53,12 +56,13 @@ function SignUpBase(props) {
   const [isInvalid, setIsInvalid] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState(null);
 
-  let history = useHistory();
+  const MINPASSWORDLENGTH = 7;
 
   React.useEffect(() => {
     setIsInvalid(
       !passwordValid ||
-        !emailValid ||
+      !emailValid ||
+      !usernameValid ||
         firstName === "" ||
         lastName === "" ||
         !checkedBox
@@ -71,23 +75,40 @@ function SignUpBase(props) {
   }, [email]);
 
   React.useEffect(() => {
-    setPasswordValid(password.length > 5);
+    setPasswordValid(password.length >= MINPASSWORDLENGTH);
   }, [password]);
+
+  React.useEffect(() => {
+    if (username !== "") {
+      props.firebase
+        .user(username)
+        .get()
+        .then(doc => {
+          setUsernameValid(!doc.exists);
+        });
+    }
+  }, [username]);
 
   const onSubmit = event => {
     props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
-        if (authUser.user) {
-          authUser.user
-            .updateProfile({
-              displayName: username
-              // displayName: firstName.concat(" ", lastName)
-            })
-            .then(s => {
-              history.push("/");
-            });
-        }
+        authUser.user.updateProfile({
+          displayName: username
+        });
+        return props.firebase.user(username).set(
+          {
+            firstName: firstName,
+            lastName: lastName,
+            username: username,
+            email: email,
+            uid: authUser.user.uid
+          },
+          { merge: true }
+        );
+      })
+      .then(() => {
+        history.goBack();
       })
       .catch(error => {
         setErrorMessage(error.message);
@@ -148,6 +169,13 @@ function SignUpBase(props) {
                   onChange={event => setUsername(event.target.value)}
                 />
               </Grid>
+              {username !== "" && !usernameValid && (
+                <Grid item xs={12}>
+                  <Typography variant="caption" color="secondary">
+                    * Username already taken
+                  </Typography>
+                </Grid>
+              )}
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -183,7 +211,8 @@ function SignUpBase(props) {
               {password !== "" && !passwordValid && (
                 <Grid item xs={12}>
                   <Typography variant="caption" color="secondary">
-                    * Password must be at least 7 characters long
+                    * Password must be at least {MINPASSWORDLENGTH} characters
+                    long
                   </Typography>
                 </Grid>
               )}
