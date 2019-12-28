@@ -1,50 +1,53 @@
-import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import {makeStyles} from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React from 'react';
-import {Link as RouterLink, useHistory, withRouter} from 'react-router-dom';
-import {compose} from 'recompose';
+import React from "react";
+import { Link as RouterLink, withRouter, useHistory } from "react-router-dom";
+import { compose } from "recompose";
+import { withFirebase } from "../firebase";
+import Dialog from "../util/AlertDialog";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 
-import {withFirebase} from '../firebase';
-import Dialog from '../util/AlertDialog';
-
-const useStyles =
-    makeStyles(theme => ({
-                 paper: {
-                   marginTop: theme.spacing(8),
-                   display: 'flex',
-                   flexDirection: 'column',
-                   alignItems: 'center'
-                 },
-                 avatar: {
-                   margin: theme.spacing(1),
-                   backgroundColor: theme.palette.secondary.main
-                 },
-                 form: {width: '100%', marginTop: theme.spacing(3)},
-                 submit: {margin: theme.spacing(3, 0, 2)}
-               }));
+const useStyles = makeStyles(theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(3)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  }
+}));
 
 function SignUpBase(props) {
   const classes = useStyles();
 
   const alertRef = React.useRef();
 
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
-  const [username, setUsername] = React.useState('');
-  const [email, setEmail] = React.useState('');
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [emailValid, setEmailValid] = React.useState(false);
-  const [password, setPassword] = React.useState('');
+  const [password, setPassword] = React.useState("");
   const [passwordValid, setPasswordValid] = React.useState(false);
   const [checkedBox, setCheckedBox] = React.useState(false);
   const [isInvalid, setIsInvalid] = React.useState(true);
@@ -54,13 +57,16 @@ function SignUpBase(props) {
 
   React.useEffect(() => {
     setIsInvalid(
-        !passwordValid || !emailValid || firstName === '' || lastName === '' ||
-        !checkedBox);
+      !passwordValid ||
+        !emailValid ||
+        firstName === "" ||
+        lastName === "" ||
+        !checkedBox
+    );
   });
 
   React.useEffect(() => {
-    const re =
-        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     setEmailValid(re.test(email));
   }, [email]);
 
@@ -69,43 +75,34 @@ function SignUpBase(props) {
   }, [password]);
 
   const onSubmit = event => {
-    props.firebase.doCreateUserWithEmailAndPassword(email, password)
-        .then(authUser => {
-          if (authUser.user) {
-            authUser.user
-                .updateProfile({
-                  displayName: username
-                  // displayName: firstName.concat(" ", lastName)
-                })
-                .then(props.firebase.user(username).set(
-                    {
-                      firstName: firstName,
-                      lastName: lastName,
-                      username: username,
-                      email: email,
-                      uid: authUser.user.uid,
-                    },
-                    {merge: true},
-                    ))
-          }
-        })
-        .then(() => {
-          history.push('/');
-        })
-        .catch(error => {
-          setErrorMessage(error.message);
-          alertRef.current.handleOpen();
-        });
+    props.firebase
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then(authUser => {
+        if (authUser.user) {
+          authUser.user
+            .updateProfile({
+              displayName: username
+              // displayName: firstName.concat(" ", lastName)
+            })
+            .then(s => {
+              history.push("/");
+            });
+        }
+      })
+      .catch(error => {
+        setErrorMessage(error.message);
+        alertRef.current.handleOpen();
+      });
     event.preventDefault();
   };
 
   return (
     <div>
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           {/* buffer */}
-          <h1 > </h1>
+          <h1> </h1>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -116,83 +113,86 @@ function SignUpBase(props) {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-  autoComplete = 'fname'
-  name = 'firstName'
-  variant = 'outlined'
-  required
-  fullWidth
-  id = 'firstName'
-  label = 'First Name'
-  autoFocus
-  onChange = {
-    event => setFirstName(event.target.value)
-  } />
-              </Grid > <Grid item xs = {12} sm = {6}>< TextField
-  variant = 'outlined'
-  required
-  fullWidth
-  id = 'lastName'
-  label = 'Last Name'
-  name = 'lastName'
-  autoComplete = 'lname'
-  onChange = {
-    event => setLastName(event.target.value)
-  } />
-              </Grid > <Grid item xs = {12}>< TextField
-  variant = 'outlined'
-  required
-  fullWidth
-  id = 'username'
-  label = 'Username'
-  name = 'username'
-  autoComplete = 'username'
-  onChange = {
-    event => setUsername(event.target.value)
-  } />
-              </Grid > <Grid item xs = {12}>< TextField
-  variant = 'outlined'
-  required
-  fullWidth
-  id = 'email'
-  label = 'Email Address'
-  name = 'email'
-  autoComplete = 'email'
-  onChange =
-  {
-    event => setEmail(event.target.value)
-  } />
-              </Grid >
-      {email !== '' && !emailValid &&
-       (<Grid item xs = {12}>
-        <Typography variant = 'caption' color = 'secondary'>*
-        Email not
-            valid</Typography>
-                </Grid>)}<Grid item xs = {12}><
-      TextField
-            variant = 'outlined'
-            required
-            fullWidth
-            name = 'password'
-            label = 'Password'
-            type = 'password'
-            id = 'password'
-            autoComplete = 'current-password'
-            onChange =
-            {
-              event => setPassword(event.target.value)
-            } />
-              </Grid >
-                {password !== '' && !passwordValid &&
-                 (<Grid item xs = {12}>
-                  <Typography variant = 'caption' color = 'secondary'>*
-                  Password must be at least 7 characters long<
-                      /Typography>
-                </Grid>)}<
-                    Grid item xs = {12}>< FormControlLabel
-            control = {
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  onChange={event => setFirstName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  onChange={event => setLastName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  onChange={event => setUsername(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  onChange={event => setEmail(event.target.value)}
+                />
+              </Grid>
+              {email !== "" && !emailValid && (
+                <Grid item xs={12}>
+                  <Typography variant="caption" color="secondary">
+                    * Email not valid
+                  </Typography>
+                </Grid>
+              )}
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={event => setPassword(event.target.value)}
+                />
+              </Grid>
+              {password !== "" && !passwordValid && (
+                <Grid item xs={12}>
+                  <Typography variant="caption" color="secondary">
+                    * Password must be at least 7 characters long
+                  </Typography>
+                </Grid>
+              )}
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
                     <Checkbox
-                      value='check'
-                      color='primary'
+                      value="check"
+                      color="primary"
                       onChange={event => setCheckedBox(event.target.checked)}
                     />
                   }
@@ -201,10 +201,10 @@ function SignUpBase(props) {
               </Grid>
             </Grid>
             <Button
-              type='submit'
+              type="submit"
               fullWidth
-              variant='contained'
-              color='primary'
+              variant="contained"
+              color="primary"
               className={classes.submit}
               disabled={isInvalid}
               onClick={event => onSubmit(event)}
@@ -217,7 +217,7 @@ function SignUpBase(props) {
                   href="#"
                   variant="body2"
                   component={RouterLink}
-                  to="/login'
+                  to="/login"
                 >
                   Already have an account? Sign in
                 </Link>
@@ -228,9 +228,9 @@ function SignUpBase(props) {
       </Container>
       <Dialog
         ref={alertRef}
-        title='Error'
+        title="Error"
         message={errorMessage}
-        button='Okay'
+        button="Okay"
       />
     </div>
   );

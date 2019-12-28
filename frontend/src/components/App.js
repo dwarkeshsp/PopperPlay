@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { withAuthentication } from "./session";
 import Home from "./Home";
-import AppBar from "./AppBar";
-import Header from "./Header";
+import AppBar from "./navigation/Navigation";
 import Philosophy from "./Philosophy";
 import Conjectures from "./conjectures/Conjectures";
 import Problems from "./problems/Problems";
@@ -11,7 +11,7 @@ import Login from "./login/Login";
 import Signup from "./login/Signup";
 import Container from "@material-ui/core/Container";
 
-export default function App() {
+function App() {
   return (
     <Router>
       <div>
@@ -46,3 +46,5 @@ export default function App() {
     </Router>
   );
 }
+
+export default withAuthentication(App);
