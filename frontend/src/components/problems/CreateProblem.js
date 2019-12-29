@@ -52,7 +52,7 @@ const CreateProblem = forwardRef((props, ref) => {
       .then(() => {
         tags.forEach(tag => {
           const tagRef = props.firebase.tag(tag);
-          tagRef.set({});
+          tagRef.set({}, { merge: true });
           tagRef.update({
             problems: props.firebase.firestore.FieldValue.arrayUnion(problemRef)
           });
