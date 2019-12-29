@@ -1,4 +1,5 @@
 import React from "react";
+import Editor from "../util/Editor";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -12,9 +13,17 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 const { forwardRef, useImperativeHandle } = React;
 
 const CreateProblem = forwardRef((props, ref) => {
-  const [tags, setTags] = React.useState("");
-
+  const [title, setTitle] = React.useState("");
+  const [tags, setTags] = React.useState([]);
+  const [description, setDescription] = React.useState("");
+  const [valid, setValid] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    setValid(title !== "");
+  }, [title]);
+
+  React.useEffect(() => console.log(description), [description]);
 
   useImperativeHandle(ref, () => ({
     handleOpen() {
@@ -27,7 +36,15 @@ const CreateProblem = forwardRef((props, ref) => {
   }
 
   function post() {
-    return 0;
+    const timestamp = props.firebase.firestore.FieldValue.serverTimestamp();
+    props.firebase.problems().add({
+      title: title,
+      description: description,
+      tags: tags,
+      created: timestamp,
+      lastModified: timestamp
+    });
+    handleClose()
   }
 
   return (
@@ -44,42 +61,22 @@ const CreateProblem = forwardRef((props, ref) => {
             We will send updates occasionally.
           </DialogContentText>
           <TextField
+            required
             autoFocus
             margin="dense"
-            id="name"
+            id="title"
             label="Title"
-            type="title"
             fullWidth
+            onChange={event => setTitle(event.target.value)}
           />
-          <Tags value={tags} setValue={setTags} />
-          {/* <MUIRichTextEditor
-            label="Start typing..."
-            onSave={data => console.log(data)}
-            controls={[
-              "title",
-              "bold",
-              "italic",
-              // "underline",
-              // "strikethrough",
-              "highlight",
-              "undo",
-              "redo",
-              // "link",
-              // "media",
-              "numberList",
-              "bulletList",
-              "quote",
-              "code",
-              "clear",
-              "save"
-            ]}
-          /> */}
+          <Tags setValue={setTags} />
+          <Editor text={description} setText={setDescription} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={post} color="primary" disabled={!valid}>
             Post
           </Button>
         </DialogActions>
@@ -88,81 +85,18 @@ const CreateProblem = forwardRef((props, ref) => {
   );
 });
 
-function Tags({ value, setValue }) {
-  const [tagDropdownOpen, setTagDropdownOpen] = React.useState(false);
-  const [options, setOptions] = React.useState([]);
-  const loading = tagDropdownOpen && options.length === 0;
-
-  React.useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      const response = await fetch(
-        "https://country.register.gov.uk/records.json?page-size=5000"
-      );
-      const countries = await response.json();
-
-      if (active) {
-        setOptions(Object.keys(countries).map(key => countries[key].item[0]));
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
-
-  React.useEffect(() => {
-    if (!tagDropdownOpen) {
-      setOptions([]);
-    }
-  }, [tagDropdownOpen]);
-
+function Tags({ setValue }) {
   return (
     <div>
       <Autocomplete
-        multiple
-        freeSolo
         id="tags"
-        // style={{ width: 300 }}
-        open={tagDropdownOpen}
-        onOpen={() => {
-          setTagDropdownOpen(true);
-        }}
-        onClose={() => {
-          setTagDropdownOpen(false);
-        }}
-        onChange={(event, val) => {
-          console.log(val);
-          setValue(val);
-        }}
-        getOptionSelected={(option, value) => option.name === value.name}
-        getOptionLabel={option => option.name}
-        options={options}
-        loading={loading}
+        freeSolo
+        multiple
+        options={top100Films.map(option => option.title)}
         renderInput={params => (
-          <TextField
-            {...params}
-            label="Tags"
-            variant="outlined"
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <React.Fragment>
-                  {loading ? (
-                    <CircularProgress color="inherit" size={20} />
-                  ) : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              )
-            }}
-            fullWidth
-          />
+          <TextField {...params} label="Tags" margin="dense" fullWidth />
         )}
+        onChange={(event, value) => setValue(value)}
       />
     </div>
   );

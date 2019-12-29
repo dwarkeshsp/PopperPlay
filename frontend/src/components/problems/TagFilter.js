@@ -4,12 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-function sleep(delay = 0) {
-  return new Promise(resolve => {
-    setTimeout(resolve, delay);
-  });
-}
-
 export default function TagSearch() {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
@@ -26,7 +20,6 @@ export default function TagSearch() {
       const response = await fetch(
         "https://country.register.gov.uk/records.json?page-size=5000"
       );
-      await sleep(1e3); // For demo purposes.
       const countries = await response.json();
 
       if (active) {
@@ -47,9 +40,10 @@ export default function TagSearch() {
 
   return (
     <Autocomplete
-      id="asynchronous-demo"
+      id="tag-filter"
       style={{ width: 300 }}
       open={open}
+      multiple
       onOpen={() => {
         setOpen(true);
       }}
