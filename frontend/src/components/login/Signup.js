@@ -61,14 +61,15 @@ function SignUpBase(props) {
   React.useEffect(() => {
     setIsInvalid(
       !passwordValid ||
-      !emailValid ||
-      !usernameValid ||
+        !emailValid ||
+        !usernameValid ||
         firstName === "" ||
         lastName === "" ||
         !checkedBox
     );
   });
 
+  // * better solution is to use on change for textboxes instead of hooks
   React.useEffect(() => {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     setEmailValid(re.test(email));
@@ -89,6 +90,7 @@ function SignUpBase(props) {
     }
   }, [username]);
 
+  // * consider adding email verification
   const onSubmit = event => {
     props.firebase
       .doCreateUserWithEmailAndPassword(email, password)

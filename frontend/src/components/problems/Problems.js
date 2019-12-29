@@ -20,6 +20,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { withFirebase } from "../firebase";
 
 function Copyright() {
   return (
@@ -65,17 +66,17 @@ const useStyles = makeStyles(theme => ({
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function Problems() {
+function Problems(props) {
   const classes = useStyles();
 
   return (
     <div>
-      <ProblemsHeader />
+      <ProblemsHeader firebase={props.firebase} />
     </div>
   );
 }
 
-function ProblemsHeader() {
+function ProblemsHeader(props) {
   const classes = useStyles();
 
   const alertRef = React.useRef();
@@ -122,7 +123,7 @@ function ProblemsHeader() {
                 >
                   New problem
                 </Button>
-                <CreateProblem ref={alertRef} />
+                <CreateProblem ref={alertRef} firebase={props.firebase} />
               </Grid>
             </div>
           </Grid>
@@ -281,3 +282,5 @@ const top100Films = [
   { title: "3 Idiots", year: 2009 },
   { title: "Monty Python and the Holy Grail", year: 1975 }
 ];
+
+export default withFirebase(Problems);

@@ -1,8 +1,12 @@
 import React from "react";
-import { Link as RouterLink, withRouter, useHistory  } from "react-router-dom";
+import { Link as RouterLink, withRouter, useHistory } from "react-router-dom";
 import { compose } from "recompose";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -76,7 +80,7 @@ function LoginBase(props) {
 
   const onSubmit = event => {
     props.firebase.setPersistence(persistence).then(function() {
-        props.firebase
+      props.firebase
         .doSignInWithEmailAndPassword(email, password)
         .then(() => {
           history.goBack();
@@ -91,96 +95,148 @@ function LoginBase(props) {
   };
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={event => setEmail(event.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={event => setPassword(event.target.value)}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="remember"
-                  color="primary"
-                  onChange={event => {
-                    if (event.target.checked) {
-                      setPersistence(props.firebase.LOCAL);
-                    } else {
-                      setPersistence(props.firebase.SESSION);
-                    }
-                  }}
-                />
-              }
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disabled={isInvalid}
-              onClick={event => onSubmit(event)}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link variant="body2">
-                  Forgot password?
-                </Link>
+    <div>
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={event => setEmail(event.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={event => setPassword(event.target.value)}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="remember"
+                    color="primary"
+                    onChange={event => {
+                      if (event.target.checked) {
+                        setPersistence(props.firebase.LOCAL);
+                      } else {
+                        setPersistence(props.firebase.SESSION);
+                      }
+                    }}
+                  />
+                }
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={isInvalid}
+                onClick={event => onSubmit(event)}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  {/* <Link variant="body2" onClick={handleClickOpen}>
+                    Forgot password?
+                  </Link> */}
+                  <ForgotPassword />
+                </Grid>
+                <Grid item>
+                  <Link
+                    // href="#"
+                    variant="body2"
+                    component={RouterLink}
+                    to="/signup"
+                  >
+                    {"Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link
-                  // href="#"
-                  variant="body2"
-                  component={RouterLink}
-                  to="/signup"
-                >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
+            </form>
+          </div>
+        </Grid>
+        <Dialog
+          ref={alertRef}
+          title="Error"
+          message={errorMessage}
+          button="Okay"
+        />
       </Grid>
+    </div>
+  );
+}
+
+function ForgotPassword() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <Link variant="body2" onClick={handleClickOpen}>
+        Forgot password
+      </Link>
       <Dialog
-        ref={alertRef}
-        title="Error"
-        message={errorMessage}
-        button="Okay"
-      />
-    </Grid>
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here.
+            We will send updates occasionally.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Subscribe
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }
 

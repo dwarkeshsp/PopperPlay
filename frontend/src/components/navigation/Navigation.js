@@ -108,8 +108,7 @@ export default function Navigation(props) {
             <Typography className={classes.title} variant="h5" noWrap>
               PopperPlay
             </Typography>
-
-            <Header />
+              <Header />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
