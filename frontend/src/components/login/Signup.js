@@ -67,7 +67,7 @@ function SignUpBase(props) {
         lastName === "" ||
         !checkedBox
     );
-  });
+  }, [firstName, lastName, passwordValid, emailValid, checkedBox, usernameValid]);
 
   // * better solution is to use on change for textboxes instead of hooks
   React.useEffect(() => {
@@ -79,6 +79,7 @@ function SignUpBase(props) {
     setPasswordValid(password.length >= MINPASSWORDLENGTH);
   }, [password]);
 
+  // * might be causing a shitton of document reads. Fix if so.
   React.useEffect(() => {
     if (username !== "") {
       props.firebase
@@ -92,6 +93,7 @@ function SignUpBase(props) {
 
   // * consider adding email verification
   const onSubmit = event => {
+    const timestamp = props.firebase.firestore.FieldValue.serverTimestamp();
     props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
@@ -104,7 +106,9 @@ function SignUpBase(props) {
             lastName: lastName,
             username: username,
             email: email,
-            uid: authUser.user.uid
+            uid: authUser.user.uid,
+            created: timestamp,
+            lastSignin: timestamp
           },
           { merge: true }
         );

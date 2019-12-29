@@ -1,7 +1,6 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import CreateProblem from "./CreateProblem";
-import TagSearch from "./TagFilter";
 import Fab from "@material-ui/core/Fab";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
@@ -69,9 +68,11 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 function Problems(props) {
   const classes = useStyles();
 
+  const [tags, setTags] = React.useState([]);
+
   return (
     <div>
-      <ProblemsHeader firebase={props.firebase} />
+      <ProblemsHeader firebase={props.firebase} tags={tags} setTags={setTags} />
     </div>
   );
 }
@@ -102,9 +103,8 @@ function ProblemsHeader(props) {
             <Grid item>
               <TextField id="search" label="Search" type="search" />
             </Grid>
-
             <Grid item>
-              <TagSearch />
+              <TagFilter firebase={props.firebase} setValue={props.setTags} />
             </Grid>
           </Grid>
           <Grid container spacing={2} justify="center">
@@ -129,6 +129,43 @@ function ProblemsHeader(props) {
           </Grid>
         </div>
       </Container>
+    </div>
+  );
+}
+
+function TagFilter(props) {
+  const [options, setOptions] = React.useState(allTags());
+
+  function allTags() {
+    let options = [];
+    props.firebase
+      .tags()
+      .get()
+      .then(querySnapshot =>
+        querySnapshot.forEach(doc => options.push(doc.id))
+      );
+    return options;
+  }
+
+  return (
+    <div>
+      <Autocomplete
+        id="tags"
+        freeSolo
+        multiple
+        options={options}
+        // options={top100Films.map(option => option.title)}
+        renderInput={params => (
+          <TextField
+            {...params}
+            label="Tags"
+            variant={"outlined"}
+            margin="dense"
+            fullWidth
+          />
+        )}
+        onChange={(event, value) => props.setValue(value)}
+      />
     </div>
   );
 }

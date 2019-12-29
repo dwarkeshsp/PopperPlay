@@ -85,6 +85,10 @@ class Firebase {
   conjecture = conjectureDocID => this.db.doc(`conjectures/${conjectureDocID}`);
   conjectures = () => this.db.collection("conjectures");
 
+  // *** Tag API ***
+  tag = tagDocID => this.db.doc(`tags/${tagDocID}`);
+  tags = () => this.db.collection("tags");
+
   // *** Util API ***
   // timestamp = () => this.firestore.FieldValue.serverTimestamp()
 }
