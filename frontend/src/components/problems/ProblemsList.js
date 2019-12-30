@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, withRouter, useHistory } from "react-router-dom";
+import BottomScrollListener from "react-bottom-scroll-listener";
 import { AuthUserContext } from "../session";
 import { withFirebase } from "../firebase";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,25 +30,45 @@ function ProblemsList({ firebase }) {
   const [problems, setProblems] = React.useState([]);
   const [lastDoc, setLastDoc] = React.useState(null);
 
+  const BATCHSIZE = 10;
+
   React.useEffect(() => {
     firebase
       .problems()
-      .orderBy("likes")
-      .limit(25)
+      .orderBy("likes", "desc")
+      .limit(BATCHSIZE)
       .get()
       .then(querySnapshot => {
         const data = querySnapshot.docs.map(doc => doc.data());
-        setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1])
+        setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
         setProblems(data);
       });
   }, []);
+
+  function lazyLoad() {
+    if (lastDoc) {
+      firebase
+        .problems()
+        .orderBy("likes", "desc")
+        .startAfter(lastDoc)
+        .limit(BATCHSIZE)
+        .get()
+        .then(querySnapshot => {
+          const data = querySnapshot.docs.map(doc => doc.data());
+          setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+          querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
+          setProblems(problems.concat(data));
+        });
+    }
+  }
 
   return (
     <div>
       {problems.map(problem => (
         <ProblemCard problem={problem} firebase={firebase} />
       ))}
+      <BottomScrollListener onBottom={() => lazyLoad()} />
     </div>
   );
 }
@@ -76,7 +97,10 @@ function ProblemCard({ problem, firebase }) {
 
   return (
     <div>
-      <Link to={"/problem/" + problem.id} style={{ textDecoration: "none", color: "black" }} >
+      <Link
+        to={"/problem/" + problem.id}
+        style={{ textDecoration: "none", color: "black" }}
+      >
         <List className={classes.root}>
           <ListItem alignItems="flex-start">
             <Like problem={problem} firebase={firebase} />
@@ -146,48 +170,50 @@ function Like({ problem, firebase }) {
     <AuthUserContext.Consumer>
       {authUser => {
         return authUser ? (
-          <ListItemSecondaryAction>
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              color={likeIconColor}
-              onClick={() => {
-                if (likeIconColor === "default") {
-                  setlikeIconColor("primary");
-                  firebase.problem(problem.id).update({
-                    likes: firebase.firestore.FieldValue.increment(1)
-                  });
-                  firebase.user(firebase.currentUser().displayName).update({
-                    problemsLiked: firebase.firestore.FieldValue.arrayUnion(
-                      firebase.db.doc(`problems/${problem.id}`)
-                    )
-                  });
-                  firebase.problem(problem.id).update({
-                    usersLiked: firebase.firestore.FieldValue.arrayUnion(
-                      firebase.currentUser().displayName
-                    )
-                  });
-                } else {
-                  setlikeIconColor("default");
-                  firebase.problem(problem.id).update({
-                    likes: firebase.firestore.FieldValue.increment(-1)
-                  });
-                  firebase.user(firebase.currentUser().displayName).update({
-                    problemsLiked: firebase.firestore.FieldValue.arrayRemove(
-                      firebase.db.doc(`problems/${problem.id}`)
-                    )
-                  });
-                  firebase.problem(problem.id).update({
-                    usersLiked: firebase.firestore.FieldValue.arrayRemove(
-                      firebase.currentUser().displayName
-                    )
-                  });
-                }
-              }}
-            >
-              <ThumbUpIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
+          <Link onClick={e => e.preventDefault()}>
+            <ListItemSecondaryAction>
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                color={likeIconColor}
+                onClick={() => {
+                  if (likeIconColor === "default") {
+                    setlikeIconColor("primary");
+                    firebase.problem(problem.id).update({
+                      likes: firebase.firestore.FieldValue.increment(1)
+                    });
+                    firebase.user(firebase.currentUser().displayName).update({
+                      problemsLiked: firebase.firestore.FieldValue.arrayUnion(
+                        firebase.db.doc(`problems/${problem.id}`)
+                      )
+                    });
+                    firebase.problem(problem.id).update({
+                      usersLiked: firebase.firestore.FieldValue.arrayUnion(
+                        firebase.currentUser().displayName
+                      )
+                    });
+                  } else {
+                    setlikeIconColor("default");
+                    firebase.problem(problem.id).update({
+                      likes: firebase.firestore.FieldValue.increment(-1)
+                    });
+                    firebase.user(firebase.currentUser().displayName).update({
+                      problemsLiked: firebase.firestore.FieldValue.arrayRemove(
+                        firebase.db.doc(`problems/${problem.id}`)
+                      )
+                    });
+                    firebase.problem(problem.id).update({
+                      usersLiked: firebase.firestore.FieldValue.arrayRemove(
+                        firebase.currentUser().displayName
+                      )
+                    });
+                  }
+                }}
+              >
+                <ThumbUpIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </Link>
         ) : (
           <div></div>
         );

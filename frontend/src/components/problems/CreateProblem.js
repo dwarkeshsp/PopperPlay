@@ -45,6 +45,7 @@ const CreateProblem = forwardRef((props, ref) => {
         created: timestamp,
         lastModified: timestamp,
         user: props.firebase.currentUser().displayName,
+        usersLiked: [],
         rank: 100,
         likes: 0
       })
