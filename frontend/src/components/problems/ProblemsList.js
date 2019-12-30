@@ -45,7 +45,6 @@ function ProblemsList({ firebase }) {
       .then(querySnapshot => {
         const data = querySnapshot.docs.map(doc => doc.data());
         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-        console.log(data[0]);
         setProblems(data);
       });
   }, []);
@@ -83,49 +82,54 @@ function ProblemCard({ problem, firebase }) {
 
   return (
     <div>
-      <List className={classes.root}>
-        <ListItem alignItems="flex-start">
-          <Like problem={problem} firebase={firebase} />
-          <ListItemText
-            primary={title()}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  // className={classes.inline}
-                  color="textPrimary"
-                >
-                  {problem.user}
-                </Typography>
-                <div>
-                  {problem.tags.map(tag => (
-                    <React.Fragment>
-                      <Typography
-                        component={Link}
-                        variant="overline"
-                        className={classes.inline}
-                        color="textPrimary"
-                      >
-                        {tag}
-                      </Typography>
-                      <Typography
-                        className={classes.inline}
-                        color="textPrimary"
-                      >
-                        {" "}
-                      </Typography>
-                    </React.Fragment>
-                  ))}
-                </div>
+      <Link to={"/problem/" + problem.id} style={{ textDecoration: "none", color: "black" }} >
+        <List className={classes.root}>
+          <ListItem alignItems="flex-start">
+            <Like problem={problem} firebase={firebase} />
+            <ListItemText
+              primary={title()}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    variant="body2"
+                    // className={classes.inline}
+                    color="textPrimary"
+                    component={Link}
+                    to={"/person/" + problem.user}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {problem.user}
+                  </Typography>
+                  <div>
+                    {problem.tags.map(tag => (
+                      <React.Fragment>
+                        <Typography
+                          component={Link}
+                          to={"/tag/" + tag.replace(" ", "-")}
+                          variant="overline"
+                          className={classes.inline}
+                          color="textPrimary"
+                        >
+                          {tag}
+                        </Typography>
+                        <Typography
+                          className={classes.inline}
+                          color="textPrimary"
+                        >
+                          {" "}
+                        </Typography>
+                      </React.Fragment>
+                    ))}
+                  </div>
 
-                {description()}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-        <Divider variant="inset" component="li" />
-      </List>
+                  {description()}
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+        </List>
+      </Link>
     </div>
   );
 }
@@ -134,10 +138,13 @@ function Like({ problem, firebase }) {
   const [likeIconColor, setlikeIconColor] = React.useState(getLikeValue());
 
   function getLikeValue() {
-    if (problem.usersLiked.includes(firebase.currentUser().displayName)) {
-      return "primary"
+    if (
+      firebase.currentUser() &&
+      problem.usersLiked.includes(firebase.currentUser().displayName)
+    ) {
+      return "primary";
     } else {
-      return "default"
+      return "default";
     }
   }
 
@@ -163,7 +170,7 @@ function Like({ problem, firebase }) {
                   });
                   firebase.problem(problem.id).update({
                     usersLiked: firebase.firestore.FieldValue.arrayUnion(
-                     firebase.currentUser().displayName
+                      firebase.currentUser().displayName
                     )
                   });
                 } else {

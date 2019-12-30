@@ -3,10 +3,16 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { withAuthentication } from "./session";
 import Home from "./Home";
 import AppBar from "./navigation/Navigation";
-import Philosophy from "./Philosophy";
 import Conjectures from "./conjectures/Conjectures";
+import Conjecture from "./conjectures/Conjecture";
 import Problems from "./problems/Problems";
-import Feedback from "./Feedback";
+import Problem from "./problems/Problem";
+import People from "./people/People";
+import Person from "./people/Person";
+import Tags from "./tags/Tags";
+import Tag from "./tags/Tag";
+import Philosophy from "./philosophy/Philosophy";
+import Feedback from "./feedback/Feedback";
 import Login from "./login/Login";
 import Signup from "./login/Signup";
 import Container from "@material-ui/core/Container";
@@ -28,8 +34,26 @@ function App() {
             <Route path="/conjectures">
               <Conjectures />
             </Route>
+            <Route path="/conjecture:id">
+              <Conjecture />
+            </Route>
             <Route path="/problems">
               <Problems />
+            </Route>
+            <Route path="/problem:id">
+              <Problem />
+            </Route>
+            <Route path="/people">
+              <People />
+            </Route>
+            <Route path="/person:username">
+              <Person />
+            </Route>
+            <Route path="/tags">
+              <Tags />
+            </Route>
+            <Route path="/tag:tag">
+              <Tag />
             </Route>
             <Route path="/feedback">
               <Feedback />
