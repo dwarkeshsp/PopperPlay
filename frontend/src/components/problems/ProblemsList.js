@@ -27,14 +27,7 @@ const useStyles = makeStyles(theme => ({
 
 function ProblemsList({ firebase }) {
   const [problems, setProblems] = React.useState([]);
-
-  //   function initialProblems() {
-  //     let data = [];
-  //     query.get().then(querySnapshot => {
-  //       querySnapshot.forEach(doc => data.push(doc.data()));
-  //       return data;
-  //     });
-  //   }
+  const [lastDoc, setLastDoc] = React.useState(null);
 
   React.useEffect(() => {
     firebase
@@ -44,6 +37,7 @@ function ProblemsList({ firebase }) {
       .get()
       .then(querySnapshot => {
         const data = querySnapshot.docs.map(doc => doc.data());
+        setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1])
         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
         setProblems(data);
       });
