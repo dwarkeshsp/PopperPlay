@@ -24,19 +24,6 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { withFirebase } from "../firebase";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles(theme => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
@@ -65,8 +52,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(6)
   }
 }));
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function Problems(props) {
   const classes = useStyles();

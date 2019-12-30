@@ -23,8 +23,6 @@ const CreateProblem = forwardRef((props, ref) => {
     setValid(title !== "");
   }, [title]);
 
-  React.useEffect(() => console.log(description), [description]);
-
   useImperativeHandle(ref, () => ({
     handleOpen() {
       setOpen(true);
@@ -46,7 +44,9 @@ const CreateProblem = forwardRef((props, ref) => {
         tags: tags,
         created: timestamp,
         lastModified: timestamp,
-        user: props.firebase.currentUser().displayName
+        user: props.firebase.currentUser().displayName,
+        rank: 100,
+        upvotes: 0
       })
       .then(docRef => (problemRef = docRef))
       .then(() => {
