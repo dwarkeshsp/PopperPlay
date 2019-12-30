@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthUserContext } from "../session";
 import Dialog from "../util/AlertDialog";
 import CreateProblem from "./CreateProblem";
@@ -17,7 +17,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
@@ -54,8 +53,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Problems(props) {
-  const classes = useStyles();
-
   const [tags, setTags] = React.useState([]);
 
   return (

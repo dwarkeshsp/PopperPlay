@@ -46,7 +46,7 @@ const CreateProblem = forwardRef((props, ref) => {
         lastModified: timestamp,
         user: props.firebase.currentUser().displayName,
         rank: 100,
-        upvotes: 0
+        likes: 0
       })
       .then(docRef => (problemRef = docRef))
       .then(() => {
