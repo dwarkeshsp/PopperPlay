@@ -31,25 +31,25 @@ function App() {
           <Route path="/conjectures">
             <Conjectures />
           </Route>
-          <Route path="/conjecture:id">
+          <Route path="/conjecture/:id">
             <Conjecture />
           </Route>
           <Route path="/problems">
             <Problems />
           </Route>
-          <Route path="/problem:id">
+          <Route path="/problem/:id">
             <Problem />
           </Route>
           <Route path="/people">
             <People />
           </Route>
-          <Route path="/person:username">
+          <Route path="/person/:username">
             <Person />
           </Route>
           <Route path="/tags">
             <Tags />
           </Route>
-          <Route path="/tag:tag">
+          <Route path="/tag/:tag">
             <Tag />
           </Route>
           <Route path="/feedback">

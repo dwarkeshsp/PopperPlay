@@ -4,7 +4,9 @@ import BottomScrollListener from "react-bottom-scroll-listener";
 import { AuthUserContext } from "../session";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
+import Markdown from "../util/Markdown";
 import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
@@ -34,6 +36,7 @@ const useStyles = makeStyles(theme => ({
 function ProblemsList({ firebase, tags }) {
   const [problems, setProblems] = React.useState([]);
   const [lastDoc, setLastDoc] = React.useState(null);
+  const [filtering, setFiltering] = React.useState(false);
 
   const LOADSIZE = 10;
 
@@ -66,6 +69,22 @@ function ProblemsList({ firebase, tags }) {
           setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
           querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
           setProblems(data);
+          setFiltering(true);
+        })
+        .catch(error => console.log(error));
+    } else if (filtering) {
+      // go back to default view
+      firebase
+        .problems()
+        .orderBy("likes", "desc")
+        .limit(LOADSIZE)
+        .get()
+        .then(querySnapshot => {
+          const data = querySnapshot.docs.map(doc => doc.data());
+          setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+          querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
+          setProblems(data);
+          setFiltering(false);
         })
         .catch(error => console.log(error));
     }
@@ -123,11 +142,14 @@ function ProblemCard({ problem, firebase }) {
 
   return (
     <div>
-      <Link
-        to={"/problem/" + problem.id}
-        style={{ textDecoration: "none", color: "black" }}
-      >
-        <List className={classes.root}>
+      <List className={classes.root}>
+        <Link
+          to={{
+            pathname: "/problem/" + problem.id,
+            state: { problem: problem }
+          }}
+          style={{ textDecoration: "none", color: "black" }}
+        >
           <ListItem alignItems="flex-start">
             <Like problem={problem} firebase={firebase} />
             <ListItemText
@@ -165,15 +187,15 @@ function ProblemCard({ problem, firebase }) {
                       </React.Fragment>
                     ))}
                   </div>
-
-                  {description()}
+                  {/* {description()} */}
                 </React.Fragment>
               }
             />
           </ListItem>
-          <Divider variant="inset" component="li" />
-        </List>
-      </Link>
+        </Link>
+
+        <Divider variant="inset" component="li" />
+      </List>
     </div>
   );
 }
@@ -281,7 +303,12 @@ function LikeLoggedIn({ problem, firebase }) {
       <ListItemSecondaryAction>
         <Button
           color="primary"
-          onClick={() => history.push("/problem/" + problem.id)}
+          component={Link}
+          to={{
+            pathname: "/problem/" + problem.id,
+            state: { problem: problem }
+          }}
+          // onClick={() => history.push("/problem/" + problem.id)}
         >
           Solve
         </Button>

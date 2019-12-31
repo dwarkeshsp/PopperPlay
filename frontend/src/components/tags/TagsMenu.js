@@ -37,7 +37,9 @@ function TagMenu(props) {
             fullWidth
           />
         )}
-        onChange={(event, value) => props.setValue(value)}
+        onChange={(event, value) =>
+          props.setValue(value.map(tag => tag.toLowerCase()))
+        }
         onOpen={() => setOptions(allTags())}
       />
     </div>

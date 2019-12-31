@@ -47,7 +47,7 @@ const CreateProblem = forwardRef((props, ref) => {
         lastModified: timestamp,
         user: props.firebase.currentUser().displayName,
         usersLiked: [],
-        points: 100,
+        // points: 100,
         likes: 0
       })
       .then(docRef => (problemRef = docRef))
@@ -74,18 +74,19 @@ const CreateProblem = forwardRef((props, ref) => {
         <DialogTitle id="form-dialog-title">A New Problem!</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            You have found a the existing conjectures are inadequate!
+            You have discovered where existing conjectures are inadequate!
+            Bravo!
           </DialogContentText>
           <TextField
             required
             autoFocus
             margin="dense"
             id="title"
-            label="Title"
+            label="Problem"
             fullWidth
             onChange={event => setTitle(event.target.value)}
           />
-          <TagsMenu setValue={setTags} variant="outlined"/>
+          <TagsMenu setValue={setTags} variant="outlined" />
           <Editor text={description} setText={setDescription} />
         </DialogContent>
         <DialogActions>
