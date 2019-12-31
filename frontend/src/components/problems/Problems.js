@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthUserContext } from "../session";
 import Dialog from "../util/AlertDialog";
 import CreateProblem from "./CreateProblem";
+import TagsMenu from "../tags/TagsMenu";
 import ProblemsList from "./ProblemsList";
 import Fab from "@material-ui/core/Fab";
 import Button from "@material-ui/core/Button";
@@ -57,8 +58,14 @@ function Problems(props) {
 
   return (
     <div>
-      <ProblemsHeader firebase={props.firebase} tags={tags} setTags={setTags} />
-      <ProblemsList />
+      <Container maxWidth="md">
+        <ProblemsHeader
+          firebase={props.firebase}
+          tags={tags}
+          setTags={setTags}
+        />
+        <ProblemsList tags={tags} />
+      </Container>
     </div>
   );
 }
@@ -90,7 +97,7 @@ function ProblemsHeader(props) {
               <TextField id="search" label="Search" type="search" />
             </Grid>
             <Grid item>
-              <TagFilter firebase={props.firebase} setValue={props.setTags} />
+              <TagsMenu setValue={props.setTags} variant="outlined" />
             </Grid>
           </Grid>
           <Grid container spacing={2} justify="center">
@@ -103,9 +110,7 @@ function ProblemsHeader(props) {
                   variant="contained"
                   color="primary"
                   startIcon={<AddIcon />}
-                  onClick={() => {
-                    alertRef.current.handleOpen();
-                  }}
+                  onClick={() => alertRef.current.handleOpen()}
                 >
                   New problem
                 </Button>
@@ -114,12 +119,12 @@ function ProblemsHeader(props) {
                     authUser ? (
                       <CreateProblem ref={alertRef} firebase={props.firebase} />
                     ) : (
-                        <Dialog
-                          ref={alertRef}
-                          title="Not logged in"
-                          message={"You must login in order to post a problem."}
-                          button="Okay"
-                        />
+                      <Dialog
+                        ref={alertRef}
+                        title="Not logged in"
+                        message={"You must login in order to post a problem."}
+                        button="Okay"
+                      />
                     )
                   }
                 </AuthUserContext.Consumer>

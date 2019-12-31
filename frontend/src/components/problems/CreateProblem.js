@@ -1,5 +1,6 @@
 import React from "react";
 import Editor from "../util/Editor";
+import TagsMenu from "../tags/TagsMenu";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -46,7 +47,7 @@ const CreateProblem = forwardRef((props, ref) => {
         lastModified: timestamp,
         user: props.firebase.currentUser().displayName,
         usersLiked: [],
-        rank: 100,
+        points: 100,
         likes: 0
       })
       .then(docRef => (problemRef = docRef))
@@ -73,8 +74,7 @@ const CreateProblem = forwardRef((props, ref) => {
         <DialogTitle id="form-dialog-title">A New Problem!</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
+            You have found a the existing conjectures are inadequate!
           </DialogContentText>
           <TextField
             required
@@ -85,7 +85,7 @@ const CreateProblem = forwardRef((props, ref) => {
             fullWidth
             onChange={event => setTitle(event.target.value)}
           />
-          <Tags setValue={setTags} firebase={props.firebase} />
+          <TagsMenu setValue={setTags} variant="outlined"/>
           <Editor text={description} setText={setDescription} />
         </DialogContent>
         <DialogActions>
@@ -100,36 +100,5 @@ const CreateProblem = forwardRef((props, ref) => {
     </div>
   );
 });
-
-function Tags(props) {
-  const [options, setOptions] = React.useState(allTags());
-
-  function allTags() {
-    let options = [];
-    props.firebase
-      .tags()
-      .get()
-      .then(querySnapshot =>
-        querySnapshot.forEach(doc => options.push(doc.id))
-      );
-    return options;
-  }
-
-  return (
-    <div>
-      <Autocomplete
-        id="tags"
-        freeSolo
-        multiple
-        options={options}
-        // options={top100Films.map(option => option.title)}
-        renderInput={params => (
-          <TextField {...params} label="Tags" margin="dense" fullWidth />
-        )}
-        onChange={(event, value) => props.setValue(value)}
-      />
-    </div>
-  );
-}
 
 export default CreateProblem;

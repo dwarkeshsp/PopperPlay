@@ -15,57 +15,53 @@ import Philosophy from "./philosophy/Philosophy";
 import Feedback from "./feedback/Feedback";
 import Login from "./login/Login";
 import Signup from "./login/Signup";
-import Container from "@material-ui/core/Container";
 
 function App() {
   return (
     <Router>
       <div>
         <AppBar />
-        {/* <Header /> */}
-        <Container maxWidth="md">
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/philosophy">
-              <Philosophy />
-            </Route>
-            <Route path="/conjectures">
-              <Conjectures />
-            </Route>
-            <Route path="/conjecture:id">
-              <Conjecture />
-            </Route>
-            <Route path="/problems">
-              <Problems />
-            </Route>
-            <Route path="/problem:id">
-              <Problem />
-            </Route>
-            <Route path="/people">
-              <People />
-            </Route>
-            <Route path="/person:username">
-              <Person />
-            </Route>
-            <Route path="/tags">
-              <Tags />
-            </Route>
-            <Route path="/tag:tag">
-              <Tag />
-            </Route>
-            <Route path="/feedback">
-              <Feedback />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-          </Switch>
-        </Container>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/philosophy">
+            <Philosophy />
+          </Route>
+          <Route path="/conjectures">
+            <Conjectures />
+          </Route>
+          <Route path="/conjecture:id">
+            <Conjecture />
+          </Route>
+          <Route path="/problems">
+            <Problems />
+          </Route>
+          <Route path="/problem:id">
+            <Problem />
+          </Route>
+          <Route path="/people">
+            <People />
+          </Route>
+          <Route path="/person:username">
+            <Person />
+          </Route>
+          <Route path="/tags">
+            <Tags />
+          </Route>
+          <Route path="/tag:tag">
+            <Tag />
+          </Route>
+          <Route path="/feedback">
+            <Feedback />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+        </Switch>
       </div>
     </Router>
   );

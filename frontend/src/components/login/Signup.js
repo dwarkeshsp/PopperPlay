@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 function SignUpBase(props) {
   const classes = useStyles();
 
-  let history = useHistory();
+  const history = useHistory();
 
   const alertRef = React.useRef();
 
@@ -67,7 +67,14 @@ function SignUpBase(props) {
         lastName === "" ||
         !checkedBox
     );
-  }, [firstName, lastName, passwordValid, emailValid, checkedBox, usernameValid]);
+  }, [
+    firstName,
+    lastName,
+    passwordValid,
+    emailValid,
+    checkedBox,
+    usernameValid
+  ]);
 
   // * better solution is to use on change for textboxes instead of hooks
   React.useEffect(() => {
