@@ -90,7 +90,8 @@ class Firebase {
   tags = () => this.db.collection("tags");
 
   // *** Util API ***
-  // timestamp = () => this.firestore.FieldValue.serverTimestamp()
+  arrayUnion = item => this.firestore.FieldValue.arrayUnion(item);
+  timestamp = () => this.firestore.FieldValue.serverTimestamp();
 }
 
 export default Firebase;

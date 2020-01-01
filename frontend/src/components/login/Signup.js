@@ -100,7 +100,7 @@ function SignUpBase(props) {
 
   // * consider adding email verification
   const onSubmit = event => {
-    const timestamp = props.firebase.firestore.FieldValue.serverTimestamp();
+    const timestamp = props.firebase.timestamp();
     props.firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {

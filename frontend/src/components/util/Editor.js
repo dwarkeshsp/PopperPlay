@@ -5,9 +5,9 @@ import TextField from "@material-ui/core/TextField";
 export default function Editor({ text, setText }) {
   return (
     <TextField
-      id="description"
-      label="Description"
-      placeholder="Description (markdown compatible)"
+      id="details"
+      label="Details"
+      placeholder="Details (markdown compatible)"
       fullWidth
       multiline
       rows="5"

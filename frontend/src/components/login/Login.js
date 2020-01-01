@@ -83,7 +83,7 @@ function LoginBase(props) {
       props.firebase
         .doSignInWithEmailAndPassword(email, password)
         .then(() => {
-          const timestamp = props.firebase.firestore.FieldValue.serverTimestamp();
+          const timestamp = props.firebase.timestamp();
           props.firebase.user(props.firebase.currentUser().displayName).set(
             {
               lastSignin: timestamp

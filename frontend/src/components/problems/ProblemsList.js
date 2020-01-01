@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import BottomScrollListener from "react-bottom-scroll-listener";
+import timeago from "epoch-timeago";
 import { AuthUserContext } from "../session";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
 import Markdown from "../util/Markdown";
+import TagsList from "../tags/TagsList";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Container from "@material-ui/core/Container";
@@ -30,6 +32,10 @@ const useStyles = makeStyles(theme => ({
   },
   inline: {
     display: "inline"
+  },
+  markdown: {
+    ...theme.typography.caption,
+    padding: theme.spacing(3, 0)
   }
 }));
 
@@ -37,13 +43,15 @@ function ProblemsList({ firebase, tags }) {
   const [problems, setProblems] = React.useState([]);
   const [lastDoc, setLastDoc] = React.useState(null);
   const [filtering, setFiltering] = React.useState(false);
+  // * implement user sorting
+  const [orderBy, setOrderBy] = React.useState("created");
 
   const LOADSIZE = 10;
 
   React.useEffect(() => {
     firebase
       .problems()
-      .orderBy("likes", "desc")
+      .orderBy(orderBy, "desc")
       .limit(LOADSIZE)
       .get()
       .then(querySnapshot => {
@@ -61,7 +69,7 @@ function ProblemsList({ firebase, tags }) {
       firebase
         .problems()
         .where("tags", "array-contains-any", tags)
-        .orderBy("likes", "desc")
+        .orderBy(orderBy, "desc")
         .limit(LOADSIZE)
         .get()
         .then(querySnapshot => {
@@ -76,7 +84,7 @@ function ProblemsList({ firebase, tags }) {
       // go back to default view
       firebase
         .problems()
-        .orderBy("likes", "desc")
+        .orderBy(orderBy, "desc")
         .limit(LOADSIZE)
         .get()
         .then(querySnapshot => {
@@ -94,7 +102,7 @@ function ProblemsList({ firebase, tags }) {
     if (lastDoc) {
       firebase
         .problems()
-        .orderBy("likes", "desc")
+        .orderBy(orderBy, "desc")
         .startAfter(lastDoc)
         .limit(LOADSIZE)
         .get()
@@ -122,7 +130,7 @@ function ProblemCard({ problem, firebase }) {
   const classes = useStyles();
 
   const TITLELENGTH = 250;
-  const DESCRIPTIONLENGTH = 400;
+  const DETAILLENGTH = 400;
 
   function title() {
     let title = problem.title.substr(0, TITLELENGTH);
@@ -132,12 +140,12 @@ function ProblemCard({ problem, firebase }) {
     return title;
   }
 
-  function description() {
-    let description = problem.description.substr(0, DESCRIPTIONLENGTH);
-    if (problem.description.substr(DESCRIPTIONLENGTH)) {
-      description += "...";
+  function details() {
+    let details = problem.details.substr(0, DETAILLENGTH);
+    if (problem.details.substr(DETAILLENGTH)) {
+      details += "...";
     }
-    return description;
+    return details;
   }
 
   return (
@@ -162,32 +170,22 @@ function ProblemCard({ problem, firebase }) {
                     color="textPrimary"
                     component={Link}
                     to={"/person/" + problem.user}
-                    style={{ textDecoration: "none" }}
+                    // style={{ textDecoration: "none" }}
                   >
                     {problem.user}
                   </Typography>
-                  <div>
-                    {problem.tags.map(tag => (
-                      <React.Fragment>
-                        <Typography
-                          component={Link}
-                          to={"/tag/" + tag.replace(" ", "-")}
-                          variant="overline"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          {tag}
-                        </Typography>
-                        <Typography
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          {" "}
-                        </Typography>
-                      </React.Fragment>
-                    ))}
-                  </div>
-                  {/* {description()} */}
+                  <Typography
+                    variant="body2"
+                    className={classes.inline}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {" "}
+                    {timeago(problem.created.seconds * 1000)}
+                  </Typography>
+                  <TagsList tags={problem.tags} />
+                  {/* <Markdown className={classes.markdown}>
+                    {problem.details}
+                  </Markdown> */}
                 </React.Fragment>
               }
             />
@@ -236,7 +234,7 @@ function LikeSignedOut() {
         <Dialog
           ref={alertRef}
           title="Not logged in"
-          message={"You must login in order to interact with the problem"}
+          message={"You must login in order to perform this action"}
           button="Okay"
         />
       </Link>
@@ -252,7 +250,7 @@ function LikeLoggedIn({ problem, firebase }) {
   function getLikeValue() {
     if (
       firebase.currentUser() &&
-      problem.usersLiked.includes(firebase.currentUser().displayName)
+      problem.liked.includes(firebase.currentUser().displayName)
     ) {
       return "primary";
     } else {
@@ -264,34 +262,32 @@ function LikeLoggedIn({ problem, firebase }) {
     if (likeIconColor === "default") {
       setlikeIconColor("primary");
       // increment likes
-      firebase.problem(problem.id).update({
-        likes: firebase.firestore.FieldValue.increment(1)
-      });
-      // add problem to user
+      // firebase.problem(problem.id).update({
+      //   likes: firebase.firestore.FieldValue.increment(1)
+      // });
+      // add problem to liked by user
       firebase.user(firebase.currentUser().displayName).update({
-        problemsLiked: firebase.firestore.FieldValue.arrayUnion(
+        problemsLiked: firebase.arrayUnion(
           firebase.db.doc(`problems/${problem.id}`)
         )
       });
-      // add user to problem
+      // add user to problem likers
       firebase.problem(problem.id).update({
-        usersLiked: firebase.firestore.FieldValue.arrayUnion(
-          firebase.currentUser().displayName
-        )
+        liked: firebase.arrayUnion(firebase.currentUser().displayName)
       });
     } else {
       // reverse
       setlikeIconColor("default");
-      firebase.problem(problem.id).update({
-        likes: firebase.firestore.FieldValue.increment(-1)
-      });
+      // firebase.problem(problem.id).update({
+      //   likes: firebase.firestore.FieldValue.increment(-1)
+      // });
       firebase.user(firebase.currentUser().displayName).update({
         problemsLiked: firebase.firestore.FieldValue.arrayRemove(
           firebase.db.doc(`problems/${problem.id}`)
         )
       });
       firebase.problem(problem.id).update({
-        usersLiked: firebase.firestore.FieldValue.arrayRemove(
+        liked: firebase.firestore.FieldValue.arrayRemove(
           firebase.currentUser().displayName
         )
       });

@@ -16,7 +16,7 @@ const { forwardRef, useImperativeHandle } = React;
 const CreateProblem = forwardRef((props, ref) => {
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState([]);
-  const [description, setDescription] = React.useState("");
+  const [details, setDetails] = React.useState("");
   const [valid, setValid] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -35,20 +35,21 @@ const CreateProblem = forwardRef((props, ref) => {
   }
 
   function post() {
-    const timestamp = props.firebase.firestore.FieldValue.serverTimestamp();
+    const timestamp = props.firebase.timestamp();
+    const user = props.firebase.currentUser().displayName;
     let problemRef;
     props.firebase
       .problems()
       .add({
         title: title,
-        description: description,
+        details: details,
         tags: tags,
         created: timestamp,
         lastModified: timestamp,
-        user: props.firebase.currentUser().displayName,
-        usersLiked: [],
+        user: user,
+        liked: []
         // points: 100,
-        likes: 0
+        // likes: 0
       })
       .then(docRef => (problemRef = docRef))
       .then(() => {
@@ -56,8 +57,11 @@ const CreateProblem = forwardRef((props, ref) => {
           const tagRef = props.firebase.tag(tag);
           tagRef.set({}, { merge: true });
           tagRef.update({
-            problems: props.firebase.firestore.FieldValue.arrayUnion(problemRef)
+            problems: props.firebase.arrayUnion(problemRef)
           });
+        });
+        props.firebase.user(user).update({
+          problems: props.firebase.arrayUnion(problemRef)
         });
       })
       .catch(error => console.log("Error: ", error));
@@ -80,6 +84,7 @@ const CreateProblem = forwardRef((props, ref) => {
           <TextField
             required
             autoFocus
+            multiline
             margin="dense"
             id="title"
             label="Problem"
@@ -87,7 +92,7 @@ const CreateProblem = forwardRef((props, ref) => {
             onChange={event => setTitle(event.target.value)}
           />
           <TagsMenu setValue={setTags} variant="outlined" />
-          <Editor text={description} setText={setDescription} />
+          <Editor text={details} setText={setDetails} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
