@@ -20,9 +20,6 @@ const useStyles = makeStyles({
   cardDetails: {
     flex: 1
   },
-  cardMedia: {
-    width: 160
-  }
 });
 
 export default function Conjecture(props) {

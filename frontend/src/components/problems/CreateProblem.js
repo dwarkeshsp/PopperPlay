@@ -47,9 +47,9 @@ const CreateProblem = forwardRef((props, ref) => {
         created: timestamp,
         lastModified: timestamp,
         user: user,
-        liked: []
+        liked: [],
         // points: 100,
-        // likes: 0
+        likes: 0
       })
       .then(docRef => (problemRef = docRef))
       .then(() => {

@@ -8,21 +8,21 @@ import Dialog from "../util/AlertDialog";
 import Markdown from "../util/Markdown";
 import TagsList from "../tags/TagsList";
 import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+
+import CardContent from "@material-ui/core/CardContent";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
-import BuildIcon from "@material-ui/icons/Build";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import ForumIcon from "@material-ui/icons/Forum";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,18 +36,39 @@ const useStyles = makeStyles(theme => ({
   markdown: {
     ...theme.typography.caption,
     padding: theme.spacing(3, 0)
+  },
+  card: {
+    display: "flex"
+  },
+  cardDetails: {
+    flex: 1
   }
 }));
 
-function ProblemsList({ firebase, tags }) {
+function ProblemsList({ firebase, tags, orderBy }) {
   const [problems, setProblems] = React.useState([]);
   const [lastDoc, setLastDoc] = React.useState(null);
   const [filtering, setFiltering] = React.useState(false);
-  // * implement user sorting
-  const [orderBy, setOrderBy] = React.useState("created");
 
   const LOADSIZE = 10;
 
+  // React.useEffect(() => {
+  //   firebase
+  //     .problems()
+  //     .orderBy(orderBy, "desc")
+  //     .limit(LOADSIZE)
+  //     .get()
+  //     .then(querySnapshot => {
+  //       console.log("mounted");
+  //       const data = querySnapshot.docs.map(doc => doc.data());
+  //       setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+  //       querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
+  //       setProblems(data);
+  //     })
+  //     .catch(error => console.log(error));
+  // }, []);
+
+  // acts as component did mount as well
   React.useEffect(() => {
     firebase
       .problems()
@@ -55,13 +76,14 @@ function ProblemsList({ firebase, tags }) {
       .limit(LOADSIZE)
       .get()
       .then(querySnapshot => {
+        console.log("order changed");
         const data = querySnapshot.docs.map(doc => doc.data());
         setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
         setProblems(data);
       })
       .catch(error => console.log(error));
-  }, []);
+  }, [orderBy]);
 
   // * currently queries if array contains any of the tags
   React.useEffect(() => {
@@ -150,50 +172,47 @@ function ProblemCard({ problem, firebase }) {
 
   return (
     <div>
-      <List className={classes.root}>
-        <Link
-          to={{
-            pathname: "/problem/" + problem.id,
-            state: { problem: problem }
-          }}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItem alignItems="flex-start">
-            <Like problem={problem} firebase={firebase} />
-            <ListItemText
-              primary={title()}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    variant="body2"
-                    // className={classes.inline}
-                    color="textPrimary"
-                    component={Link}
-                    to={"/person/" + problem.user}
-                    // style={{ textDecoration: "none" }}
-                  >
-                    {problem.user}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    className={classes.inline}
-                    style={{ textDecoration: "none" }}
-                  >
-                    {" "}
-                    {timeago(problem.created.seconds * 1000)}
-                  </Typography>
-                  <TagsList tags={problem.tags} />
-                  {/* <Markdown className={classes.markdown}>
-                    {problem.details}
-                  </Markdown> */}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-        </Link>
-
-        <Divider variant="inset" component="li" />
-      </List>
+      <Link
+        to={{
+          pathname: "/problem/" + problem.id,
+          state: { problem: problem }
+        }}
+        style={{ textDecoration: "none" }}
+      >
+        <CardActionArea component="a" href="#">
+          <Card className={classes.card}>
+            <div className={classes.cardDetails}>
+              <CardContent>
+                <Typography component="h2" variant="h6">
+                  {title()}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  // className={classes.inline}
+                  color="textPrimary"
+                  component={Link}
+                  to={"/person/" + problem.user}
+                  // style={{ textDecoration: "none" }}
+                >
+                  {problem.user}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  className={classes.inline}
+                  style={{ textDecoration: "none" }}
+                >
+                  {" "}
+                  {timeago(problem.created.seconds * 1000)}
+                </Typography>
+                <TagsList tags={problem.tags} />
+              </CardContent>
+            </div>
+            <CardActions disableSpacing>
+              <Like problem={problem} firebase={firebase} />
+            </CardActions>
+          </Card>
+        </CardActionArea>
+      </Link>
     </div>
   );
 }
@@ -218,7 +237,6 @@ function LikeSignedOut() {
   return (
     <React.Fragment>
       <Link onClick={e => e.preventDefault()}>
-        <ListItemSecondaryAction>
           <Button color="primary" onClick={e => alertRef.current.handleOpen()}>
             Solve
           </Button>
@@ -230,7 +248,6 @@ function LikeSignedOut() {
           >
             <ThumbUpIcon />
           </IconButton>
-        </ListItemSecondaryAction>
         <Dialog
           ref={alertRef}
           title="Not logged in"
@@ -262,9 +279,9 @@ function LikeLoggedIn({ problem, firebase }) {
     if (likeIconColor === "default") {
       setlikeIconColor("primary");
       // increment likes
-      // firebase.problem(problem.id).update({
-      //   likes: firebase.firestore.FieldValue.increment(1)
-      // });
+      firebase.problem(problem.id).update({
+        likes: firebase.firestore.FieldValue.increment(1)
+      });
       // add problem to liked by user
       firebase.user(firebase.currentUser().displayName).update({
         problemsLiked: firebase.arrayUnion(
@@ -278,9 +295,9 @@ function LikeLoggedIn({ problem, firebase }) {
     } else {
       // reverse
       setlikeIconColor("default");
-      // firebase.problem(problem.id).update({
-      //   likes: firebase.firestore.FieldValue.increment(-1)
-      // });
+      firebase.problem(problem.id).update({
+        likes: firebase.firestore.FieldValue.increment(-1)
+      });
       firebase.user(firebase.currentUser().displayName).update({
         problemsLiked: firebase.firestore.FieldValue.arrayRemove(
           firebase.db.doc(`problems/${problem.id}`)
@@ -296,7 +313,6 @@ function LikeLoggedIn({ problem, firebase }) {
 
   return (
     <Link onClick={e => e.preventDefault()}>
-      <ListItemSecondaryAction>
         <Button
           color="primary"
           component={Link}
@@ -316,7 +332,6 @@ function LikeLoggedIn({ problem, firebase }) {
         >
           <ThumbUpIcon />
         </IconButton>
-      </ListItemSecondaryAction>
     </Link>
   );
 }

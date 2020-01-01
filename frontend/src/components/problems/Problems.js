@@ -20,6 +20,8 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { withFirebase } from "../firebase";
@@ -55,6 +57,8 @@ const useStyles = makeStyles(theme => ({
 
 function Problems(props) {
   const [tags, setTags] = React.useState([]);
+    const [orderBy, setOrderBy] = React.useState("created");
+
 
   return (
     <div>
@@ -63,8 +67,9 @@ function Problems(props) {
           firebase={props.firebase}
           tags={tags}
           setTags={setTags}
+          setOrderBy={setOrderBy}
         />
-        <ProblemsList tags={tags} />
+        <ProblemsList tags={tags} orderBy={orderBy}/>
       </Container>
     </div>
   );
@@ -93,6 +98,9 @@ function ProblemsHeader(props) {
         </Typography>
         <div className={classes.heroButtons}>
           <Grid container spacing={2} justify="center">
+            <Grid item>
+              <OrderByMenu setOrderBy={props.setOrderBy}/>
+            </Grid>
             <Grid item>
               <TextField id="search" label="Search" type="search" />
             </Grid>
@@ -137,41 +145,51 @@ function ProblemsHeader(props) {
   );
 }
 
-function TagFilter(props) {
-  const [options, setOptions] = React.useState(allTags());
+function OrderByMenu(props) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  function allTags() {
-    let options = [];
-    props.firebase
-      .tags()
-      .get()
-      .then(querySnapshot =>
-        querySnapshot.forEach(doc => options.push(doc.id))
-      );
-    return options;
-  }
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div>
-      <Autocomplete
-        id="tags"
-        freeSolo
-        multiple
-        options={options}
-        // options={top100Films.map(option => option.title)}
-        renderInput={params => (
-          <TextField
-            {...params}
-            label="Tags"
-            variant={"outlined"}
-            margin="dense"
-            fullWidth
-          />
-        )}
-        onChange={(event, value) => props.setValue(value)}
-      />
+      <Button
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        Order By
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem
+          onClick={() => {
+            props.setOrderBy("created");
+            handleClose();
+          }}
+        >
+          Most Recent
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            props.setOrderBy("likes");
+            handleClose();
+          }}
+        >
+          Likes
+        </MenuItem>
+      </Menu>
     </div>
   );
 }
-
 export default withFirebase(Problems);
