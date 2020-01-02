@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AuthUserContext } from "../session";
 import Dialog from "../util/AlertDialog";
-import CreateProblem from "./CreateProblem";
+import CreateProblem from "../util/CreatePost";
 import TagsMenu from "../tags/TagsMenu";
 import ProblemsList from "./ProblemsList";
 import Fab from "@material-ui/core/Fab";
@@ -125,7 +125,7 @@ function ProblemsHeader(props) {
                 <AuthUserContext.Consumer>
                   {authUser =>
                     authUser ? (
-                      <CreateProblem ref={alertRef} firebase={props.firebase} />
+                      <CreateProblem ref={alertRef} firebase={props.firebase} problem/>
                     ) : (
                       <Dialog
                         ref={alertRef}

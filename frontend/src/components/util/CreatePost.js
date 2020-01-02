@@ -1,6 +1,7 @@
 import React from "react";
-import Editor from "../util/Editor";
+import Editor from "./Editor";
 import TagsMenu from "../tags/TagsMenu";
+import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -13,7 +14,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const { forwardRef, useImperativeHandle } = React;
 
-const CreateProblem = forwardRef((props, ref) => {
+const CreatePost = forwardRef((props, ref) => {
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [details, setDetails] = React.useState("");
@@ -34,7 +35,7 @@ const CreateProblem = forwardRef((props, ref) => {
     setOpen(false);
   }
 
-  function post() {
+  function postProblem() {
     const timestamp = props.firebase.timestamp();
     const user = props.firebase.currentUser().displayName;
     let problemRef;
@@ -47,7 +48,41 @@ const CreateProblem = forwardRef((props, ref) => {
         created: timestamp,
         lastModified: timestamp,
         user: user,
-        liked: [],
+        likedBy: [],
+        // points: 100,
+        likes: 0
+      })
+      .then(docRef => (problemRef = docRef))
+      .then(() => {
+        tags.forEach(tag => {
+          const tagRef = props.firebase.tag(tag);
+          tagRef.set({}, { merge: true });
+          tagRef.update({
+            problems: props.firebase.arrayUnion(problemRef)
+          });
+        });
+        props.firebase.user(user).update({
+          problems: props.firebase.arrayUnion(problemRef)
+        });
+      })
+      .catch(error => console.log("Error: ", error));
+    handleClose();
+  }
+
+  function postConjecture() {
+    const timestamp = props.firebase.timestamp();
+    const user = props.firebase.currentUser().displayName;
+    let problemRef;
+    props.firebase
+      .conjectures()
+      .add({
+        title: title,
+        details: details,
+        tags: tags,
+        created: timestamp,
+        lastModified: timestamp,
+        user: user,
+        likedBy: [],
         // points: 100,
         likes: 0
       })
@@ -75,11 +110,14 @@ const CreateProblem = forwardRef((props, ref) => {
         // onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">A New Problem!</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {props.problem ? "A New Problem!" : "A New Conjecture"}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            You have discovered where existing conjectures are inadequate!
-            Bravo!
+            {props.problem
+              ? "You have discovered where existing conjectures are inadequate! Bravo!"
+              : "You are solving a problem by making a creative conjecture. Bravo!"}
           </DialogContentText>
           <TextField
             required
@@ -92,13 +130,20 @@ const CreateProblem = forwardRef((props, ref) => {
             onChange={event => setTitle(event.target.value)}
           />
           <TagsMenu setValue={setTags} variant="outlined" />
+          <Typography variant="caption">
+            {tags.length} {tags.length === 1 ? "tag" : "tags"}
+          </Typography>
           <Editor text={details} setText={setDetails} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={post} color="primary" disabled={!valid}>
+          <Button
+            onClick={props.problem ? postProblem : postConjecture}
+            color="primary"
+            disabled={!valid}
+          >
             Post
           </Button>
         </DialogActions>
@@ -107,4 +152,4 @@ const CreateProblem = forwardRef((props, ref) => {
   );
 });
 
-export default CreateProblem;
+export default CreatePost;

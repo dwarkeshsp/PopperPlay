@@ -237,17 +237,17 @@ function LikeSignedOut() {
   return (
     <React.Fragment>
       <Link onClick={e => e.preventDefault()}>
-          <Button color="primary" onClick={e => alertRef.current.handleOpen()}>
-            Solve
-          </Button>
-          <IconButton
-            edge="end"
-            aria-label="delete"
-            color="default"
-            onClick={e => alertRef.current.handleOpen()}
-          >
-            <ThumbUpIcon />
-          </IconButton>
+        <Button color="primary" onClick={e => alertRef.current.handleOpen()}>
+          Solve
+        </Button>
+        <IconButton
+          edge="end"
+          aria-label="delete"
+          color="default"
+          onClick={e => alertRef.current.handleOpen()}
+        >
+          <ThumbUpIcon />
+        </IconButton>
         <Dialog
           ref={alertRef}
           title="Not logged in"
@@ -267,7 +267,7 @@ function LikeLoggedIn({ problem, firebase }) {
   function getLikeValue() {
     if (
       firebase.currentUser() &&
-      problem.liked.includes(firebase.currentUser().displayName)
+      problem.likedBy.includes(firebase.currentUser().displayName)
     ) {
       return "primary";
     } else {
@@ -282,7 +282,7 @@ function LikeLoggedIn({ problem, firebase }) {
       firebase.problem(problem.id).update({
         likes: firebase.firestore.FieldValue.increment(1)
       });
-      // add problem to liked by user
+      // add problem to likedBy by user
       firebase.user(firebase.currentUser().displayName).update({
         problemsLiked: firebase.arrayUnion(
           firebase.db.doc(`problems/${problem.id}`)
@@ -290,7 +290,7 @@ function LikeLoggedIn({ problem, firebase }) {
       });
       // add user to problem likers
       firebase.problem(problem.id).update({
-        liked: firebase.arrayUnion(firebase.currentUser().displayName)
+        likedBy: firebase.arrayUnion(firebase.currentUser().displayName)
       });
     } else {
       // reverse
@@ -304,7 +304,7 @@ function LikeLoggedIn({ problem, firebase }) {
         )
       });
       firebase.problem(problem.id).update({
-        liked: firebase.firestore.FieldValue.arrayRemove(
+        likedBy: firebase.firestore.FieldValue.arrayRemove(
           firebase.currentUser().displayName
         )
       });
@@ -313,25 +313,25 @@ function LikeLoggedIn({ problem, firebase }) {
 
   return (
     <Link onClick={e => e.preventDefault()}>
-        <Button
-          color="primary"
-          component={Link}
-          to={{
-            pathname: "/problem/" + problem.id,
-            state: { problem: problem }
-          }}
-          // onClick={() => history.push("/problem/" + problem.id)}
-        >
-          Solve
-        </Button>
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          color={likeIconColor}
-          onClick={() => like()}
-        >
-          <ThumbUpIcon />
-        </IconButton>
+      <Button
+        color="primary"
+        component={Link}
+        to={{
+          pathname: "/problem/" + problem.id,
+          state: { problem: problem }
+        }}
+        // onClick={() => history.push("/problem/" + problem.id)}
+      >
+        Solve
+      </Button>
+      <IconButton
+        edge="end"
+        aria-label="delete"
+        color={likeIconColor}
+        onClick={() => like()}
+      >
+        <ThumbUpIcon />
+      </IconButton>
     </Link>
   );
 }
