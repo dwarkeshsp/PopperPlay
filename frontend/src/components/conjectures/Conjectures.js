@@ -7,6 +7,8 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import Conjecture from "./Conjecture";
+import ListHeader from "../util/ListHeader";
+import List from "../util/List";
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -36,31 +38,15 @@ const featuredPosts = [
 export default function Blog() {
   const classes = useStyles();
 
+  const [tags, setTags] = React.useState([]);
+  const [orderBy, setOrderBy] = React.useState("created");
+
   return (
-    <React.Fragment>
-      <CssBaseline />
+    <div>
+      <ListHeader setTags={setTags} setOrderBy={setOrderBy} />
       <Container maxWidth="md">
-        <main>
-          {/* <Grid container spacing={4}> */}
-          {featuredPosts.map(post => (
-            <Conjecture key={post.title} post={post} />
-          ))}
-          {/* </Grid> */}
-          {/* <Grid container spacing={5} className={classes.mainGrid}> */}
-          {/* <Main title="From the firehose" posts={posts} />
-          <Sidebar
-            title={sidebar.title}
-            description={sidebar.description}
-            archives={sidebar.archives}
-            social={sidebar.social}
-          /> */}
-          {/* </Grid> */}
-        </main>
+        <List tags={tags} orderBy={orderBy} />
       </Container>
-      {/* <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      /> */}
-    </React.Fragment>
+    </div>
   );
 }

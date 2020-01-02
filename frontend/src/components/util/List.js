@@ -4,18 +4,13 @@ import BottomScrollListener from "react-bottom-scroll-listener";
 import timeago from "epoch-timeago";
 import { AuthUserContext } from "../session";
 import { withFirebase } from "../firebase";
-import Dialog from "../util/AlertDialog";
-import Markdown from "../util/Markdown";
+import Dialog from "./AlertDialog";
 import TagsList from "../tags/TagsList";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
-
 import CardContent from "@material-ui/core/CardContent";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -45,8 +40,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ProblemsList({ firebase, tags, orderBy }) {
-  const [problems, setProblems] = React.useState([]);
+function List({ firebase, tags, orderBy, problem }) {
+  const [items, setItems] = React.useState([]);
   const [lastDoc, setLastDoc] = React.useState(null);
   const [filtering, setFiltering] = React.useState(false);
 
@@ -68,52 +63,53 @@ function ProblemsList({ firebase, tags, orderBy }) {
   //     .catch(error => console.log(error));
   // }, []);
 
+  const updateData = querySnapshot => {
+    const data = querySnapshot.docs.map(doc => doc.data());
+    querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
+
+    setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+    return data;
+  };
+
   // acts as component did mount as well
   React.useEffect(() => {
+    // if (!filtering) {
     firebase
-      .problems()
-      .orderBy(orderBy, "desc")
-      .limit(LOADSIZE)
-      .get()
+      .query(orderBy, LOADSIZE, problem)
       .then(querySnapshot => {
-        console.log("order changed");
-        const data = querySnapshot.docs.map(doc => doc.data());
-        setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-        querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-        setProblems(data);
+        const data = updateData(querySnapshot);
+        setItems(data);
       })
       .catch(error => console.log(error));
+    // } else {
+    //   firebase
+    //     .tagsQuery(orderBy, LOADSIZE, tags, problem)
+    //     .then(querySnapshot => {
+    //       const data = updateData(querySnapshot);
+    //       setItems(data);
+    //       setFiltering(true);
+    //     });
+    // }
   }, [orderBy]);
 
   // * currently queries if array contains any of the tags
   React.useEffect(() => {
     if (tags.length) {
       firebase
-        .problems()
-        .where("tags", "array-contains-any", tags)
-        .orderBy(orderBy, "desc")
-        .limit(LOADSIZE)
-        .get()
+        .tagsQuery(orderBy, LOADSIZE, tags, problem)
         .then(querySnapshot => {
-          const data = querySnapshot.docs.map(doc => doc.data());
-          setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-          querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-          setProblems(data);
+          const data = updateData(querySnapshot);
+          setItems(data);
           setFiltering(true);
         })
         .catch(error => console.log(error));
     } else if (filtering) {
       // go back to default view
       firebase
-        .problems()
-        .orderBy(orderBy, "desc")
-        .limit(LOADSIZE)
-        .get()
+        .query(orderBy, LOADSIZE, problem)
         .then(querySnapshot => {
-          const data = querySnapshot.docs.map(doc => doc.data());
-          setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-          querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-          setProblems(data);
+          const data = updateData(querySnapshot);
+          setItems(data);
           setFiltering(false);
         })
         .catch(error => console.log(error));
@@ -123,16 +119,10 @@ function ProblemsList({ firebase, tags, orderBy }) {
   function lazyLoad() {
     if (lastDoc) {
       firebase
-        .problems()
-        .orderBy(orderBy, "desc")
-        .startAfter(lastDoc)
-        .limit(LOADSIZE)
-        .get()
+        .startAfterQuery(orderBy, LOADSIZE, lastDoc, problem)
         .then(querySnapshot => {
-          const data = querySnapshot.docs.map(doc => doc.data());
-          setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-          querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-          setProblems(problems.concat(data));
+          const data = updateData(querySnapshot);
+          setItems(items.concat(data));
         })
         .catch(error => console.log(error));
     }
@@ -140,31 +130,31 @@ function ProblemsList({ firebase, tags, orderBy }) {
 
   return (
     <div>
-      {problems.map(problem => {
-        return <ProblemCard problem={problem} firebase={firebase} />;
+      {items.map(item => {
+        return <ItemCard item={item} firebase={firebase} problem={problem} />;
       })}
-      <BottomScrollListener onBottom={() => lazyLoad()} />
+      <BottomScrollListener onBottom={lazyLoad} />
     </div>
   );
 }
 
-function ProblemCard({ problem, firebase }) {
+function ItemCard({ item, firebase, problem }) {
   const classes = useStyles();
 
   const TITLELENGTH = 250;
   const DETAILLENGTH = 400;
 
   function title() {
-    let title = problem.title.substr(0, TITLELENGTH);
-    if (problem.title.substr(TITLELENGTH)) {
+    let title = item.title.substr(0, TITLELENGTH);
+    if (item.title.substr(TITLELENGTH)) {
       title += "...";
     }
     return title;
   }
 
   function details() {
-    let details = problem.details.substr(0, DETAILLENGTH);
-    if (problem.details.substr(DETAILLENGTH)) {
+    let details = item.details.substr(0, DETAILLENGTH);
+    if (item.details.substr(DETAILLENGTH)) {
       details += "...";
     }
     return details;
@@ -173,56 +163,65 @@ function ProblemCard({ problem, firebase }) {
   return (
     <div>
       <Link
-        to={{
-          pathname: "/problem/" + problem.id,
-          state: { problem: problem }
-        }}
+        to={
+          problem
+            ? {
+                pathname: "/problem/" + item.id,
+                state: { problem: item }
+              }
+            : {
+                pathname: "/conjecture/" + item.id,
+                state: { conjecture: item }
+              }
+        }
         style={{ textDecoration: "none" }}
       >
-        <CardActionArea component="a" href="#">
-          <Card className={classes.card}>
-            <div className={classes.cardDetails}>
-              <CardContent>
-                <Typography component="h2" variant="h6">
-                  {title()}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  // className={classes.inline}
-                  color="textPrimary"
-                  component={Link}
-                  to={"/person/" + problem.user}
-                  // style={{ textDecoration: "none" }}
-                >
-                  {problem.user}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  className={classes.inline}
-                  style={{ textDecoration: "none" }}
-                >
-                  {" "}
-                  {timeago(problem.created.seconds * 1000)}
-                </Typography>
-                <TagsList tags={problem.tags} />
-              </CardContent>
-            </div>
-            <CardActions disableSpacing>
-              <Like problem={problem} firebase={firebase} />
-            </CardActions>
-          </Card>
-        </CardActionArea>
+        <div>
+          <CardActionArea component="a" href="#">
+            <Card className={classes.card}>
+              <div className={classes.cardDetails}>
+                <CardContent>
+                  <Typography component="h2" variant="h6">
+                    {title()}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    // className={classes.inline}
+                    color="textPrimary"
+                    component={Link}
+                    to={"/person/" + item.user}
+                    // style={{ textDecoration: "none" }}
+                  >
+                    {item.user}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    className={classes.inline}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {" "}
+                    {timeago(item.created.seconds * 1000)}
+                  </Typography>
+                  <TagsList tags={item.tags} />
+                </CardContent>
+              </div>
+              <CardActions disableSpacing>
+                <Like item={item} firebase={firebase} />
+              </CardActions>
+            </Card>
+          </CardActionArea>
+        </div>
       </Link>
     </div>
   );
 }
 
-function Like({ problem, firebase }) {
+function Like({ item, firebase }) {
   return (
     <AuthUserContext.Consumer>
       {authUser => {
         return authUser ? (
-          <LikeLoggedIn problem={problem} firebase={firebase} />
+          <LikeLoggedIn item={item} firebase={firebase} />
         ) : (
           <LikeSignedOut />
         );
@@ -259,7 +258,7 @@ function LikeSignedOut() {
   );
 }
 
-function LikeLoggedIn({ problem, firebase }) {
+function LikeLoggedIn({ item, firebase }) {
   const history = useHistory();
 
   const [likeIconColor, setlikeIconColor] = React.useState(getLikeValue());
@@ -267,10 +266,13 @@ function LikeLoggedIn({ problem, firebase }) {
   function getLikeValue() {
     if (
       firebase.currentUser() &&
-      problem.likedBy.includes(firebase.currentUser().displayName)
+      item.likedBy.includes(firebase.currentUser().displayName)
     ) {
+      console.log("liked", item);
       return "primary";
     } else {
+      console.log("not liked", item);
+
       return "default";
     }
   }
@@ -278,34 +280,29 @@ function LikeLoggedIn({ problem, firebase }) {
   function like() {
     if (likeIconColor === "default") {
       setlikeIconColor("primary");
-      // increment likes
-      firebase.problem(problem.id).update({
-        likes: firebase.firestore.FieldValue.increment(1)
+      // increment likes and add user to item likers
+      firebase.problem(item.id).update({
+        likes: firebase.firestore.FieldValue.increment(1),
+        likedBy: firebase.arrayUnion(firebase.currentUser().displayName)
       });
-      // add problem to likedBy by user
+      // add item to likedBy by user
       firebase.user(firebase.currentUser().displayName).update({
         problemsLiked: firebase.arrayUnion(
-          firebase.db.doc(`problems/${problem.id}`)
+          firebase.db.doc(`problems/${item.id}`)
         )
-      });
-      // add user to problem likers
-      firebase.problem(problem.id).update({
-        likedBy: firebase.arrayUnion(firebase.currentUser().displayName)
       });
     } else {
       // reverse
       setlikeIconColor("default");
-      firebase.problem(problem.id).update({
-        likes: firebase.firestore.FieldValue.increment(-1)
+      firebase.problem(item.id).update({
+        likes: firebase.firestore.FieldValue.increment(-1),
+        likedBy: firebase.firestore.FieldValue.arrayRemove(
+          firebase.currentUser().displayName
+        )
       });
       firebase.user(firebase.currentUser().displayName).update({
         problemsLiked: firebase.firestore.FieldValue.arrayRemove(
-          firebase.db.doc(`problems/${problem.id}`)
-        )
-      });
-      firebase.problem(problem.id).update({
-        likedBy: firebase.firestore.FieldValue.arrayRemove(
-          firebase.currentUser().displayName
+          firebase.db.doc(`problems/${item.id}`)
         )
       });
     }
@@ -317,8 +314,8 @@ function LikeLoggedIn({ problem, firebase }) {
         color="primary"
         component={Link}
         to={{
-          pathname: "/problem/" + problem.id,
-          state: { problem: problem }
+          pathname: "/problem/" + item.id,
+          state: { problem: item }
         }}
         // onClick={() => history.push("/problem/" + problem.id)}
       >
@@ -336,4 +333,4 @@ function LikeLoggedIn({ problem, firebase }) {
   );
 }
 
-export default withFirebase(ProblemsList);
+export default withFirebase(List);

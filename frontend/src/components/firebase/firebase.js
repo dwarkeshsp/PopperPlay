@@ -80,16 +80,64 @@ class Firebase {
   // *** Problem API ***
   problem = problemDocID => this.db.doc(`problems/${problemDocID}`);
   problems = () => this.db.collection("problems");
+  problemsQuery = (orderBy, LOADSIZE) =>
+    this.problems()
+      .orderBy(orderBy, "desc")
+      .limit(LOADSIZE)
+      .get();
+  problemsTagsQuery = (orderBy, LOADSIZE, tags) =>
+    this.problems()
+      .where("tags", "array-contains-any", tags)
+      .orderBy(orderBy, "desc")
+      .limit(LOADSIZE)
+      .get();
+  problemsStartAfterQuery = (orderBy, LOADSIZE, lastDoc) =>
+    this.problems()
+      .orderBy(orderBy, "desc")
+      .startAfter(lastDoc)
+      .limit(LOADSIZE)
+      .get();
 
   // *** Conjecture API ***
   conjecture = conjectureDocID => this.db.doc(`conjectures/${conjectureDocID}`);
   conjectures = () => this.db.collection("conjectures");
+  conjecturesQuery = (orderBy, LOADSIZE) =>
+    this.conjectures()
+      .orderBy(orderBy, "desc")
+      .limit(LOADSIZE)
+      .get();
+  conjecturesTagsQuery = (orderBy, LOADSIZE, tags) =>
+    this.conjectures()
+      .where("tags", "array-contains-any", tags)
+      .orderBy(orderBy, "desc")
+      .limit(LOADSIZE)
+      .get();
+  conjecturesStartAfterQuery = (orderBy, LOADSIZE, lastDoc) =>
+    this.conjectures()
+      .orderBy(orderBy, "desc")
+      .startAfter(lastDoc)
+      .limit(LOADSIZE)
+      .get();
+
+  // *** Query API ***
+  query = (orderBy, LOADSIZE, problem) =>
+    problem
+      ? this.problemsQuery(orderBy, LOADSIZE)
+      : this.conjecturesQuery(orderBy, LOADSIZE);
+  tagsQuery = (orderBy, LOADSIZE, tags, problem) =>
+    problem
+      ? this.problemsTagsQuery(orderBy, LOADSIZE, tags)
+      : this.conjecturesTagsQuery(orderBy, LOADSIZE, tags);
+  startAfterQuery = (orderBy, LOADSIZE, lastDoc, problem) =>
+    problem
+      ? this.problemsStartAfterQuery(orderBy, LOADSIZE, lastDoc)
+      : this.conjecturesStartAfterQuery(orderBy, LOADSIZE, lastDoc);
 
   // *** Tag API ***
   tag = tagDocID => this.db.doc(`tags/${tagDocID}`);
   tags = () => this.db.collection("tags");
 
-  // *** Util API ***
+  // *** FieldValue API ***
   arrayUnion = item => this.firestore.FieldValue.arrayUnion(item);
   timestamp = () => this.firestore.FieldValue.serverTimestamp();
 }

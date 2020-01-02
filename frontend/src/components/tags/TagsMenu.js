@@ -17,7 +17,8 @@ function TagMenu(props) {
       .then(
         querySnapshot =>
           (options = querySnapshot.forEach(doc => options.push(doc.id)))
-      );
+      )
+      .catch(error => console.log(error));
     return options;
   }
 

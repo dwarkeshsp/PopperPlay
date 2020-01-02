@@ -94,7 +94,8 @@ function SignUpBase(props) {
         .get()
         .then(doc => {
           setUsernameValid(!doc.exists);
-        });
+        })
+        .catch(error => console.log(error));
     }
   }, [username]);
 
