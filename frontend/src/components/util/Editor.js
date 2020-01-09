@@ -7,7 +7,7 @@ export default function Editor({ text, setText }) {
     <TextField
       id="details"
       label="Details"
-      placeholder="Details (markdown compatible)"
+      placeholder="Details"
       fullWidth
       multiline
       rows="5"

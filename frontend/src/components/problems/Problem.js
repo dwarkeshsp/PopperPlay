@@ -70,10 +70,9 @@ export default function Main(props) {
         {timeago(problem.created.seconds * 1000)}
       </Typography>
       <TagsList tags={problem.tags} />
-      <Divider />
       <Markdown className={classes.markdown}>{problem.details}</Markdown>
       <Grid container className={classes.solveButton}>
-        <Button variant="contained" color="primary">
+        <Button variant="text" color="primary">
           Solve
         </Button>
       </Grid>

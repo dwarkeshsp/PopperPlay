@@ -11,6 +11,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { Link } from "react-router-dom";
 
 const { forwardRef, useImperativeHandle } = React;
 
@@ -134,6 +135,15 @@ const CreatePost = forwardRef((props, ref) => {
             {tags.length} {tags.length === 1 ? "tag" : "tags"}
           </Typography>
           <Editor text={details} setText={setDetails} />
+
+          <a
+            href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
+            target="_blank"
+          >
+            <Typography variant="body2">
+              Markdown is supported for details
+            </Typography>
+          </a>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

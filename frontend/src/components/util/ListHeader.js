@@ -59,12 +59,14 @@ function ListHeader(props) {
   return (
     <div className={classes.heroButtons}>
       <Grid container direction="row" justify="center" alignItems="center">
-        <Grid item>
+        {/* fix order by so that it can be reincluded */}
+        {/* <Grid item>
           <OrderByMenu setOrderBy={props.setOrderBy} />
-        </Grid>
-        <Grid item>
+        </Grid> */}
+        {/* make search so that it can be reincluded */}
+        {/* <Grid item>
           <TextField id="search" label="Search" type="search" />
-        </Grid>
+        </Grid> */}
         <Grid item>
           <TagsMenu setValue={props.setTags} variant="outlined" />
         </Grid>

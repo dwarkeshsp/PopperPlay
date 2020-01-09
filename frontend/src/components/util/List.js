@@ -6,8 +6,10 @@ import { AuthUserContext } from "../session";
 import { withFirebase } from "../firebase";
 import Dialog from "./AlertDialog";
 import TagsList from "../tags/TagsList";
+import ListActions from "./ListActions";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -74,6 +76,7 @@ function List({ firebase, tags, orderBy, problem }) {
   // acts as component did mount as well
   React.useEffect(() => {
     // if (!filtering) {
+    console.log(orderBy);
     firebase
       .query(orderBy, LOADSIZE, problem)
       .then(querySnapshot => {
@@ -185,7 +188,21 @@ function ItemCard({ item, firebase, problem }) {
                     {title()}
                   </Typography>
                   <Typography
+                    variant="body1"
+                    className={classes.inline}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {item.likes}
+                  </Typography>
+                  <Typography
                     variant="body2"
+                    className={classes.inline}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {" likes "}
+                  </Typography>
+                  <Typography
+                    variant="body1"
                     // className={classes.inline}
                     color="textPrimary"
                     component={Link}
@@ -205,131 +222,12 @@ function ItemCard({ item, firebase, problem }) {
                   <TagsList tags={item.tags} />
                 </CardContent>
               </div>
-              <CardActions disableSpacing>
-                <Like item={item} firebase={firebase} />
-              </CardActions>
+              {/* <ListActions item={item} problem={problem} /> */}
             </Card>
           </CardActionArea>
         </div>
       </Link>
     </div>
-  );
-}
-
-function Like({ item, firebase }) {
-  return (
-    <AuthUserContext.Consumer>
-      {authUser => {
-        return authUser ? (
-          <LikeLoggedIn item={item} firebase={firebase} />
-        ) : (
-          <LikeSignedOut />
-        );
-      }}
-    </AuthUserContext.Consumer>
-  );
-}
-
-function LikeSignedOut() {
-  const alertRef = React.useRef();
-
-  return (
-    <React.Fragment>
-      <Link onClick={e => e.preventDefault()}>
-        <Button color="primary" onClick={e => alertRef.current.handleOpen()}>
-          Solve
-        </Button>
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          color="default"
-          onClick={e => alertRef.current.handleOpen()}
-        >
-          <ThumbUpIcon />
-        </IconButton>
-        <Dialog
-          ref={alertRef}
-          title="Not logged in"
-          message={"You must login in order to perform this action"}
-          button="Okay"
-        />
-      </Link>
-    </React.Fragment>
-  );
-}
-
-function LikeLoggedIn({ item, firebase }) {
-  const history = useHistory();
-
-  const [likeIconColor, setlikeIconColor] = React.useState(getLikeValue());
-
-  function getLikeValue() {
-    if (
-      firebase.currentUser() &&
-      item.likedBy.includes(firebase.currentUser().displayName)
-    ) {
-      console.log("liked", item);
-      return "primary";
-    } else {
-      console.log("not liked", item);
-
-      return "default";
-    }
-  }
-
-  function like() {
-    if (likeIconColor === "default") {
-      setlikeIconColor("primary");
-      // increment likes and add user to item likers
-      firebase.problem(item.id).update({
-        likes: firebase.firestore.FieldValue.increment(1),
-        likedBy: firebase.arrayUnion(firebase.currentUser().displayName)
-      });
-      // add item to likedBy by user
-      firebase.user(firebase.currentUser().displayName).update({
-        problemsLiked: firebase.arrayUnion(
-          firebase.db.doc(`problems/${item.id}`)
-        )
-      });
-    } else {
-      // reverse
-      setlikeIconColor("default");
-      firebase.problem(item.id).update({
-        likes: firebase.firestore.FieldValue.increment(-1),
-        likedBy: firebase.firestore.FieldValue.arrayRemove(
-          firebase.currentUser().displayName
-        )
-      });
-      firebase.user(firebase.currentUser().displayName).update({
-        problemsLiked: firebase.firestore.FieldValue.arrayRemove(
-          firebase.db.doc(`problems/${item.id}`)
-        )
-      });
-    }
-  }
-
-  return (
-    <Link onClick={e => e.preventDefault()}>
-      <Button
-        color="primary"
-        component={Link}
-        to={{
-          pathname: "/problem/" + item.id,
-          state: { problem: item }
-        }}
-        // onClick={() => history.push("/problem/" + problem.id)}
-      >
-        Solve
-      </Button>
-      <IconButton
-        edge="end"
-        aria-label="delete"
-        color={likeIconColor}
-        onClick={() => like()}
-      >
-        <ThumbUpIcon />
-      </IconButton>
-    </Link>
   );
 }
 
