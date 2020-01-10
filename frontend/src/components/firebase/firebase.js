@@ -40,7 +40,7 @@ class Firebase {
   onAuthUserListener = (next, fallback) =>
     this.auth.onAuthStateChanged(authUser => {
       if (authUser) {
-        this.user(authUser.displayName)
+        this.person(authUser.displayName)
           .get()
           .then(snapshot => {
             const dbUser = snapshot.data();
@@ -72,10 +72,10 @@ class Firebase {
   LOCAL = app.auth.Auth.Persistence.LOCAL;
 
   // *** User API ***
-  currentUser = () => this.auth.currentUser;
-  UserInfo = () => this.auth.UserInfo;
-  user = username => this.db.doc(`users/${username}`);
-  users = () => this.db.collection("users");
+  currentPerson = () => this.auth.currentUser;
+  PersonInfo = () => this.auth.UserInfo;
+  person = username => this.db.doc(`people/${username}`);
+  people = () => this.db.collection("people");
 
   // *** Problem API ***
   problem = problemDocID => this.db.doc(`problems/${problemDocID}`);

@@ -27,8 +27,8 @@ function Actions({ item, firebase, problem }) {
 
   function getLikeValue() {
     if (
-      firebase.currentUser() &&
-      item.likedBy.includes(firebase.currentUser().displayName)
+      firebase.currentPerson() &&
+      item.likedBy.includes(firebase.currentPerson().displayName)
     ) {
       return "primary";
     } else {
@@ -42,10 +42,10 @@ function Actions({ item, firebase, problem }) {
       // increment likes and add user to item likers
       firebase.problem(item.id).update({
         likes: firebase.firestore.FieldValue.increment(1),
-        likedBy: firebase.arrayUnion(firebase.currentUser().displayName)
+        likedBy: firebase.arrayUnion(firebase.currentPerson().displayName)
       });
       // add item to likedBy by user
-      firebase.user(firebase.currentUser().displayName).update({
+      firebase.person(firebase.currentPerson().displayName).update({
         problemsLiked: firebase.arrayUnion(
           firebase.db.doc(`problems/${item.id}`)
         )
@@ -56,10 +56,10 @@ function Actions({ item, firebase, problem }) {
       firebase.problem(item.id).update({
         likes: firebase.firestore.FieldValue.increment(-1),
         likedBy: firebase.firestore.FieldValue.arrayRemove(
-          firebase.currentUser().displayName
+          firebase.currentPerson().displayName
         )
       });
-      firebase.user(firebase.currentUser().displayName).update({
+      firebase.person(firebase.currentPerson().displayName).update({
         problemsLiked: firebase.firestore.FieldValue.arrayRemove(
           firebase.db.doc(`problems/${item.id}`)
         )
@@ -183,8 +183,8 @@ function ActionsLoggedIn({ item, firebase }) {
 
   function getLikeValue() {
     if (
-      firebase.currentUser() &&
-      item.likedBy.includes(firebase.currentUser().displayName)
+      firebase.currentPerson() &&
+      item.likedBy.includes(firebase.currentPerson().displayName)
     ) {
       return "primary";
     } else {
@@ -198,10 +198,10 @@ function ActionsLoggedIn({ item, firebase }) {
       // increment likes and add user to item likers
       firebase.problem(item.id).update({
         likes: firebase.firestore.FieldValue.increment(1),
-        likedBy: firebase.arrayUnion(firebase.currentUser().displayName)
+        likedBy: firebase.arrayUnion(firebase.currentPerson().displayName)
       });
       // add item to likedBy by user
-      firebase.user(firebase.currentUser().displayName).update({
+      firebase.person(firebase.currentPerson().displayName).update({
         problemsLiked: firebase.arrayUnion(
           firebase.db.doc(`problems/${item.id}`)
         )
@@ -212,10 +212,10 @@ function ActionsLoggedIn({ item, firebase }) {
       firebase.problem(item.id).update({
         likes: firebase.firestore.FieldValue.increment(-1),
         likedBy: firebase.firestore.FieldValue.arrayRemove(
-          firebase.currentUser().displayName
+          firebase.currentPerson().displayName
         )
       });
-      firebase.user(firebase.currentUser().displayName).update({
+      firebase.person(firebase.currentPerson().displayName).update({
         problemsLiked: firebase.firestore.FieldValue.arrayRemove(
           firebase.db.doc(`problems/${item.id}`)
         )

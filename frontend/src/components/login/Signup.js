@@ -90,7 +90,7 @@ function SignUpBase(props) {
   React.useEffect(() => {
     if (username !== "") {
       props.firebase
-        .user(username)
+        .person(username)
         .get()
         .then(doc => {
           setUsernameValid(!doc.exists);
@@ -108,7 +108,7 @@ function SignUpBase(props) {
         authUser.user.updateProfile({
           displayName: username
         });
-        return props.firebase.user(username).set(
+        return props.firebase.person(username).set(
           {
             firstName: firstName,
             lastName: lastName,

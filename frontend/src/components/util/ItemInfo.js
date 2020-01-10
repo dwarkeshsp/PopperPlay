@@ -55,10 +55,10 @@ export default function ItemInfo({ item }) {
         // className={classes.inline}
         color="textPrimary"
         component={Link}
-        to={"/person/" + item.user}
+        to={"/person/" + item.person}
         // style={{ textDecoration: "none" }}
       >
-        {item.user}
+        {item.person}
       </Typography>
       <Typography
         variant="body2"

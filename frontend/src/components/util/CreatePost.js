@@ -38,7 +38,7 @@ const CreatePost = forwardRef((props, ref) => {
 
   function postProblem() {
     const timestamp = props.firebase.timestamp();
-    const user = props.firebase.currentUser().displayName;
+    const person = props.firebase.currentPerson().displayName;
     let problemRef;
     props.firebase
       .problems()
@@ -48,7 +48,7 @@ const CreatePost = forwardRef((props, ref) => {
         tags: tags,
         created: timestamp,
         lastModified: timestamp,
-        user: user,
+        person: person,
         likedBy: [],
         // points: 100,
         likes: 0
@@ -62,7 +62,7 @@ const CreatePost = forwardRef((props, ref) => {
             problems: props.firebase.arrayUnion(problemRef)
           });
         });
-        props.firebase.user(user).update({
+        props.firebase.person(person).update({
           problems: props.firebase.arrayUnion(problemRef)
         });
       })
@@ -72,7 +72,7 @@ const CreatePost = forwardRef((props, ref) => {
 
   function postConjecture() {
     const timestamp = props.firebase.timestamp();
-    const user = props.firebase.currentUser().displayName;
+    const person = props.firebase.currentPerson().displayName;
     let problemRef;
     props.firebase
       .conjectures()
@@ -82,7 +82,7 @@ const CreatePost = forwardRef((props, ref) => {
         tags: tags,
         created: timestamp,
         lastModified: timestamp,
-        user: user,
+        person: person,
         likedBy: [],
         // points: 100,
         likes: 0
@@ -96,7 +96,7 @@ const CreatePost = forwardRef((props, ref) => {
             problems: props.firebase.arrayUnion(problemRef)
           });
         });
-        props.firebase.user(user).update({
+        props.firebase.person(person).update({
           problems: props.firebase.arrayUnion(problemRef)
         });
       })
@@ -120,6 +120,7 @@ const CreatePost = forwardRef((props, ref) => {
               ? "You have discovered where existing conjectures are inadequate! Bravo!"
               : "You are solving a problem by making a creative conjecture. Bravo!"}
           </DialogContentText>
+
           <TextField
             required
             autoFocus
@@ -134,16 +135,13 @@ const CreatePost = forwardRef((props, ref) => {
           <Typography variant="caption">
             {tags.length} {tags.length === 1 ? "tag" : "tags"}
           </Typography>
-          <Editor text={details} setText={setDetails} />
-
           <a
             href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
             target="_blank"
           >
-            <Typography variant="body2">
-              Markdown is supported for details
-            </Typography>
+            <Typography variant="body2">Markdown is supported</Typography>
           </a>
+          <Editor text={details} setText={setDetails} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
