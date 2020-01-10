@@ -97,18 +97,25 @@ export default function Navigation(props) {
       <HideOnScroll {...props}>
         <AppBar color="theme.palette.background.paper">
           <Toolbar>
-            <IconButton
+            {/* <IconButton
               aria-label="home"
               color="inherit"
               component={Link}
               to="/"
             >
               <HomeIcon />
-            </IconButton>
-            <Typography className={classes.title} variant="h5" noWrap>
+            </IconButton> */}
+            <Typography
+              component={Link}
+              to="/"
+              className={classes.title}
+              variant="h5"
+              noWrap
+              color="textPrimary"
+            >
               PopperPlay
             </Typography>
-              <Header />
+            <Header />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />

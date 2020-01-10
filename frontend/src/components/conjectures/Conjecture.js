@@ -1,61 +1,94 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { useLocation } from "react-router";
+import { Link, useHistory } from "react-router-dom";
+import timeago from "epoch-timeago";
+import Markdown from "../util/Markdown";
+import TagsList from "../tags/TagsList";
+import ItemInfo from "../util/ItemInfo";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import ForumIcon from "@material-ui/icons/Forum";
+import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
+import { withFirebase } from "../firebase";
 
-const useStyles = makeStyles({
-  card: {
-    display: "flex"
+const useStyles = makeStyles(theme => ({
+  root: {
+    marginTop: "5rem"
   },
-  cardDetails: {
-    flex: 1
+  markdown: {
+    ...theme.typography.caption,
+    padding: theme.spacing(3, 0)
   },
-});
+  inline: {
+    display: "inline"
+  },
+  solveButton: {
+    justifyContent: "center"
+  },
+  conjectures: {
+    marginTop: "2rem"
+  }
+}));
 
-export default function Conjecture(props) {
+function Conjecture({ firebase }) {
   const classes = useStyles();
-  const { post } = props;
+  const location = useLocation();
+
+  const [conjecture, setConjecture] = React.useState(
+    location.state ? location.state.conjecture : null
+  );
+
+  React.useEffect(() => {
+    if (!location.state) {
+      const conjectureId = location.pathname.substr(9);
+      firebase
+        .conjecture(conjectureId)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            setConjecture(doc.data());
+          }
+        });
+      setConjecture();
+    }
+  }, []);
 
   return (
-    // <Grid item xs={12} md={6}>
-    <CardActionArea component="a" href="#">
-      <Card className={classes.card}>
-        <div className={classes.cardDetails}>
-          <CardContent>
-            <Typography component="h2" variant="h5">
-              {post.title}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              {post.date}
-            </Typography>
-            <Typography variant="subtitle1" paragraph>
-              {post.description}
-            </Typography>
-            <Typography variant="subtitle1" color="primary">
-              Continue reading...
-            </Typography>
-          </CardContent>
+    <Container maxWidth="sm" className={classes.root}>
+      {conjecture && (
+        <div>
+          <Typography variant="h6" gutterBottom>
+            {conjecture.title}
+          </Typography>
+          <ItemInfo item={conjecture} />
+          <Markdown className={classes.markdown}>{conjecture.details}</Markdown>
+          <Grid container className={classes.solveButton}>
+            <Button variant="text" color="primary">
+              Criticize
+            </Button>
+          </Grid>
+          <Typography
+            className={classes.conjectures}
+            variant="h5"
+            align="center"
+            gutterBottom
+          >
+            Conjectures
+          </Typography>
         </div>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <ForumIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ThumbUpIcon />
-          </IconButton>
-        </CardActions>
-      </Card>
-    </CardActionArea>
-    // </Grid>
+      )}
+      {!conjecture && (
+        <div>
+          <Typography align="center" variant="h5">
+            Conjecture not found
+          </Typography>
+        </div>
+      )}
+    </Container>
   );
 }
+
+export default withFirebase(Conjecture);

@@ -7,6 +7,7 @@ import { withFirebase } from "../firebase";
 import Dialog from "./AlertDialog";
 import TagsList from "../tags/TagsList";
 import ListActions from "./ListActions";
+import ItemInfo from "./ItemInfo";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
@@ -144,10 +145,9 @@ function List({ firebase, tags, orderBy, problem }) {
 function ItemCard({ item, firebase, problem }) {
   const classes = useStyles();
 
-  const TITLELENGTH = 250;
-  const DETAILLENGTH = 400;
-
   function title() {
+    const TITLELENGTH = 250;
+
     let title = item.title.substr(0, TITLELENGTH);
     if (item.title.substr(TITLELENGTH)) {
       title += "...";
@@ -156,6 +156,8 @@ function ItemCard({ item, firebase, problem }) {
   }
 
   function details() {
+    const DETAILLENGTH = 400;
+
     let details = item.details.substr(0, DETAILLENGTH);
     if (item.details.substr(DETAILLENGTH)) {
       details += "...";
@@ -187,39 +189,7 @@ function ItemCard({ item, firebase, problem }) {
                   <Typography component="h2" variant="h6">
                     {title()}
                   </Typography>
-                  <Typography
-                    variant="body1"
-                    className={classes.inline}
-                    style={{ textDecoration: "none" }}
-                  >
-                    {item.likes}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    className={classes.inline}
-                    style={{ textDecoration: "none" }}
-                  >
-                    {" likes "}
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    // className={classes.inline}
-                    color="textPrimary"
-                    component={Link}
-                    to={"/person/" + item.user}
-                    // style={{ textDecoration: "none" }}
-                  >
-                    {item.user}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    className={classes.inline}
-                    style={{ textDecoration: "none" }}
-                  >
-                    {" "}
-                    {timeago(item.created.seconds * 1000)}
-                  </Typography>
-                  <TagsList tags={item.tags} />
+                  <ItemInfo item={item} />
                 </CardContent>
               </div>
               {/* <ListActions item={item} problem={problem} /> */}
