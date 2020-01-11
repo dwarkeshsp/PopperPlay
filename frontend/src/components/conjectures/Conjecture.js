@@ -2,6 +2,9 @@ import React from "react";
 import { useLocation } from "react-router";
 import { Link, useHistory } from "react-router-dom";
 import timeago from "epoch-timeago";
+import { withFirebase } from "../firebase";
+import VoteButton from "../util/VoteButton";
+import CreatePost from "../util/CreatePost";
 import Markdown from "../util/Markdown";
 import TagsList from "../tags/TagsList";
 import ItemInfo from "../util/ItemInfo";
@@ -12,7 +15,7 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
-import { withFirebase } from "../firebase";
+import BuildIcon from "@material-ui/icons/Build";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,61 +32,76 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center"
   },
   conjectures: {
-    marginTop: "2rem"
+    marginTop: "0.5rem"
   }
 }));
 
-function Conjecture({ firebase }) {
+function Problem({ firebase }) {
   const classes = useStyles();
-  const location = useLocation();
 
-  const [conjecture, setConjecture] = React.useState(
-    location.state ? location.state.conjecture : null
-  );
+  const [problem, setProblem] = React.useState(null);
+
+  const location = useLocation();
+  const path = location.pathname.split("/");
+  const problemID = path[path.length - 2];
+  const conjectureID = path[path.length - 1];
+
+  const alertRef = React.useRef();
 
   React.useEffect(() => {
-    if (!location.state) {
-      const conjectureId = location.pathname.substr(9);
-      firebase
-        .conjecture(conjectureId)
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            setConjecture(doc.data());
-          }
-        });
-      setConjecture();
-    }
+    firebase
+      .conjecture(problemID, conjectureID)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          data.id = problemID;
+          setProblem(data);
+        }
+      })
+      .catch(error => console.log(error));
   }, []);
 
   return (
     <Container maxWidth="sm" className={classes.root}>
-      {conjecture && (
+      {problem && (
         <div>
           <Typography variant="h6" gutterBottom>
-            {conjecture.title}
+            {problem.title}
           </Typography>
-          <ItemInfo item={conjecture} />
-          <Markdown className={classes.markdown}>{conjecture.details}</Markdown>
+          <ItemInfo item={problem} />
+          <VoteButton item={problem} problem />
+          <Markdown className={classes.markdown}>{problem.details}</Markdown>
           <Grid container className={classes.solveButton}>
-            <Button variant="text" color="primary">
-              Criticize
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<BuildIcon />}
+              onClick={() => alertRef.current.handleOpen()}
+            >
+              Solve
             </Button>
+            <CreatePost
+              ref={alertRef}
+              firebase={firebase}
+              problemID={problemID}
+            />
           </Grid>
           <Typography
             className={classes.conjectures}
-            variant="h5"
+            variant="h6"
             align="center"
             gutterBottom
           >
             Conjectures
           </Typography>
+          {/* <ProblemConjecturesList problemID={problemID} /> */}
         </div>
       )}
-      {!conjecture && (
+      {!problem && (
         <div>
           <Typography align="center" variant="h5">
-            Conjecture not found
+            Problem not found
           </Typography>
         </div>
       )}
@@ -91,4 +109,4 @@ function Conjecture({ firebase }) {
   );
 }
 
-export default withFirebase(Conjecture);
+export default withFirebase(Problem);

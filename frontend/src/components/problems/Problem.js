@@ -39,17 +39,16 @@ const useStyles = makeStyles(theme => ({
 
 function Problem({ firebase }) {
   const classes = useStyles();
+
+  const [problem, setProblem] = React.useState(null);
+
   const location = useLocation();
-  const problemID = location.pathname.substr(9);
+  const path = location.pathname.split("/");
+  const problemID = path[path.length - 1];
+
   const alertRef = React.useRef();
 
-  const [problem, setProblem] = React.useState(
-    // location.state ? location.state.problem : null
-    null
-  );
-
   React.useEffect(() => {
-    // if (!location.state) {
     firebase
       .problem(problemID)
       .get()
@@ -61,7 +60,6 @@ function Problem({ firebase }) {
         }
       })
       .catch(error => console.log(error));
-    // }
   }, []);
 
   return (

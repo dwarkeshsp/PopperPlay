@@ -176,7 +176,7 @@ function ItemCard({ item, problem }) {
                 // state: { problem: item }
               }
             : {
-                pathname: "/conjecture/" + item.id
+                pathname: "/conjecture/" + item.problem.id + "/" + item.id
                 // state: { conjecture: item }
               }
         }

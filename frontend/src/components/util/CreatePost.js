@@ -80,6 +80,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemID }, ref) => {
         title: title,
         details: details,
         tags: tags,
+        problem: firebase.db.doc(`problems/${problemID}`),
         created: timestamp,
         lastModified: timestamp,
         creator: person,
