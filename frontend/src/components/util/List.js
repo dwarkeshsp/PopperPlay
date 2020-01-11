@@ -6,7 +6,7 @@ import { AuthUserContext } from "../session";
 import { withFirebase } from "../firebase";
 import Dialog from "./AlertDialog";
 import TagsList from "../tags/TagsList";
-import ListActions from "./ListActions";
+import VoteButton from "./VoteButton";
 import ItemInfo from "./ItemInfo";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -21,6 +21,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
 import ForumIcon from "@material-ui/icons/Forum";
+import BuildIcon from "@material-ui/icons/Build";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -171,12 +172,12 @@ function ItemCard({ item, problem }) {
         to={
           problem
             ? {
-                pathname: "/problem/" + item.id,
-                state: { problem: item }
+                pathname: "/problem/" + item.id
+                // state: { problem: item }
               }
             : {
-                pathname: "/conjecture/" + item.id,
-                state: { conjecture: item }
+                pathname: "/conjecture/" + item.id
+                // state: { conjecture: item }
               }
         }
         style={{ textDecoration: "none" }}
@@ -192,7 +193,16 @@ function ItemCard({ item, problem }) {
                   <ItemInfo item={item} />
                 </CardContent>
               </div>
-              {/* <ListActions item={item} problem={problem} /> */}
+              <CardActions disableSpacing>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<BuildIcon />}
+                >
+                  {problem ? "Solve" : "Criticize"}
+                </Button>
+                <VoteButton item={item} problem={problem} />
+              </CardActions>
             </Card>
           </CardActionArea>
         </div>

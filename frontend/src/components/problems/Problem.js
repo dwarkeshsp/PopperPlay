@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 import { Link, useHistory } from "react-router-dom";
 import timeago from "epoch-timeago";
 import { withFirebase } from "../firebase";
+import VoteButton from "../util/VoteButton";
 import ProblemConjecturesList from "./ProblemConjecturesList";
 import CreatePost from "../util/CreatePost";
 import Markdown from "../util/Markdown";
@@ -43,20 +44,24 @@ function Problem({ firebase }) {
   const alertRef = React.useRef();
 
   const [problem, setProblem] = React.useState(
-    location.state ? location.state.problem : null
+    // location.state ? location.state.problem : null
+    null
   );
 
   React.useEffect(() => {
-    if (!location.state) {
-      firebase
-        .problem(problemID)
-        .get()
-        .then(doc => {
-          if (doc.exists) {
-            setProblem(doc.data());
-          }
-        });
-    }
+    // if (!location.state) {
+    firebase
+      .problem(problemID)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          data.id = problemID;
+          setProblem(data);
+        }
+      })
+      .catch(error => console.log(error));
+    // }
   }, []);
 
   return (
@@ -67,6 +72,7 @@ function Problem({ firebase }) {
             {problem.title}
           </Typography>
           <ItemInfo item={problem} />
+          <VoteButton item={problem} problem />
           <Markdown className={classes.markdown}>{problem.details}</Markdown>
           <Grid container className={classes.solveButton}>
             <Button

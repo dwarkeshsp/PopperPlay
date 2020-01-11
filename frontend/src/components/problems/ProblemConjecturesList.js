@@ -6,7 +6,7 @@ import { AuthUserContext } from "../session";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
 import TagsList from "../tags/TagsList";
-import ListActions from "../util/ListActions";
+import VoteButton from "../util/VoteButton";
 import ItemInfo from "../util/ItemInfo";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -21,6 +21,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
 import ForumIcon from "@material-ui/icons/Forum";
+import BuildIcon from "@material-ui/icons/Build";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -118,7 +119,9 @@ function ConjectureCard({ conjecture }) {
                   {/* <ItemInfo item={conjecture} /> */}
                 </CardContent>
               </div>
-              {/* <ListActions conjecture={conjecture} problem={problem} /> */}
+              <CardActions disableSpacing>
+                <VoteButton item={conjecture} />
+              </CardActions>
             </Card>
           </CardActionArea>
         </div>

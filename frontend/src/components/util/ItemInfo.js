@@ -6,7 +6,7 @@ import { AuthUserContext } from "../session";
 import { withFirebase } from "../firebase";
 import Dialog from "./AlertDialog";
 import TagsList from "../tags/TagsList";
-import ListActions from "./ListActions";
+import VoteButton from "./VoteButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
@@ -20,6 +20,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
 import ForumIcon from "@material-ui/icons/Forum";
+import BuildIcon from "@material-ui/icons/Build";
 
 const useStyles = makeStyles(theme => ({
   inline: {
@@ -55,10 +56,10 @@ export default function ItemInfo({ item }) {
         // className={classes.inline}
         color="textPrimary"
         component={Link}
-        to={"/person/" + item.person}
+        to={"/person/" + item.creator}
         // style={{ textDecoration: "none" }}
       >
-        {item.person}
+        {item.creator}
       </Typography>
       <Typography
         variant="body2"
