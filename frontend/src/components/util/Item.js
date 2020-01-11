@@ -5,8 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import BuildIcon from "@material-ui/icons/Build";
 import React from "react";
+import CommentsList from "../conjectures/CommentsList";
 import { withFirebase } from "../firebase";
 import ProblemConjecturesList from "../problems/ProblemConjecturesList";
+import { AuthUserContext } from "../session";
+import Dialog from "../util/AlertDialog";
 import CreatePost from "./CreatePost";
 import ItemInfo from "./ItemInfo";
 import Markdown from "./Markdown";
@@ -14,19 +17,21 @@ import VoteButton from "./VoteButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: "5rem"
+    marginTop: "5.5rem"
   },
-  // markdown: {
-  //   padding: theme.spacing(3, 0)
-  // },
+
   inline: {
     display: "inline"
   },
-  solveButton: {
-    justifyContent: "center"
+  markdown: {
+    ...theme.typography.body1
   },
-  conjectures: {
-    marginTop: "0.5rem"
+  createButton: {
+    justifyContent: "center",
+    marginTop: "1rem"
+  },
+  childrenTitle: {
+    marginTop: "2rem"
   }
 }));
 
@@ -50,7 +55,7 @@ function Item({ item, problemID, problem, firebase }) {
             </Grid>
           </Grid>
           <Markdown className={classes.markdown}>{item.details}</Markdown>
-          <Grid container className={classes.solveButton}>
+          <Grid container className={classes.createButton}>
             <Button
               variant="contained"
               color="primary"
@@ -59,22 +64,39 @@ function Item({ item, problemID, problem, firebase }) {
             >
               {problem ? "Solve" : "Comment"}
             </Button>
-            <CreatePost
-              ref={alertRef}
-              firebase={firebase}
-              problemID={problemID}
-              problem={problem}
-            />
           </Grid>
+          <AuthUserContext.Consumer>
+            {authUser =>
+              authUser ? (
+                <CreatePost
+                  ref={alertRef}
+                  firebase={firebase}
+                  problemID={problemID}
+                  problem={problem}
+                />
+              ) : (
+                <Dialog
+                  ref={alertRef}
+                  title="Not logged in"
+                  message={"You must login in order to perform this action."}
+                  button="Okay"
+                />
+              )
+            }
+          </AuthUserContext.Consumer>
           <Typography
-            className={classes.conjectures}
             variant="h6"
-            align="center"
+            className={classes.childrenTitle}
+            variant="h5"
             gutterBottom
           >
             {problem ? "Conjectures" : "Comments"}
           </Typography>
-          {problem ? <ProblemConjecturesList problemID={problemID} /> : <div />}
+          {problem ? (
+            <ProblemConjecturesList problemID={problemID} />
+          ) : (
+            <CommentsList />
+          )}
         </div>
       )}
       {!item && (

@@ -1,15 +1,27 @@
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import BottomScrollListener from "react-bottom-scroll-listener";
+import timeago from "epoch-timeago";
+import { AuthUserContext } from "../session";
+import { withFirebase } from "../firebase";
+import Dialog from "../util/AlertDialog";
+import TagsList from "../tags/TagsList";
+import VoteButton from "../util/VoteButton";
+import ItemInfo from "../util/ItemInfo";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import IconButton from "@material-ui/core/IconButton";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { Link } from "react-router-dom";
-import { withFirebase } from "../firebase";
-import ItemInfo from "../util/ItemInfo";
-import Markdown from "../util/Markdown";
-import VoteButton from "../util/VoteButton";
+import ForumIcon from "@material-ui/icons/Forum";
+import BuildIcon from "@material-ui/icons/Build";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +33,8 @@ const useStyles = makeStyles(theme => ({
     display: "inline"
   },
   markdown: {
-    ...theme.typography.caption
+    ...theme.typography.caption,
+    padding: theme.spacing(3, 0)
   },
   card: {
     display: "flex"
@@ -31,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ProblemConjecturesList({ problemID, firebase }) {
+function CommentsList({ problemID, conjectureID, firebase }) {
   const [conjectures, setConjectures] = React.useState([]);
   const [lastConjecture, setLastConjecture] = React.useState(null);
 
@@ -103,8 +116,6 @@ function ConjectureCard({ conjecture }) {
                   <Typography component="h2" variant="h6">
                     {title()}
                   </Typography>
-                  <ItemInfo item={conjecture} />
-                  <Markdown className={classes.markdown}>{details()}</Markdown>
                 </CardContent>
               </div>
               <CardActions disableSpacing>
@@ -118,4 +129,4 @@ function ConjectureCard({ conjecture }) {
   );
 }
 
-export default withFirebase(ProblemConjecturesList);
+export default withFirebase(CommentsList);
