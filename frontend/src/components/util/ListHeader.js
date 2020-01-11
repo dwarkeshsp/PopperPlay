@@ -60,9 +60,9 @@ function ListHeader(props) {
     <div className={classes.heroButtons}>
       <Grid container direction="row" justify="center" alignItems="center">
         {/* fix order by so that it can be reincluded */}
-        {/* <Grid item>
+        <Grid item>
           <OrderByMenu setOrderBy={props.setOrderBy} />
-        </Grid> */}
+        </Grid>
         {/* make search so that it can be reincluded */}
         {/* <Grid item>
           <TextField id="search" label="Search" type="search" />
@@ -151,7 +151,7 @@ function OrderByMenu(props) {
             handleClose();
           }}
         >
-          Likes
+          Votes
         </MenuItem>
       </Menu>
     </div>

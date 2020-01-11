@@ -22,16 +22,19 @@ import ForumIcon from "@material-ui/icons/Forum";
 import BuildIcon from "@material-ui/icons/Build";
 import { Grid } from "@material-ui/core";
 
-function Actions({ item, firebase, problem }) {
+function VoteButton({ item, firebase, problem }) {
+  const { votedBy, id } = item;
   const alertRef = React.useRef();
-  const [voteIconColor, setvoteIconColor] = React.useState(
-    votedByCurrentPerson()
-  );
+  const [voteIconColor, setVoteIconColor] = React.useState("default");
+
+  React.useEffect(() => {
+    setVoteIconColor(votedByCurrentPerson());
+  }, [id]);
 
   function votedByCurrentPerson() {
     if (
       firebase.currentPerson() &&
-      item.votedBy.includes(firebase.currentPerson().displayName)
+      votedBy.includes(firebase.currentPerson().displayName)
     ) {
       return "primary";
     } else {
@@ -42,22 +45,20 @@ function Actions({ item, firebase, problem }) {
   function vote() {
     if (voteIconColor === "default") {
       console.log("forwards");
-      setvoteIconColor("primary");
+      setVoteIconColor("primary");
       // increment votes and add user to item voters
-      firebase.problem(item.id).update({
+      firebase.problem(id).update({
         votes: firebase.firestore.FieldValue.increment(1),
         votedBy: firebase.arrayUnion(firebase.currentPerson().displayName)
       });
       // add item to votedBy by user
       firebase.person(firebase.currentPerson().displayName).update({
-        problemsVoted: firebase.arrayUnion(
-          firebase.db.doc(`problems/${item.id}`)
-        )
+        problemsVoted: firebase.arrayUnion(firebase.db.doc(`problems/${id}`))
       });
     } else {
       // reverse
-      setvoteIconColor("default");
-      firebase.problem(item.id).update({
+      setVoteIconColor("default");
+      firebase.problem(id).update({
         votes: firebase.firestore.FieldValue.increment(-1),
         votedBy: firebase.firestore.FieldValue.arrayRemove(
           firebase.currentPerson().displayName
@@ -65,7 +66,7 @@ function Actions({ item, firebase, problem }) {
       });
       firebase.person(firebase.currentPerson().displayName).update({
         problemsVoted: firebase.firestore.FieldValue.arrayRemove(
-          firebase.db.doc(`problems/${item.id}`)
+          firebase.db.doc(`problems/${id}`)
         )
       });
     }
@@ -85,7 +86,7 @@ function Actions({ item, firebase, problem }) {
                   startIcon={<BuildIcon />}
                   component={Link}
                   to={{
-                    pathname: "/problem/" + item.id,
+                    pathname: "/problem/" + id,
                     state: { problem: item }
                   }}
                   onClick={e => {
@@ -112,7 +113,7 @@ function Actions({ item, firebase, problem }) {
             {/* </div>
           <div>
             <Typography variant="subtitle1" color="textPrimary" align="center">
-              {item.votes}
+              {votes}
             </Typography>
           </div> */}
             {/* </Grid> */}
@@ -130,4 +131,4 @@ function Actions({ item, firebase, problem }) {
   );
 }
 
-export default withFirebase(Actions);
+export default withFirebase(VoteButton);

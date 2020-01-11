@@ -57,9 +57,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-export default function Album() {
+export default function Home() {
   const classes = useStyles();
 
   return (
@@ -89,9 +87,9 @@ export default function Album() {
                 variant="contained"
                 color="primary"
                 component={RouterLink}
-                to="/conjectures"
+                to="/problems"
               >
-                Create Conjectures
+                Solve Problems
               </Button>
             </Grid>
             <Grid item>
@@ -99,9 +97,9 @@ export default function Album() {
                 variant="outlined"
                 color="primary"
                 component={RouterLink}
-                to="/problems"
+                to="/conjectures"
               >
-                Solve Problems
+                Create Conjectures
               </Button>
             </Grid>
           </Grid>

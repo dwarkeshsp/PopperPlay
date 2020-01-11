@@ -11,7 +11,7 @@ import FeedbackIcon from "@material-ui/icons/Feedback";
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "center"
     // backgroundColor: "white"
   }
 }));
@@ -26,9 +26,9 @@ function Header(props) {
   React.useEffect(() => {
     const pathArray = props.location.pathname.split("/");
     const firstLevelPath = pathArray[1];
-    if (firstLevelPath === "conjectures") {
+    if (firstLevelPath === "problems") {
       setValue(0);
-    } else if (firstLevelPath === "problems") {
+    } else if (firstLevelPath === "conjectures") {
       setValue(1);
     } else if (firstLevelPath === "philosophy") {
       setValue(2);
@@ -49,16 +49,16 @@ function Header(props) {
       className={classes.root}
     >
       <BottomNavigationAction
-        label="Conjectures"
-        icon={<WbIncandescentSharpIcon />}
-        component={Link}
-        to="/conjectures"
-      />
-      <BottomNavigationAction
         label="Problems"
         icon={<BuildSharpIcon />}
         component={Link}
         to="/problems"
+      />
+      <BottomNavigationAction
+        label="Conjectures"
+        icon={<WbIncandescentSharpIcon />}
+        component={Link}
+        to="/conjectures"
       />
       <BottomNavigationAction
         label="Philosophy"
