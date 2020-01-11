@@ -78,7 +78,6 @@ function List({ firebase, tags, orderBy, problem }) {
   // acts as component did mount as well
   React.useEffect(() => {
     // if (!filtering) {
-    console.log(orderBy);
     firebase
       .query(orderBy, LOADSIZE, problem)
       .then(querySnapshot => {

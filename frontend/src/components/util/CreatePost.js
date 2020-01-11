@@ -1,18 +1,14 @@
-import React from "react";
-import Editor from "./Editor";
-import TagsMenu from "../tags/TagsMenu";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Link } from "react-router-dom";
-
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import React from "react";
+import TagsMenu from "../tags/TagsMenu";
+import Editor from "./Editor";
 const { forwardRef, useImperativeHandle } = React;
 
 const CreatePost = forwardRef(({ firebase, problem, problemID }, ref) => {

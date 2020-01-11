@@ -43,8 +43,42 @@ function VoteButton({ item, firebase, problem }) {
   }
 
   function vote() {
+    problem ? voteProblem() : voteConjecture();
+  }
+
+  function voteConjecture() {
     if (voteIconColor === "default") {
-      console.log("forwards");
+      setVoteIconColor("primary");
+      // increment votes and add user to item voters
+      firebase.conjecture(item.problem.id, id).update({
+        votes: firebase.firestore.FieldValue.increment(1),
+        votedBy: firebase.arrayUnion(firebase.currentPerson().displayName)
+      });
+      // add item to votedBy by user
+      firebase.person(firebase.currentPerson().displayName).update({
+        conjecturesVoted: firebase.arrayUnion(
+          firebase.db.doc("problems/" + item.problem.id + "/conjectures/" + id)
+        )
+      });
+    } else {
+      // reverse
+      setVoteIconColor("default");
+      firebase.conjecture(item.problem.id, id).update({
+        votes: firebase.firestore.FieldValue.increment(-1),
+        votedBy: firebase.firestore.FieldValue.arrayRemove(
+          firebase.currentPerson().displayName
+        )
+      });
+      firebase.person(firebase.currentPerson().displayName).update({
+        conjecturesVoted: firebase.firestore.FieldValue.arrayRemove(
+          firebase.db.doc("problems/" + item.problem.id + "/conjectures/" + id)
+        )
+      });
+    }
+  }
+
+  function voteProblem() {
+    if (voteIconColor === "default") {
       setVoteIconColor("primary");
       // increment votes and add user to item voters
       firebase.problem(id).update({
@@ -77,29 +111,6 @@ function VoteButton({ item, firebase, problem }) {
       <AuthUserContext.Consumer>
         {authUser => (
           <React.Fragment>
-            {/* <Grid */}
-            {/* container direction="row" justify="center" alignItems="center" > */}
-            {/* <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<BuildIcon />}
-                  component={Link}
-                  to={{
-                    pathname: "/problem/" + id,
-                    state: { problem: item }
-                  }}
-                  onClick={e => {
-                    if (!authUser) {
-                      alertRef.current.handleOpen();
-                      e.preventDefault();
-                    }
-                  }}
-                >
-                  Solve
-                </Button>
-              </Grid> */}
-            {/* <Grid item> */}
             <IconButton
               edge="end"
               aria-label="vote"
@@ -110,14 +121,6 @@ function VoteButton({ item, firebase, problem }) {
             >
               <ThumbUpIcon />
             </IconButton>
-            {/* </div>
-          <div>
-            <Typography variant="subtitle1" color="textPrimary" align="center">
-              {votes}
-            </Typography>
-          </div> */}
-            {/* </Grid> */}
-            {/* </Grid> */}
             <Dialog
               ref={alertRef}
               title="Not logged in"
