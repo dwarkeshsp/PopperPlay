@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     justifyContent: "center"
-    // backgroundColor: "white"
+    // https://stackoverflow.com/questions/54375096/styling-bottomnavigation-in-react-js-material-ui
+    // backgroundColor: "black"
   }
 }));
 

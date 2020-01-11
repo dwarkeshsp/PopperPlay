@@ -116,7 +116,7 @@ export default function Navigation(props) {
               PopperPlay
             </Typography>
             <Header />
-            <div className={classes.search}>
+            {/* <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
@@ -128,7 +128,7 @@ export default function Navigation(props) {
                 }}
                 inputProps={{ "aria-label": "search" }}
               />
-            </div>
+            </div> */}
             <Box m={1}></Box>
             <Account />
           </Toolbar>
