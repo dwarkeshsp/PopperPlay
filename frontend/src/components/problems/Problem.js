@@ -2,6 +2,9 @@ import React from "react";
 import { useLocation } from "react-router";
 import { Link, useHistory } from "react-router-dom";
 import timeago from "epoch-timeago";
+import { withFirebase } from "../firebase";
+import ProblemConjecturesList from "./ProblemConjecturesList";
+import CreatePost from "../util/CreatePost";
 import Markdown from "../util/Markdown";
 import TagsList from "../tags/TagsList";
 import ItemInfo from "../util/ItemInfo";
@@ -12,7 +15,7 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
-import { withFirebase } from "../firebase";
+import BuildIcon from "@material-ui/icons/Build";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,13 +32,15 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center"
   },
   conjectures: {
-    marginTop: "2rem"
+    marginTop: "0.5rem"
   }
 }));
 
 function Problem({ firebase }) {
   const classes = useStyles();
   const location = useLocation();
+  const problemID = location.pathname.substr(9);
+  const alertRef = React.useRef();
 
   const [problem, setProblem] = React.useState(
     location.state ? location.state.problem : null
@@ -43,16 +48,14 @@ function Problem({ firebase }) {
 
   React.useEffect(() => {
     if (!location.state) {
-      const problemId = location.pathname.substr(9);
       firebase
-        .problem(problemId)
+        .problem(problemID)
         .get()
         .then(doc => {
           if (doc.exists) {
             setProblem(doc.data());
           }
         });
-      setProblem();
     }
   }, []);
 
@@ -66,18 +69,29 @@ function Problem({ firebase }) {
           <ItemInfo item={problem} />
           <Markdown className={classes.markdown}>{problem.details}</Markdown>
           <Grid container className={classes.solveButton}>
-            <Button variant="text" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<BuildIcon />}
+              onClick={() => alertRef.current.handleOpen()}
+            >
               Solve
             </Button>
+            <CreatePost
+              ref={alertRef}
+              firebase={firebase}
+              problemID={problemID}
+            />
           </Grid>
           <Typography
             className={classes.conjectures}
-            variant="h5"
+            variant="h6"
             align="center"
             gutterBottom
           >
             Conjectures
           </Typography>
+          <ProblemConjecturesList problemID={problemID} />
         </div>
       )}
       {!problem && (

@@ -6,8 +6,8 @@ export default function Editor({ text, setText }) {
   return (
     <TextField
       id="details"
-      label="Details"
-      placeholder="Details"
+      label="More"
+      placeholder="More"
       fullWidth
       multiline
       rows="5"

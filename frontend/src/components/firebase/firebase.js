@@ -78,7 +78,7 @@ class Firebase {
   people = () => this.db.collection("people");
 
   // *** Problem API ***
-  problem = problemDocID => this.db.doc(`problems/${problemDocID}`);
+  problem = problemID => this.db.doc(`problems/${problemID}`);
   problems = () => this.db.collection("problems");
   problemsQuery = (orderBy, LOADSIZE) =>
     this.problems()
@@ -99,8 +99,16 @@ class Firebase {
       .get();
 
   // *** Conjecture API ***
-  conjecture = conjectureDocID => this.db.doc(`conjectures/${conjectureDocID}`);
-  conjectures = () => this.db.collection("conjectures");
+  conjecture = conjectureID =>
+    this.db
+      .collection("problems")
+      .collectionGroup("conjectures")
+      .doc(conjectureID);
+  conjectures = () =>
+    this.db.collection("problems").collectionGroup("conjectures");
+  problemConjectures = problemID =>
+    this.db.doc(`problems/${problemID}`).collection("conjectures");
+
   conjecturesQuery = (orderBy, LOADSIZE) =>
     this.conjectures()
       .orderBy(orderBy, "desc")
@@ -134,7 +142,7 @@ class Firebase {
       : this.conjecturesStartAfterQuery(orderBy, LOADSIZE, lastDoc);
 
   // *** Tag API ***
-  tag = tagDocID => this.db.doc(`tags/${tagDocID}`);
+  tag = tagID => this.db.doc(`tags/${tagID}`);
   tags = () => this.db.collection("tags");
 
   // *** FieldValue API ***

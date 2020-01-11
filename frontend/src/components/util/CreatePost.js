@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 const { forwardRef, useImperativeHandle } = React;
 
-const CreatePost = forwardRef((props, ref) => {
+const CreatePost = forwardRef(({ firebase, problem, problemID }, ref) => {
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [details, setDetails] = React.useState("");
@@ -37,10 +37,10 @@ const CreatePost = forwardRef((props, ref) => {
   }
 
   function postProblem() {
-    const timestamp = props.firebase.timestamp();
-    const person = props.firebase.currentPerson().displayName;
+    const timestamp = firebase.timestamp();
+    const person = firebase.currentPerson().displayName;
     let problemRef;
-    props.firebase
+    firebase
       .problems()
       .add({
         title: title,
@@ -48,7 +48,7 @@ const CreatePost = forwardRef((props, ref) => {
         tags: tags,
         created: timestamp,
         lastModified: timestamp,
-        person: person,
+        creator: person,
         likedBy: [],
         // points: 100,
         likes: 0
@@ -56,14 +56,14 @@ const CreatePost = forwardRef((props, ref) => {
       .then(docRef => (problemRef = docRef))
       .then(() => {
         tags.forEach(tag => {
-          const tagRef = props.firebase.tag(tag);
+          const tagRef = firebase.tag(tag);
           tagRef.set({}, { merge: true });
           tagRef.update({
-            problems: props.firebase.arrayUnion(problemRef)
+            problems: firebase.arrayUnion(problemRef)
           });
         });
-        props.firebase.person(person).update({
-          problems: props.firebase.arrayUnion(problemRef)
+        firebase.person(person).update({
+          problems: firebase.arrayUnion(problemRef)
         });
       })
       .catch(error => console.log("Error: ", error));
@@ -71,33 +71,33 @@ const CreatePost = forwardRef((props, ref) => {
   }
 
   function postConjecture() {
-    const timestamp = props.firebase.timestamp();
-    const person = props.firebase.currentPerson().displayName;
+    const timestamp = firebase.timestamp();
+    const person = firebase.currentPerson().displayName;
     let problemRef;
-    props.firebase
-      .conjectures()
+    firebase
+      .problemConjectures(problemID)
       .add({
         title: title,
         details: details,
         tags: tags,
         created: timestamp,
         lastModified: timestamp,
-        person: person,
+        creator: person,
         likedBy: [],
         // points: 100,
-        likes: 0
+        votes: 0
       })
       .then(docRef => (problemRef = docRef))
       .then(() => {
         tags.forEach(tag => {
-          const tagRef = props.firebase.tag(tag);
+          const tagRef = firebase.tag(tag);
           tagRef.set({}, { merge: true });
           tagRef.update({
-            problems: props.firebase.arrayUnion(problemRef)
+            conjectures: firebase.arrayUnion(problemRef)
           });
         });
-        props.firebase.person(person).update({
-          problems: props.firebase.arrayUnion(problemRef)
+        firebase.person(person).update({
+          conjectures: firebase.arrayUnion(problemRef)
         });
       })
       .catch(error => console.log("Error: ", error));
@@ -112,11 +112,11 @@ const CreatePost = forwardRef((props, ref) => {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          {props.problem ? "A New Problem!" : "A New Conjecture"}
+          {problem ? "A New Problem!" : "A New Conjecture"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {props.problem
+            {problem
               ? "You have discovered where existing conjectures are inadequate! Bravo!"
               : "You are solving a problem by making a creative conjecture. Bravo!"}
           </DialogContentText>
@@ -127,7 +127,7 @@ const CreatePost = forwardRef((props, ref) => {
             multiline
             margin="dense"
             id="title"
-            label="Problem"
+            label={problem ? "Problem" : "Conjecture"}
             fullWidth
             onChange={event => setTitle(event.target.value)}
           />
@@ -139,7 +139,7 @@ const CreatePost = forwardRef((props, ref) => {
             href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
             target="_blank"
           >
-            <Typography variant="body2">Markdown is supported</Typography>
+            <Typography variant="body2">Markdown is supported below</Typography>
           </a>
           <Editor text={details} setText={setDetails} />
         </DialogContent>
@@ -148,7 +148,7 @@ const CreatePost = forwardRef((props, ref) => {
             Cancel
           </Button>
           <Button
-            onClick={props.problem ? postProblem : postConjecture}
+            onClick={problem ? postProblem : postConjecture}
             color="primary"
             disabled={!valid}
           >

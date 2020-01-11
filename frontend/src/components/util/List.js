@@ -134,15 +134,15 @@ function List({ firebase, tags, orderBy, problem }) {
 
   return (
     <div>
-      {items.map(item => {
-        return <ItemCard item={item} firebase={firebase} problem={problem} />;
-      })}
+      {items.map(item => (
+        <ItemCard item={item} problem={problem} />
+      ))}
       <BottomScrollListener onBottom={lazyLoad} />
     </div>
   );
 }
 
-function ItemCard({ item, firebase, problem }) {
+function ItemCard({ item, problem }) {
   const classes = useStyles();
 
   function title() {
