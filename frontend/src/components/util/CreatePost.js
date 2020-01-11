@@ -49,9 +49,9 @@ const CreatePost = forwardRef(({ firebase, problem, problemID }, ref) => {
         created: timestamp,
         lastModified: timestamp,
         creator: person,
-        likedBy: [],
+        votedBy: [],
         // points: 100,
-        likes: 0
+        votes: 0
       })
       .then(docRef => (problemRef = docRef))
       .then(() => {
@@ -83,7 +83,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemID }, ref) => {
         created: timestamp,
         lastModified: timestamp,
         creator: person,
-        likedBy: [],
+        votedBy: [],
         // points: 100,
         votes: 0
       })

@@ -41,14 +41,14 @@ export default function ItemInfo({ item }) {
         className={classes.inline}
         style={{ textDecoration: "none" }}
       >
-        {item.likes}
+        {item.votes}
       </Typography>
       <Typography
         variant="body2"
         className={classes.inline}
         style={{ textDecoration: "none" }}
       >
-        {" likes "}
+        {" votes "}
       </Typography>
       <Typography
         variant="body1"

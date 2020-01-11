@@ -147,7 +147,7 @@ function OrderByMenu(props) {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            props.setOrderBy("likes");
+            props.setOrderBy("votes");
             handleClose();
           }}
         >

@@ -23,12 +23,12 @@ import { Grid } from "@material-ui/core";
 
 function Actions({ item, firebase, problem }) {
   const alertRef = React.useRef();
-  const [likeIconColor, setlikeIconColor] = React.useState(getLikeValue());
+  const [voteIconColor, setvoteIconColor] = React.useState(getLikeValue());
 
   function getLikeValue() {
     if (
       firebase.currentPerson() &&
-      item.likedBy.includes(firebase.currentPerson().displayName)
+      item.votedBy.includes(firebase.currentPerson().displayName)
     ) {
       return "primary";
     } else {
@@ -36,15 +36,15 @@ function Actions({ item, firebase, problem }) {
     }
   }
 
-  function like() {
-    if (likeIconColor === "default") {
-      setlikeIconColor("primary");
-      // increment likes and add user to item likers
+  function vote() {
+    if (voteIconColor === "default") {
+      setvoteIconColor("primary");
+      // increment votes and add user to item voters
       firebase.problem(item.id).update({
-        likes: firebase.firestore.FieldValue.increment(1),
-        likedBy: firebase.arrayUnion(firebase.currentPerson().displayName)
+        votes: firebase.firestore.FieldValue.increment(1),
+        votedBy: firebase.arrayUnion(firebase.currentPerson().displayName)
       });
-      // add item to likedBy by user
+      // add item to votedBy by user
       firebase.person(firebase.currentPerson().displayName).update({
         problemsLiked: firebase.arrayUnion(
           firebase.db.doc(`problems/${item.id}`)
@@ -52,10 +52,10 @@ function Actions({ item, firebase, problem }) {
       });
     } else {
       // reverse
-      setlikeIconColor("default");
+      setvoteIconColor("default");
       firebase.problem(item.id).update({
-        likes: firebase.firestore.FieldValue.increment(-1),
-        likedBy: firebase.firestore.FieldValue.arrayRemove(
+        votes: firebase.firestore.FieldValue.increment(-1),
+        votedBy: firebase.firestore.FieldValue.arrayRemove(
           firebase.currentPerson().displayName
         )
       });
@@ -111,10 +111,10 @@ function Actions({ item, firebase, problem }) {
                     {/* <div> */}
                     <IconButton
                       edge="end"
-                      aria-label="like"
-                      color={likeIconColor}
+                      aria-label="vote"
+                      color={voteIconColor}
                       onClick={() =>
-                        authUser ? () => like() : alertRef.current.handleOpen()
+                        authUser ? () => vote() : alertRef.current.handleOpen()
                       }
                     >
                       <ThumbUpIcon />
@@ -122,7 +122,7 @@ function Actions({ item, firebase, problem }) {
                     {/* </div>
           <div>
             <Typography variant="subtitle1" color="textPrimary" align="center">
-              {item.likes}
+              {item.votes}
             </Typography>
           </div> */}
                   </Grid>
@@ -159,7 +159,7 @@ function ActionsSignedOut() {
         <Grid item>
           <IconButton
             edge="end"
-            aria-label="like"
+            aria-label="vote"
             color="default"
             onClick={e => alertRef.current.handleOpen()}
           >
@@ -179,12 +179,12 @@ function ActionsSignedOut() {
 }
 
 function ActionsLoggedIn({ item, firebase }) {
-  const [likeIconColor, setlikeIconColor] = React.useState(getLikeValue());
+  const [voteIconColor, setvoteIconColor] = React.useState(getLikeValue());
 
   function getLikeValue() {
     if (
       firebase.currentPerson() &&
-      item.likedBy.includes(firebase.currentPerson().displayName)
+      item.votedBy.includes(firebase.currentPerson().displayName)
     ) {
       return "primary";
     } else {
@@ -192,15 +192,15 @@ function ActionsLoggedIn({ item, firebase }) {
     }
   }
 
-  function like() {
-    if (likeIconColor === "default") {
-      setlikeIconColor("primary");
-      // increment likes and add user to item likers
+  function vote() {
+    if (voteIconColor === "default") {
+      setvoteIconColor("primary");
+      // increment votes and add user to item voters
       firebase.problem(item.id).update({
-        likes: firebase.firestore.FieldValue.increment(1),
-        likedBy: firebase.arrayUnion(firebase.currentPerson().displayName)
+        votes: firebase.firestore.FieldValue.increment(1),
+        votedBy: firebase.arrayUnion(firebase.currentPerson().displayName)
       });
-      // add item to likedBy by user
+      // add item to votedBy by user
       firebase.person(firebase.currentPerson().displayName).update({
         problemsLiked: firebase.arrayUnion(
           firebase.db.doc(`problems/${item.id}`)
@@ -208,10 +208,10 @@ function ActionsLoggedIn({ item, firebase }) {
       });
     } else {
       // reverse
-      setlikeIconColor("default");
+      setvoteIconColor("default");
       firebase.problem(item.id).update({
-        likes: firebase.firestore.FieldValue.increment(-1),
-        likedBy: firebase.firestore.FieldValue.arrayRemove(
+        votes: firebase.firestore.FieldValue.increment(-1),
+        votedBy: firebase.firestore.FieldValue.arrayRemove(
           firebase.currentPerson().displayName
         )
       });
@@ -243,16 +243,16 @@ function ActionsLoggedIn({ item, firebase }) {
         {/* <div> */}
         <IconButton
           edge="end"
-          aria-label="like"
-          color={likeIconColor}
-          onClick={() => like()}
+          aria-label="vote"
+          color={voteIconColor}
+          onClick={() => vote()}
         >
           <ThumbUpIcon />
         </IconButton>
         {/* </div>
           <div>
             <Typography variant="subtitle1" color="textPrimary" align="center">
-              {item.likes}
+              {item.votes}
             </Typography>
           </div> */}
       </Grid>
