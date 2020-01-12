@@ -30,12 +30,19 @@ function Quote() {
   const classes = useStyles();
   return (
     <div className={classes.quote}>
-      <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
+      {/* <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
         The way in which knowledge progresses is by tentative solutions to our
         problems, by conjectures
       </Typography>
       <Typography variant="subtitle1" align="center" color="textSecondary">
         Karl Popper
+      </Typography> */}
+      <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
+        Through creative conjecture and criticism we try to find and remove
+        errors and so progress, tentatively, from problems to better problems
+      </Typography>
+      <Typography variant="subtitle1" align="center" color="textSecondary">
+        David Deutsch
       </Typography>
     </div>
   );

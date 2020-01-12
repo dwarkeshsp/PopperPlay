@@ -95,7 +95,7 @@ export default function Navigation(props) {
   return (
     <div className={classes.root}>
       <HideOnScroll {...props}>
-        <AppBar color="theme.palette.background.paper">
+        <AppBar color="primary">
           <Toolbar>
             {/* <IconButton
               aria-label="home"
@@ -111,11 +111,11 @@ export default function Navigation(props) {
               className={classes.title}
               variant="h5"
               noWrap
-              color="textPrimary"
+              color="inherit"
             >
               PopperPlay
             </Typography>
-            <Header />
+            {/* <Header /> */}
             {/* <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />

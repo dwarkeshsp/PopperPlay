@@ -20,7 +20,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: "5.5rem"
+    marginTop: "1rem"
   },
 
   inline: {
@@ -115,7 +115,7 @@ function ProblemMetaData({ problem }) {
   return (
     <div>
       <Link to={"/problem/" + problem.id}>
-        <Typography variant="subtitle1" gutterBottom>
+        <Typography variant="subtitle1" color="textPrimary" gutterBottom>
           {problem.title}
         </Typography>
       </Link>

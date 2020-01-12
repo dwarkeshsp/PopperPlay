@@ -1,26 +1,28 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { withAuthentication } from "./session";
-import Home from "./Home";
-import AppBar from "./navigation/Navigation";
-import Conjectures from "./conjectures/Conjectures";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Conjecture from "./conjectures/Conjecture";
-import Problems from "./problems/Problems";
-import Problem from "./problems/Problem";
-import People from "./people/People";
-import Person from "./people/Person";
-import Tags from "./tags/Tags";
-import Tag from "./tags/Tag";
-import Philosophy from "./philosophy/Philosophy";
+import Conjectures from "./conjectures/Conjectures";
 import Feedback from "./feedback/Feedback";
+import Home from "./Home";
 import Login from "./login/Login";
 import Signup from "./login/Signup";
+import Header from "./navigation/Header";
+import AppBar from "./navigation/Navigation";
+import People from "./people/People";
+import Person from "./people/Person";
+import Philosophy from "./philosophy/Philosophy";
+import Problem from "./problems/Problem";
+import Problems from "./problems/Problems";
+import { withAuthentication } from "./session";
+import Tag from "./tags/Tag";
+import Tags from "./tags/Tags";
 
 function App() {
   return (
     <Router>
       <div>
         <AppBar />
+        <Header />
         <Switch>
           <Route exact path="/">
             <Home />

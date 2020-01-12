@@ -36,11 +36,17 @@ function Quote() {
   const classes = useStyles();
   return (
     <div className={classes.quote}>
-      <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
+      {/* <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
         All life is problem solving
       </Typography>
       <Typography variant="subtitle1" align="center" color="textSecondary">
         Karl Popper
+      </Typography> */}
+      <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
+        The raw material for creativity is problems
+      </Typography>
+      <Typography variant="subtitle1" align="center" color="textSecondary">
+        David Deutsch
       </Typography>
     </div>
   );
