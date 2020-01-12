@@ -137,7 +137,7 @@ class Firebase {
   //   this.db.collection(
   //     "problems/" + problemID + "/conjectures/" + conjectureID
   //   );
-  comments = path => this.db.collection(path);
+  collection = path => this.db.collection(path);
 
   // *** Query API ***
   query = (orderBy, LOADSIZE, problem) =>

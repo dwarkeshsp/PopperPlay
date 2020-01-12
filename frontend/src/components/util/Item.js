@@ -41,68 +41,71 @@ function Item({ item, problem, firebase }) {
   const alertRef = React.useRef();
 
   return (
-    <Container maxWidth="sm" className={classes.root}>
+    <React.Fragment>
       {item && (
         <div>
-          <Grid container>
-            <Grid item xs={11}>
-              <Typography variant="h6" gutterBottom>
-                {item.title}
-              </Typography>
-              <ItemInfo item={item} />
+          <Container maxWidth="md" className={classes.root}>
+            <Grid container>
+              <Grid item xs={11}>
+                <Typography variant="h6" gutterBottom>
+                  {item.title}
+                </Typography>
+                <ItemInfo item={item} />
+              </Grid>
+              <Grid item xs={1}>
+                <VoteButton item={item} problem={problem} />
+              </Grid>
             </Grid>
-            <Grid item xs={1}>
-              <VoteButton item={item} problem={problem} />
-            </Grid>
-          </Grid>
-          <Markdown className={classes.markdown}>{item.details}</Markdown>
-          <Grid container className={classes.createButton}>
-            {problem ? (
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<BuildIcon />}
-                onClick={() => alertRef.current.handleOpen()}
-              >
-                Solve
-              </Button>
-            ) : (
-              <CommentTextBox conjecture={item} />
-            )}
-          </Grid>
-          <AuthUserContext.Consumer>
-            {authUser =>
-              authUser ? (
-                <CreatePost
-                  ref={alertRef}
-                  firebase={firebase}
-                  problemItem={problem ? item : null}
-                  problem={!problem}
-                />
+            <Markdown className={classes.markdown}>{item.details}</Markdown>
+            <Grid container className={classes.createButton}>
+              {problem ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<BuildIcon />}
+                  onClick={() => alertRef.current.handleOpen()}
+                >
+                  Solve
+                </Button>
               ) : (
-                <Dialog
-                  ref={alertRef}
-                  title="Not logged in"
-                  message={"You must login in order to perform this action."}
-                  button="Okay"
-                />
-              )
-            }
-          </AuthUserContext.Consumer>
-          <Typography
-            variant="h6"
-            className={classes.childrenTitle}
-            variant="h5"
-            gutterBottom
-          >
-            {problem ? "Conjectures" : "Comments"}
-          </Typography>
-          {problem ? (
-            <ProblemConjecturesList problem={item} />
-          ) : (
-            // <CommentsList conjecture={item} />
-            <div />
-          )}
+                <CommentTextBox conjecture={item} />
+              )}
+            </Grid>
+            <AuthUserContext.Consumer>
+              {authUser =>
+                authUser ? (
+                  <CreatePost
+                    ref={alertRef}
+                    firebase={firebase}
+                    problemItem={problem ? item : null}
+                    problem={!problem}
+                  />
+                ) : (
+                  <Dialog
+                    ref={alertRef}
+                    title="Not logged in"
+                    message={"You must login in order to perform this action."}
+                    button="Okay"
+                  />
+                )
+              }
+            </AuthUserContext.Consumer>
+            <Typography
+              variant="h6"
+              className={classes.childrenTitle}
+              variant="h5"
+              gutterBottom
+            >
+              {problem ? "Conjectures" : "Comments"}
+            </Typography>
+          </Container>
+          <Container maxWidth="md">
+            {problem ? (
+              <ProblemConjecturesList problem={item} />
+            ) : (
+              <CommentsList conjecture={item} />
+            )}
+          </Container>
         </div>
       )}
       {!item && (
@@ -112,7 +115,7 @@ function Item({ item, problem, firebase }) {
           </Typography>
         </div>
       )}
-    </Container>
+    </React.Fragment>
   );
 }
 

@@ -72,14 +72,14 @@ function ProblemConjecturesList({ problem, firebase }) {
   return (
     <div>
       {conjectures.map(conjecture => (
-        <ConjectureCard conjecture={conjecture} problemID={problemID} />
+        <ConjectureCard conjecture={conjecture} />
       ))}
       <BottomScrollListener onBottom={lazyLoad} />
     </div>
   );
 }
 
-function ConjectureCard({ conjecture, problemID }) {
+function ConjectureCard({ conjecture }) {
   const classes = useStyles();
 
   function title() {
@@ -106,7 +106,7 @@ function ConjectureCard({ conjecture, problemID }) {
     <div>
       <Link
         to={{
-          pathname: "/conjecture/" + problemID + "/" + conjecture.id
+          pathname: "/conjecture/" + conjecture.problem.id + "/" + conjecture.id
           // state: { conjecture: conjecture }
         }}
         style={{ textDecoration: "none" }}

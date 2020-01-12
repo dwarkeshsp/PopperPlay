@@ -28,7 +28,7 @@ function CommentTextBox({ conjecture, firebase }) {
     const person = firebase.currentPerson().displayName;
     let commentRef;
     firebase
-      .comments(path)
+      .collection(path)
       .add({
         content: value,
         creator: person,

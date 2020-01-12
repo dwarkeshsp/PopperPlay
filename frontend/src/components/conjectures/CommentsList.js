@@ -32,17 +32,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function CommentsList({ problem, firebase }) {
-  const [conjectures, setConjectures] = React.useState([]);
-  const [lastConjecture, setLastConjecture] = React.useState(null);
-  const problemID = problem.id;
+function CommentsList({ conjecture, firebase }) {
+  const [comments, setComments] = React.useState([]);
+  const [lastComment, setLastComment] = React.useState(null);
 
   const LOADSIZE = 5;
   const orderBy = "votes";
 
   React.useEffect(() => {
+    const path =
+      "problems/" +
+      conjecture.problem.id +
+      "/conjectures/" +
+      conjecture.id +
+      "/comments";
     firebase
-      .problemConjectures(problemID)
+      .collection(path)
       .orderBy("votes", "desc")
       .limit(LOADSIZE)
       .get()
@@ -50,20 +55,20 @@ function CommentsList({ problem, firebase }) {
         const data = querySnapshot.docs.map(doc => doc.data());
         console.log(data);
         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-        setLastConjecture(querySnapshot.docs[querySnapshot.docs.length - 1]);
-        setConjectures(data);
+        setLastComment(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        setComments(data);
       });
   }, []);
 
   function lazyLoad() {
-    if (lastConjecture) {
+    if (lastComment) {
       firebase
-        .startAfterQuery(orderBy, LOADSIZE, lastConjecture)
+        .startAfterQuery(orderBy, LOADSIZE, lastComment)
         .then(querySnapshot => {
           const data = querySnapshot.docs.map(doc => doc.data());
           querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-          setLastConjecture(querySnapshot.docs[querySnapshot.docs.length - 1]);
-          setConjectures(conjectures.concat(data));
+          setLastComment(querySnapshot.docs[querySnapshot.docs.length - 1]);
+          setComments(comments.concat(data));
         })
         .catch(error => console.log(error));
     }
@@ -71,34 +76,35 @@ function CommentsList({ problem, firebase }) {
 
   return (
     <div>
-      {conjectures.map(conjecture => (
-        <ConjectureCard conjecture={conjecture} problemID={problemID} />
+      {comments.map(comment => (
+        <CommentCard comment={comment} />
       ))}
       <BottomScrollListener onBottom={lazyLoad} />
     </div>
   );
 }
 
-function ConjectureCard({ conjecture, problemID }) {
+function CommentCard({ comment }) {
   const classes = useStyles();
 
-  function details() {
+  function content() {
     const DETAILLENGTH = 400;
 
-    let details = conjecture.details.substr(0, DETAILLENGTH);
-    if (conjecture.details.substr(DETAILLENGTH)) {
-      details += "...";
+    let content = comment.content.substr(0, DETAILLENGTH);
+    if (comment.content.substr(DETAILLENGTH)) {
+      content += "...";
     }
-    return details;
+    return content;
   }
 
+  console.log(comment);
   return (
     <div>
       <Link
-        to={{
-          pathname: "/conjecture/" + problemID + "/" + conjecture.id
-          // state: { conjecture: conjecture }
-        }}
+        // to={{
+        //   pathname: "/comment/" + comment.id
+        //   // state: { comment: comment }
+        // }}
         style={{ textDecoration: "none" }}
       >
         <div>
@@ -106,12 +112,12 @@ function ConjectureCard({ conjecture, problemID }) {
             <Card className={classes.card}>
               <div className={classes.cardDetails}>
                 <CardContent>
-                  <ItemInfo item={conjecture} />
-                  <Markdown className={classes.markdown}>{details()}</Markdown>
+                  <ItemInfo item={comment} />
+                  <Markdown className={classes.markdown}>{content()}</Markdown>
                 </CardContent>
               </div>
               <CardActions disableSpacing>
-                <VoteButton item={conjecture} />
+                <VoteButton item={comment} comment />
               </CardActions>
             </Card>
           </CardActionArea>
