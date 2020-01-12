@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { withFirebase } from "../firebase";
 import Button from "@material-ui/core/Button";
+import { AuthUserContext } from "../session";
+import Dialog from "../util/AlertDialog";
 
 const useStyles = makeStyles(theme => ({
   textbox: {
@@ -16,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 function CommentTextBox({ conjecture, firebase }) {
   const classes = useStyles();
   const [value, setValue] = React.useState("");
+  const alertRef = React.useRef();
 
   function post() {
     const path =
@@ -36,8 +39,8 @@ function CommentTextBox({ conjecture, firebase }) {
         votes: 0,
         created: timestamp,
         lastModified: timestamp,
-        path: path,
-        tags: conjecture.tags
+        path: path
+        // tags: conjecture.tags
       })
       .then(docRef => (commentRef = docRef))
       .then(() => {
@@ -58,27 +61,37 @@ function CommentTextBox({ conjecture, firebase }) {
 
   return (
     <React.Fragment>
-      <TextField
-        className={classes.textbox}
-        id="comment-textbox"
-        label="Comment"
-        multiline
-        rowsMax="4"
-        //   variant="outlined"
-        value={value}
-        onChange={event => setValue(event.target.value)}
-      />
-      {/* {value && ( */}
-      <Button
-        className={classes.post}
-        variant="contained"
-        color="primary"
-        disabled={!value}
-        onClick={post}
-      >
-        Post
-      </Button>
-      {/* )} */}
+      <AuthUserContext.Consumer>
+        {authUser => (
+          <React.Fragment>
+            <TextField
+              className={classes.textbox}
+              id="comment-textbox"
+              label="Comment"
+              multiline
+              rowsMax="4"
+              //   variant="outlined"
+              value={value}
+              onChange={event => setValue(event.target.value)}
+            />
+            <Button
+              className={classes.post}
+              variant="contained"
+              color="primary"
+              disabled={!value}
+              onClick={authUser ? post : () => alertRef.current.handleOpen()}
+            >
+              Post
+            </Button>
+            <Dialog
+              ref={alertRef}
+              title="Not logged in"
+              message={"You must login in order to perform this action."}
+              button="Okay"
+            />
+          </React.Fragment>
+        )}
+      </AuthUserContext.Consumer>
     </React.Fragment>
   );
 }
