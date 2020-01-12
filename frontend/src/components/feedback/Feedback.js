@@ -30,7 +30,7 @@ export default function Types() {
           Potential features, bugs, layouts, website architeces: any and all of
           these are tremenoudly helpful
         </Typography>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           To give feedback, please create a problem using the tag "popperplay"
           or solve a problem with that tag.
         </Typography>
