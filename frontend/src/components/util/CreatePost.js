@@ -11,7 +11,7 @@ import TagsMenu from "../tags/TagsMenu";
 import Editor from "./Editor";
 const { forwardRef, useImperativeHandle } = React;
 
-const CreatePost = forwardRef(({ firebase, problem, problemID }, ref) => {
+const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [details, setDetails] = React.useState("");
@@ -71,12 +71,18 @@ const CreatePost = forwardRef(({ firebase, problem, problemID }, ref) => {
     const person = firebase.currentPerson().displayName;
     let problemRef;
     firebase
-      .problemConjectures(problemID)
+      .problemConjectures(problemItem.id)
       .add({
         title: title,
         details: details,
         tags: tags,
-        problem: firebase.db.doc(`problems/${problemID}`),
+        problem: firebase.db.doc(`problems/${problemItem.id}`),
+        // problemMeta: {
+        //   title: problemItem.title,
+        //   tags: problemItem.tags,
+        //   created: problemItem.created,
+        //   creator: problemItem.creator
+        // },
         created: timestamp,
         lastModified: timestamp,
         creator: person,

@@ -5,6 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import BottomScrollListener from "react-bottom-scroll-listener";
 import { Link } from "react-router-dom";
 import { withFirebase } from "../firebase";
 import ItemInfo from "../util/ItemInfo";
@@ -31,39 +32,54 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ProblemConjecturesList({ problemID, firebase }) {
+function ProblemConjecturesList({ problem, firebase }) {
   const [conjectures, setConjectures] = React.useState([]);
   const [lastConjecture, setLastConjecture] = React.useState(null);
+  const problemID = problem.id;
+
+  const LOADSIZE = 5;
+  const orderBy = "votes";
 
   React.useEffect(() => {
     firebase
       .problemConjectures(problemID)
       .orderBy("votes", "desc")
-      .limit(10)
+      .limit(LOADSIZE)
       .get()
       .then(querySnapshot => {
-        const conjectures = querySnapshot.docs.map(doc => doc.data());
-        querySnapshot.docs.map(
-          (doc, index) => (conjectures[index].id = doc.id)
-        );
+        const data = querySnapshot.docs.map(doc => doc.data());
+        console.log(data);
+        querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
         setLastConjecture(querySnapshot.docs[querySnapshot.docs.length - 1]);
-        setConjectures(conjectures);
-        console.log(conjectures);
+        setConjectures(data);
       });
   }, []);
 
-  function lazyLoad() {}
+  function lazyLoad() {
+    if (lastConjecture) {
+      firebase
+        .startAfterQuery(orderBy, LOADSIZE, lastConjecture)
+        .then(querySnapshot => {
+          const data = querySnapshot.docs.map(doc => doc.data());
+          querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
+          setLastConjecture(querySnapshot.docs[querySnapshot.docs.length - 1]);
+          setConjectures(conjectures.concat(data));
+        })
+        .catch(error => console.log(error));
+    }
+  }
 
   return (
     <div>
       {conjectures.map(conjecture => (
-        <ConjectureCard conjecture={conjecture} />
+        <ConjectureCard conjecture={conjecture} problemID={problemID} />
       ))}
+      <BottomScrollListener onBottom={lazyLoad} />
     </div>
   );
 }
 
-function ConjectureCard({ conjecture }) {
+function ConjectureCard({ conjecture, problemID }) {
   const classes = useStyles();
 
   function title() {
@@ -90,8 +106,8 @@ function ConjectureCard({ conjecture }) {
     <div>
       <Link
         to={{
-          pathname: "/conjecture/" + conjecture.id,
-          state: { conjecture: conjecture }
+          pathname: "/conjecture/" + problemID + "/" + conjecture.id
+          // state: { conjecture: conjecture }
         }}
         style={{ textDecoration: "none" }}
       >

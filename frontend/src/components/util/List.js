@@ -146,7 +146,7 @@ function ItemCard({ item, problem }) {
   }
 
   function details() {
-    const DETAILLENGTH = 400;
+    const DETAILLENGTH = 100;
 
     let details = item.details.substr(0, DETAILLENGTH);
     if (item.details.substr(DETAILLENGTH)) {
@@ -189,7 +189,7 @@ function ItemCard({ item, problem }) {
                   color="primary"
                   startIcon={<BuildIcon />}
                 >
-                  {problem ? "Solve" : "Criticize"}
+                  {problem ? "Solve" : "Improve"}
                 </Button>
                 <VoteButton item={item} problem={problem} />
               </CardActions>

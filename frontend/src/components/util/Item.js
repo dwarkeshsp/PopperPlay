@@ -35,9 +35,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Item({ item, problemID, problem, firebase }) {
+function Item({ item, problem, firebase }) {
   const classes = useStyles();
   const alertRef = React.useRef();
+
+  console.log(item);
 
   return (
     <Container maxWidth="sm" className={classes.root}>
@@ -71,8 +73,8 @@ function Item({ item, problemID, problem, firebase }) {
                 <CreatePost
                   ref={alertRef}
                   firebase={firebase}
-                  problemID={problemID}
-                  problem={problem}
+                  problemItem={problem ? item : null}
+                  problem={!problem}
                 />
               ) : (
                 <Dialog
@@ -93,9 +95,9 @@ function Item({ item, problemID, problem, firebase }) {
             {problem ? "Conjectures" : "Comments"}
           </Typography>
           {problem ? (
-            <ProblemConjecturesList problemID={problemID} />
+            <ProblemConjecturesList problem={item} />
           ) : (
-            <CommentsList />
+            <CommentsList conjecture={item} />
           )}
         </div>
       )}
