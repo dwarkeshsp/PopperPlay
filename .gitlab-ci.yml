@@ -2,11 +2,6 @@ image: devillex/docker-firebase
 stages:
   - deploy
 
-cache:                  
-  paths:                
-    - frontend/node_modules/     
-  key: "$CI_BUILD_REPO" 
-
 deploy-prod:
   stage: deploy
   only:
