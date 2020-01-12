@@ -1,27 +1,16 @@
-import React from "react";
-import { Link, useHistory } from "react-router-dom";
-import BottomScrollListener from "react-bottom-scroll-listener";
-import timeago from "epoch-timeago";
-import { AuthUserContext } from "../session";
-import { withFirebase } from "../firebase";
-import Dialog from "../util/AlertDialog";
-import TagsList from "../tags/TagsList";
-import VoteButton from "../util/VoteButton";
-import ItemInfo from "../util/ItemInfo";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import IconButton from "@material-ui/core/IconButton";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import ForumIcon from "@material-ui/icons/Forum";
-import BuildIcon from "@material-ui/icons/Build";
+import React from "react";
+import BottomScrollListener from "react-bottom-scroll-listener";
+import { Link } from "react-router-dom";
+import { withFirebase } from "../firebase";
+import ItemInfo from "../util/ItemInfo";
+import Markdown from "../util/Markdown";
+import VoteButton from "../util/VoteButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,8 +22,7 @@ const useStyles = makeStyles(theme => ({
     display: "inline"
   },
   markdown: {
-    ...theme.typography.caption,
-    padding: theme.spacing(3, 0)
+    ...theme.typography.body1
   },
   card: {
     display: "flex"
@@ -44,50 +32,55 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function CommentsList({ problemID, conjectureID, firebase }) {
+function CommentsList({ problem, firebase }) {
   const [conjectures, setConjectures] = React.useState([]);
   const [lastConjecture, setLastConjecture] = React.useState(null);
+  const problemID = problem.id;
+
+  const LOADSIZE = 5;
+  const orderBy = "votes";
 
   React.useEffect(() => {
     firebase
       .problemConjectures(problemID)
       .orderBy("votes", "desc")
-      .limit(10)
+      .limit(LOADSIZE)
       .get()
       .then(querySnapshot => {
-        const conjectures = querySnapshot.docs.map(doc => doc.data());
-        querySnapshot.docs.map(
-          (doc, index) => (conjectures[index].id = doc.id)
-        );
+        const data = querySnapshot.docs.map(doc => doc.data());
+        console.log(data);
+        querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
         setLastConjecture(querySnapshot.docs[querySnapshot.docs.length - 1]);
-        setConjectures(conjectures);
-        console.log(conjectures);
+        setConjectures(data);
       });
   }, []);
 
-  function lazyLoad() {}
+  function lazyLoad() {
+    if (lastConjecture) {
+      firebase
+        .startAfterQuery(orderBy, LOADSIZE, lastConjecture)
+        .then(querySnapshot => {
+          const data = querySnapshot.docs.map(doc => doc.data());
+          querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
+          setLastConjecture(querySnapshot.docs[querySnapshot.docs.length - 1]);
+          setConjectures(conjectures.concat(data));
+        })
+        .catch(error => console.log(error));
+    }
+  }
 
   return (
     <div>
       {conjectures.map(conjecture => (
-        <ConjectureCard conjecture={conjecture} />
+        <ConjectureCard conjecture={conjecture} problemID={problemID} />
       ))}
+      <BottomScrollListener onBottom={lazyLoad} />
     </div>
   );
 }
 
-function ConjectureCard({ conjecture }) {
+function ConjectureCard({ conjecture, problemID }) {
   const classes = useStyles();
-
-  function title() {
-    const TITLELENGTH = 250;
-
-    let title = conjecture.title.substr(0, TITLELENGTH);
-    if (conjecture.title.substr(TITLELENGTH)) {
-      title += "...";
-    }
-    return title;
-  }
 
   function details() {
     const DETAILLENGTH = 400;
@@ -103,8 +96,8 @@ function ConjectureCard({ conjecture }) {
     <div>
       <Link
         to={{
-          pathname: "/conjecture/" + conjecture.id,
-          state: { conjecture: conjecture }
+          pathname: "/conjecture/" + problemID + "/" + conjecture.id
+          // state: { conjecture: conjecture }
         }}
         style={{ textDecoration: "none" }}
       >
@@ -113,9 +106,8 @@ function ConjectureCard({ conjecture }) {
             <Card className={classes.card}>
               <div className={classes.cardDetails}>
                 <CardContent>
-                  <Typography component="h2" variant="h6">
-                    {title()}
-                  </Typography>
+                  <ItemInfo item={conjecture} />
+                  <Markdown className={classes.markdown}>{details()}</Markdown>
                 </CardContent>
               </div>
               <CardActions disableSpacing>

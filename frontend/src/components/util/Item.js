@@ -14,6 +14,7 @@ import CreatePost from "./CreatePost";
 import ItemInfo from "./ItemInfo";
 import Markdown from "./Markdown";
 import VoteButton from "./VoteButton";
+import CommentTextBox from "../conjectures/CommentTextBox";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,8 +40,6 @@ function Item({ item, problem, firebase }) {
   const classes = useStyles();
   const alertRef = React.useRef();
 
-  console.log(item);
-
   return (
     <Container maxWidth="sm" className={classes.root}>
       {item && (
@@ -58,14 +57,18 @@ function Item({ item, problem, firebase }) {
           </Grid>
           <Markdown className={classes.markdown}>{item.details}</Markdown>
           <Grid container className={classes.createButton}>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<BuildIcon />}
-              onClick={() => alertRef.current.handleOpen()}
-            >
-              {problem ? "Solve" : "Comment"}
-            </Button>
+            {problem ? (
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<BuildIcon />}
+                onClick={() => alertRef.current.handleOpen()}
+              >
+                Solve
+              </Button>
+            ) : (
+              <CommentTextBox conjecture={item} />
+            )}
           </Grid>
           <AuthUserContext.Consumer>
             {authUser =>
@@ -97,7 +100,8 @@ function Item({ item, problem, firebase }) {
           {problem ? (
             <ProblemConjecturesList problem={item} />
           ) : (
-            <CommentsList conjecture={item} />
+            // <CommentsList conjecture={item} />
+            <div />
           )}
         </div>
       )}

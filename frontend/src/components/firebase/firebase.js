@@ -123,6 +123,22 @@ class Firebase {
       .limit(LOADSIZE)
       .get();
 
+  // *** Comments API ***
+  comment = (problemID, conjectureID, commentID) =>
+    this.db.doc(
+      "problems/" +
+        problemID +
+        "/conjectures/" +
+        conjectureID +
+        "/comments/" +
+        commentID
+    );
+  // comments = (problemID, conjectureID) =>
+  //   this.db.collection(
+  //     "problems/" + problemID + "/conjectures/" + conjectureID
+  //   );
+  comments = path => this.db.collection(path);
+
   // *** Query API ***
   query = (orderBy, LOADSIZE, problem) =>
     problem

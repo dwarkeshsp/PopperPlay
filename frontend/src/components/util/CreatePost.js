@@ -62,14 +62,14 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
           problems: firebase.arrayUnion(problemRef)
         });
       })
-      .catch(error => console.log("Error: ", error));
+      .catch(error => console.log(error));
     handleClose();
   }
 
   function postConjecture() {
     const timestamp = firebase.timestamp();
     const person = firebase.currentPerson().displayName;
-    let problemRef;
+    let conjectureRef;
     firebase
       .problemConjectures(problemItem.id)
       .add({
@@ -90,20 +90,20 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
         // points: 100,
         votes: 0
       })
-      .then(docRef => (problemRef = docRef))
+      .then(docRef => (conjectureRef = docRef))
       .then(() => {
         tags.forEach(tag => {
           const tagRef = firebase.tag(tag);
           tagRef.set({}, { merge: true });
           tagRef.update({
-            conjectures: firebase.arrayUnion(problemRef)
+            conjectures: firebase.arrayUnion(conjectureRef)
           });
         });
         firebase.person(person).update({
-          conjectures: firebase.arrayUnion(problemRef)
+          conjectures: firebase.arrayUnion(conjectureRef)
         });
       })
-      .catch(error => console.log("Error: ", error));
+      .catch(error => console.log(error));
     handleClose();
   }
 
