@@ -45,8 +45,6 @@ function Item({ item, problem, problemItem, firebase }) {
   const classes = useStyles();
   const alertRef = React.useRef();
 
-  console.log(problemItem);
-
   return (
     <Container maxWidth="sm" className={classes.root}>
       {item && (
