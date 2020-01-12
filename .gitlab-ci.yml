@@ -1,6 +1,11 @@
-image: devillex/docker-firebase
+image: node:latest
+
 stages:
   - deploy
+
+cache:
+  paths:
+    - frontend/node_modules/
 
 deploy-prod:
   stage: deploy
@@ -8,7 +13,8 @@ deploy-prod:
     - master
   script:
     - cd frontend/
+    - npm install -g firebase-tools
     - npm install
     - npm run-script build
-    - firebase use popper-play --token $FIREBASE_TOKEN
+    - firebase use --token $FIREBASE_TOKEN production
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
