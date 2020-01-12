@@ -3,10 +3,6 @@ image: node:latest
 stages:
   - deploy
 
-cache:
-  paths:
-    - frontend/node_modules/
-
 deploy-prod:
   stage: deploy
   only:
