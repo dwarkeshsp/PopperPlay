@@ -2,6 +2,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import BuildIcon from "@material-ui/icons/Build";
 import React from "react";
@@ -15,6 +16,7 @@ import ItemInfo from "./ItemInfo";
 import Markdown from "./Markdown";
 import VoteButton from "./VoteButton";
 import CommentTextBox from "../conjectures/CommentTextBox";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,89 +35,109 @@ const useStyles = makeStyles(theme => ({
   },
   childrenTitle: {
     marginTop: "2rem"
+  },
+  indent: {
+    marginRight: "1rem"
   }
 }));
 
-function Item({ item, problem, firebase }) {
+function Item({ item, problem, problemItem, firebase }) {
   const classes = useStyles();
   const alertRef = React.useRef();
 
+  console.log(problemItem);
+
   return (
-    <React.Fragment>
+    <Container maxWidth="sm" className={classes.root}>
       {item && (
         <div>
-          <Container maxWidth="md" className={classes.root}>
-            <Grid container>
-              <Grid item xs={11}>
-                <Typography variant="h6" gutterBottom>
-                  {item.title}
-                </Typography>
-                <ItemInfo item={item} />
-              </Grid>
-              <Grid item xs={1}>
-                <VoteButton item={item} problem={problem} />
-              </Grid>
-            </Grid>
-            <Markdown className={classes.markdown}>{item.details}</Markdown>
-            <Grid container className={classes.createButton}>
-              {problem ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<BuildIcon />}
-                  onClick={() => alertRef.current.handleOpen()}
-                >
-                  Solve
-                </Button>
-              ) : (
-                <CommentTextBox conjecture={item} />
-              )}
-            </Grid>
-            <AuthUserContext.Consumer>
-              {authUser =>
-                authUser ? (
-                  <CreatePost
-                    ref={alertRef}
-                    firebase={firebase}
-                    problemItem={problem ? item : null}
-                    problem={!problem}
-                  />
-                ) : (
-                  <Dialog
-                    ref={alertRef}
-                    title="Not logged in"
-                    message={"You must login in order to perform this action."}
-                    button="Okay"
-                  />
-                )
-              }
-            </AuthUserContext.Consumer>
-            <Typography
-              variant="h6"
-              className={classes.childrenTitle}
-              variant="h5"
-              gutterBottom
-            >
-              {problem ? "Conjectures" : "Comments"}
-            </Typography>
-          </Container>
-          <Container maxWidth="md">
+          {!problem && problemItem && <ProblemMetaData problem={problemItem} />}
+          <Header item={item} problem={problem} />
+          <Markdown className={classes.markdown}>{item.details}</Markdown>
+          <Grid container className={classes.createButton}>
             {problem ? (
-              <ProblemConjecturesList problem={item} />
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<BuildIcon />}
+                onClick={() => alertRef.current.handleOpen()}
+              >
+                Solve
+              </Button>
             ) : (
-              <CommentsList conjecture={item} />
+              <CommentTextBox conjecture={item} />
             )}
-          </Container>
+          </Grid>
+          <AuthUserContext.Consumer>
+            {authUser =>
+              authUser ? (
+                <CreatePost
+                  ref={alertRef}
+                  firebase={firebase}
+                  problemItem={problem ? item : null}
+                  problem={!problem}
+                />
+              ) : (
+                <Dialog
+                  ref={alertRef}
+                  title="Not logged in"
+                  message={"You must login in order to perform this action."}
+                  button="Okay"
+                />
+              )
+            }
+          </AuthUserContext.Consumer>
+          <Typography
+            variant="h6"
+            className={classes.childrenTitle}
+            variant="h5"
+            gutterBottom
+          >
+            {problem ? "Conjectures" : "Comments"}
+          </Typography>
+          {problem ? (
+            <ProblemConjecturesList problem={item} />
+          ) : (
+            <CommentsList conjecture={item} />
+          )}
         </div>
       )}
       {!item && (
-        <div>
-          <Typography align="center" variant="h5">
-            Item not found
-          </Typography>
-        </div>
+        <Grid container justify="center">
+          <CircularProgress />
+        </Grid>
       )}
-    </React.Fragment>
+    </Container>
+  );
+}
+
+function ProblemMetaData({ problem }) {
+  return (
+    <div>
+      <Link to={"/problem/" + problem.id}>
+        <Typography variant="subtitle1" gutterBottom>
+          {problem.title}
+        </Typography>
+      </Link>
+      {/* <ItemInfo item={problem} /> */}
+    </div>
+  );
+}
+
+function Header({ item, problem }) {
+  const classes = useStyles();
+  return (
+    <Grid container>
+      <Grid item xs={11}>
+        <Typography variant="h6" gutterBottom>
+          {item.title}
+        </Typography>
+        <ItemInfo item={item} />
+      </Grid>
+      <Grid item xs={1}>
+        <VoteButton item={item} problem={problem} />
+      </Grid>
+    </Grid>
   );
 }
 

@@ -37,7 +37,7 @@ function CommentsList({ conjecture, firebase }) {
   const [lastComment, setLastComment] = React.useState(null);
 
   const LOADSIZE = 5;
-  const orderBy = "votes";
+  const orderBy = "created";
 
   React.useEffect(() => {
     const path =
@@ -48,12 +48,11 @@ function CommentsList({ conjecture, firebase }) {
       "/comments";
     firebase
       .collection(path)
-      .orderBy("votes", "desc")
+      .orderBy(orderBy, "desc")
       .limit(LOADSIZE)
       .get()
       .then(querySnapshot => {
         const data = querySnapshot.docs.map(doc => doc.data());
-        console.log(data);
         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
         setLastComment(querySnapshot.docs[querySnapshot.docs.length - 1]);
         setComments(data);
@@ -97,7 +96,6 @@ function CommentCard({ comment }) {
     return content;
   }
 
-  console.log(comment);
   return (
     <div>
       <Link
@@ -117,7 +115,7 @@ function CommentCard({ comment }) {
                 </CardContent>
               </div>
               <CardActions disableSpacing>
-                <VoteButton item={comment} comment />
+                {/* <VoteButton item={comment} comment /> */}
               </CardActions>
             </Card>
           </CardActionArea>
