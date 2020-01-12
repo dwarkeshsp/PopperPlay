@@ -5,7 +5,7 @@ stages:
 
 cache:                  
   paths:                
-    - node_modules/     
+    - frontend/node_modules/     
   key: "$CI_BUILD_REPO" 
 
 deploy-prod:
@@ -13,6 +13,7 @@ deploy-prod:
   only:
     - master
   script:
+    - cd frontend/
     - npm run-script build
     - firebase use popper-play --token $FIREBASE_TOKEN
     - firebase deploy --only hosting -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --token $FIREBASE_TOKEN
