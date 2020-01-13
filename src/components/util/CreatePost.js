@@ -48,7 +48,6 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
         lastModified: timestamp,
         creator: person,
         votedBy: [],
-        // points: 100,
         votes: 0
       })
       .then(docRef => (problemRef = docRef))
@@ -89,17 +88,10 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
           details: details,
           tags: tags,
           problem: firebase.db.doc(`problems/${problemID}`),
-          // problemMeta: {
-          //   title: problemItem.title,
-          //   tags: problemItem.tags,
-          //   created: problemItem.created,
-          //   creator: problemItem.creator
-          // },
           created: timestamp,
           lastModified: timestamp,
           creator: person,
           votedBy: [],
-          // points: 100,
           votes: 0
         })
         .then(docRef => (conjectureRef = docRef))
@@ -131,7 +123,6 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
           lastModified: timestamp,
           creator: person,
           votedBy: [],
-          // points: 100,
           votes: 0
         })
         .then(docRef => (problemRef = docRef))
@@ -154,76 +145,74 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
   }
 
   return (
-    <div>
-      <Dialog
-        open={open}
-        // onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">
-          {problem ? "A New Problem!" : "A New Conjecture"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {problem
-              ? "You have discovered where existing conjectures are inadequate! Bravo!"
-              : "You are solving a problem by making a creative conjecture. Bravo!"}
-          </DialogContentText>
+    <Dialog
+      open={open}
+      // onClose={handleClose}
+      aria-labelledby="create-title"
+    >
+      <DialogTitle id="create-title">
+        {problem ? "A New Problem!" : "A New Conjecture"}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          {problem
+            ? "You have discovered where existing conjectures are inadequate! Bravo!"
+            : "You are solving a problem by making a creative conjecture. Bravo!"}
+        </DialogContentText>
 
-          {!problem && !problemItem && (
-            <React.Fragment>
-              <DialogContentText>
-                To solve an already posted problem, please find it on the
-                problems page
-              </DialogContentText>
-              <TextField
-                required
-                autoFocus
-                multiline
-                margin="dense"
-                id="title"
-                label="Problem"
-                fullWidth
-                onChange={event => setParentProblemTitle(event.target.value)}
-              />
-            </React.Fragment>
-          )}
-          <TextField
-            required
-            autoFocus
-            multiline
-            margin="dense"
-            id="title"
-            label={problem ? "Problem" : "Conjecture"}
-            fullWidth
-            onChange={event => setTitle(event.target.value)}
-          />
-          <TagsMenu setValue={setTags} variant="outlined" />
-          <Typography variant="caption">
-            {tags.length} {tags.length === 1 ? "tag" : "tags"}
-          </Typography>
-          <a
-            href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
-            target="_blank"
-          >
-            <Typography variant="body2">Markdown is supported below</Typography>
-          </a>
-          <Editor text={details} setText={setDetails} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button
-            onClick={problem ? postProblem : postConjecture}
-            color="primary"
-            disabled={!valid}
-          >
-            Post
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+        {!problem && !problemItem && (
+          <React.Fragment>
+            <DialogContentText>
+              To solve an already posted problem, please find it on the problems
+              page
+            </DialogContentText>
+            <TextField
+              required
+              autoFocus
+              multiline
+              margin="dense"
+              id="title"
+              label="Problem"
+              fullWidth
+              onChange={event => setParentProblemTitle(event.target.value)}
+            />
+          </React.Fragment>
+        )}
+        <TextField
+          required
+          autoFocus
+          multiline
+          margin="dense"
+          id="title"
+          label={problem ? "Problem" : "Conjecture"}
+          fullWidth
+          onChange={event => setTitle(event.target.value)}
+        />
+        <TagsMenu setValue={setTags} variant="outlined" />
+        <Typography variant="caption">
+          {tags.length} {tags.length === 1 ? "tag" : "tags"}
+        </Typography>
+        <a
+          href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
+          target="_blank"
+        >
+          <Typography variant="body2">Markdown is supported below</Typography>
+        </a>
+        <Editor text={details} setText={setDetails} />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Cancel
+        </Button>
+        <Button
+          onClick={problem ? postProblem : postConjecture}
+          color="primary"
+          disabled={!valid}
+        >
+          Post
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 });
 
