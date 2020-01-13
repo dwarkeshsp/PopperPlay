@@ -18,7 +18,7 @@ Ads and paywalls are bad solutions to the problem of monetization. I think it's 
 
 Advertisements are perhaps even worse. They create an incentive to optimize for click-bait and distraction, and they destroy the user experience (who, after all, hasn't cringed when an article they were reading was replaced with popups and banners)
 
-But as PopperPlay grows, I will need money and to pay for servers and to support the time I am spending in building features and improving the site. I need your ideas about [how I should monetize](https://popperplay.com/problem/Ri7rf6GspvuCuuVL1274).
+But as PopperPlay grows, I will need money and to pay for servers and to support the time I am spending in building features and improving the site. I need your ideas about [how I should monetize](https://popperplay.com/#/problem/Ri7rf6GspvuCuuVL1274).
 
 ## Peer to Peer Donations
 
@@ -46,7 +46,7 @@ Instead of seeking higher authorities of knowledge, we can build a platform whic
 
 ## Error Correction
 
-PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. These errors will be found in the layout and structure of the website, in missing features, in the algorithms for featuring problems and conjectures (once I build them), and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjectures solutions upon. That is why PopperPlay is completely open source. I desperately need your [feedback](https://popperplay.com/feedback) in order to make this website a more fun and open forum for the creation of new ideas and correction of errors.
+PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. These errors will be found in the layout and structure of the website, in missing features, in the algorithms for featuring problems and conjectures (once I build them), and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjectures solutions upon. That is why PopperPlay is completely open source. I desperately need your [feedback](https://popperplay.com/#/feedback) in order to make this website a more fun and open forum for the creation of new ideas and correction of errors.
 
 [^1]: I realize the irony of using a source to make this point. I'm not appealing to authority, only to clear writing I see no point in replicating.
 [^2]: From this are derived further bad questions like, "How do we ensure that our journalistic and academic classes are responsible and informed?", "Who should be allowed to participate in the process of sense making?", and "How should the gatekeepers be educated?"
