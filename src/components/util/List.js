@@ -46,7 +46,7 @@ function List({ firebase, tags, orderBy, problem }) {
   const [lastDoc, setLastDoc] = React.useState(null);
   const [filtering, setFiltering] = React.useState(false);
 
-  const LOADSIZE = 15;
+  const LOADSIZE = 10;
 
   const updateData = querySnapshot => {
     const data = querySnapshot.docs.map(doc => doc.data());
