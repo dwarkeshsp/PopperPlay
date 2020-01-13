@@ -13,6 +13,8 @@ import { withFirebase } from "../firebase";
 import Markdown from "../util/Markdown";
 import ItemInfo from "./ItemInfo";
 import VoteButton from "./VoteButton";
+import Grid from "@material-ui/core/Grid";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,31 +33,20 @@ const useStyles = makeStyles(theme => ({
   },
   cardDetails: {
     flex: 1
+  },
+  loading: {
+    marginTop: "0.5rem"
   }
 }));
 
 function List({ firebase, tags, orderBy, problem }) {
+  const classes = useStyles();
+
   const [items, setItems] = React.useState([]);
   const [lastDoc, setLastDoc] = React.useState(null);
   const [filtering, setFiltering] = React.useState(false);
 
-  const LOADSIZE = 10;
-
-  // React.useEffect(() => {
-  //   firebase
-  //     .problems()
-  //     .orderBy(orderBy, "desc")
-  //     .limit(LOADSIZE)
-  //     .get()
-  //     .then(querySnapshot => {
-  //       console.log("mounted");
-  //       const data = querySnapshot.docs.map(doc => doc.data());
-  //       setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-  //       querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-  //       setProblems(data);
-  //     })
-  //     .catch(error => console.log(error));
-  // }, []);
+  const LOADSIZE = 15;
 
   const updateData = querySnapshot => {
     const data = querySnapshot.docs.map(doc => doc.data());
@@ -120,6 +111,7 @@ function List({ firebase, tags, orderBy, problem }) {
           const data = updateData(querySnapshot);
           setItems(items.concat(data));
         })
+
         .catch(error => console.log(error));
     }
   }
@@ -130,6 +122,9 @@ function List({ firebase, tags, orderBy, problem }) {
         <ItemCard item={item} problem={problem} />
       ))}
       <BottomScrollListener onBottom={lazyLoad} />
+      <Grid container justify="center" className={classes.loading}>
+        <CircularProgress />
+      </Grid>
     </div>
   );
 }
@@ -144,16 +139,18 @@ function ItemCard({ item, problem }) {
     if (item.title.substr(TITLELENGTH)) {
       title += "...";
     }
+    title = title.replace(/(\r\n|\n|\r)/gm, "");
     return title;
   }
 
   function details() {
-    const DETAILLENGTH = 100;
+    const DETAILLENGTH = 400;
 
     let details = item.details.substr(0, DETAILLENGTH);
     if (item.details.substr(DETAILLENGTH)) {
       details += "...";
     }
+    details = details.replace(/(\r\n|\n|\r)/gm, "");
     return details;
   }
 

@@ -134,7 +134,6 @@ function SignUpBase(props) {
   return (
     <div>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <div className={classes.paper}>
           {/* buffer */}
           <h1> </h1>

@@ -8,7 +8,6 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import TagsMenu from "../tags/TagsMenu";
-import Editor from "./Editor";
 const { forwardRef, useImperativeHandle } = React;
 
 const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
@@ -168,7 +167,6 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
             </DialogContentText>
             <TextField
               required
-              autoFocus
               multiline
               margin="dense"
               id="title"
@@ -192,13 +190,21 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
         <Typography variant="caption">
           {tags.length} {tags.length === 1 ? "tag" : "tags"}
         </Typography>
-        <a
+        {/* <a
           href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
           target="_blank"
         >
           <Typography variant="body2">Markdown is supported below</Typography>
-        </a>
-        <Editor text={details} setText={setDetails} />
+        </a> */}
+        <TextField
+          id="details"
+          label="More"
+          placeholder="More"
+          fullWidth
+          multiline
+          rows="5"
+          onChange={event => setDetails(event.target.value)}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
