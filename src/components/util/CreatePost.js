@@ -17,6 +17,8 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
   const [details, setDetails] = React.useState("");
   const [valid, setValid] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  // only for conjectures
+  const [parentProblemTitle, setParentProblemTitle] = React.useState("");
 
   React.useEffect(() => {
     setValid(title !== "");
@@ -69,41 +71,85 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
   function postConjecture() {
     const timestamp = firebase.timestamp();
     const person = firebase.currentPerson().displayName;
-    let conjectureRef;
-    firebase
-      .problemConjectures(problemItem.id)
-      .add({
-        title: title,
-        details: details,
-        tags: tags,
-        problem: firebase.db.doc(`problems/${problemItem.id}`),
-        // problemMeta: {
-        //   title: problemItem.title,
-        //   tags: problemItem.tags,
-        //   created: problemItem.created,
-        //   creator: problemItem.creator
-        // },
-        created: timestamp,
-        lastModified: timestamp,
-        creator: person,
-        votedBy: [],
-        // points: 100,
-        votes: 0
-      })
-      .then(docRef => (conjectureRef = docRef))
-      .then(() => {
-        tags.forEach(tag => {
-          const tagRef = firebase.tag(tag);
-          tagRef.set({}, { merge: true });
-          tagRef.update({
+    if (!problemItem) {
+      postParentProblem()
+        .then(problemRef => post(problemRef.id))
+        .catch(error => console.log(error));
+    } else {
+      post(problemItem.id);
+    }
+
+    // post conjecture inside the problem
+    function post(problemID) {
+      let conjectureRef;
+      firebase
+        .problemConjectures(problemID)
+        .add({
+          title: title,
+          details: details,
+          tags: tags,
+          problem: firebase.db.doc(`problems/${problemID}`),
+          // problemMeta: {
+          //   title: problemItem.title,
+          //   tags: problemItem.tags,
+          //   created: problemItem.created,
+          //   creator: problemItem.creator
+          // },
+          created: timestamp,
+          lastModified: timestamp,
+          creator: person,
+          votedBy: [],
+          // points: 100,
+          votes: 0
+        })
+        .then(docRef => (conjectureRef = docRef))
+        .then(() => {
+          tags.forEach(tag => {
+            const tagRef = firebase.tag(tag);
+            tagRef.set({}, { merge: true });
+            tagRef.update({
+              conjectures: firebase.arrayUnion(conjectureRef)
+            });
+          });
+          firebase.person(person).update({
             conjectures: firebase.arrayUnion(conjectureRef)
           });
-        });
-        firebase.person(person).update({
-          conjectures: firebase.arrayUnion(conjectureRef)
-        });
-      })
-      .catch(error => console.log(error));
+        })
+        .catch(error => console.log(error));
+    }
+
+    // post parent problem
+    function postParentProblem() {
+      let problemRef;
+      return firebase
+        .problems()
+        .add({
+          title: parentProblemTitle,
+          tags: tags,
+          details: "",
+          created: timestamp,
+          lastModified: timestamp,
+          creator: person,
+          votedBy: [],
+          // points: 100,
+          votes: 0
+        })
+        .then(docRef => (problemRef = docRef))
+        .then(() => {
+          tags.forEach(tag => {
+            const tagRef = firebase.tag(tag);
+            tagRef.set({}, { merge: true });
+            tagRef.update({
+              problems: firebase.arrayUnion(problemRef)
+            });
+          });
+          firebase.person(person).update({
+            problems: firebase.arrayUnion(problemRef)
+          });
+          return problemRef;
+        })
+        .catch(error => console.log(error));
+    }
     handleClose();
   }
 
@@ -124,6 +170,24 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
               : "You are solving a problem by making a creative conjecture. Bravo!"}
           </DialogContentText>
 
+          {!problem && !problemItem && (
+            <React.Fragment>
+              <DialogContentText>
+                To solve an already posted problem, please find it on the
+                problems page
+              </DialogContentText>
+              <TextField
+                required
+                autoFocus
+                multiline
+                margin="dense"
+                id="title"
+                label="Problem"
+                fullWidth
+                onChange={event => setParentProblemTitle(event.target.value)}
+              />
+            </React.Fragment>
+          )}
           <TextField
             required
             autoFocus
