@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     marginTop: "1rem"
   },
-
   inline: {
     display: "inline"
   },

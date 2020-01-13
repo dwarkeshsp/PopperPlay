@@ -16,7 +16,8 @@ const options = {
       component: Typography,
       props: {
         gutterBottom: true,
-        variant: "h5"
+        variant: "h5",
+        align: "center"
       }
     },
     h2: { component: Typography, props: { gutterBottom: true, variant: "h6" } },
