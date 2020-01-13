@@ -1,59 +1,53 @@
-Many of following ideas are inspired by the work of David Deutsch, Karl Popper, and Lulie Tannet. They are given full credit and gratitude.
+_Many of following ideas are inspired by David Deutsch, Karl Popper, Lulie Tannet, and Mason Hartman. They are given full credit and gratitude._
 
-> discovery: first a problem, then conjecture, then criticism, then new problem.
+**January 2020 (revised continually)**
 
-> David Deutsch
+#### 👋 Hi! I'm Dwarkesh. I'm trying to make a platform that helps people solve problems and create new ideas.
 
-# Popper's Criterion
+## Problem Solving
 
-News, academia, and social media are in crisis. They are turning dogmatic, dishonest, and tribal. The source of this trouble is that we have been using the wrong criterion for institutions which help create knowledge. The prevailing approach focuses on sources, asking, "Who should we trust?" ~~From this are derived further questions like "How do we ensure that our journalistic and academic classes are responsible and informed?", "Who should be allowed to participate in the process of sense making?", and "How should the gatekeepers be educated?"~~
+I had a problem. I wanted to find and solve interesting problems, but there was no fun and easy way to do this.
 
-The question, "Who should we trust?", is based on the same mistakes as the prevailing question in political philosophy , "Who should rule?". The philosopher Karl Popper pointed out that that since all rulers are fallible, and since they will all make mistakes and pursue bad policies, we will never find the perfect ruler who, once appointed, will dissolve problems once and for all. Similarly, there is no source of information which will always give us the unmolested truth - free from error and bias. If we believe that such a source exists, and that we have found it, then we become prone to believe incredulous claims which could not survive open criticism. Furthermore, there is no rational way to resolve disputes between sources claiming to justify their own credibility. Instead, disagreements must be settled by fallacious appeals to authority.
+As a college student, I realized that not only was I was I not solving problems, I wasn't even learning how to solve problems. Instead, I was learning how to pretend like I was solving an interesting problem creatively while being neither creative nor interested.
 
-But open-ended knowledge creation is not possible in this way, for when we ask, "Who should we trust?", we are expecting explanationless progress. We try to predict future success from raw data like the qualifications and track record of news organizations and academic journals. But without providing an explanation for why
+How much fun it would be to identify where existing explanations were inadequate and create new ones! This is what education should be, I thought: not the dull replication of recieved dogma but the fun and open creation of new ideas. This is what life is. Problems arise when ideas are in conflict with each other, and as Karl Popper stated, "All life is problem solving." How much progress we could make if problem solving was freed from the gatekeeping, bureaucracy, and inertia that currently impinges on it!
 
-So, the criterion which Karl Popper created to judge political insitutions is equally applicable to institutions of knowledge creation: How can we detect and eliminate errors while encouraging the creation of new ideas, and how can we do this using reason and persuasion instead of coercion and pressure?
+## No Ads or Paywalls
 
-There is a crisis in our sense making institutions - news, academia, and social media are turning dogmatic, dishonest, and tribal. Much of this trouble originates from a mistake in the philosophy of sense making. The prevailing approach towards these institutions is based on answering the question, "Who Should We Trust." From this are derived further questions like "How do we ensure that our journalistic and academic classes are responsible and informed?", "Who should be allowed to participate in the process of sense making?", and "How should the gatekeepers be educated?"
+Ads and paywalls are bad solutions to the problem of monetization. I think it's wrong to make people pay to receive or create knowledge. As a college student, I probably wouldn't be able to afford PopperPlay myself if it was paywalled.
 
-These questions implicitly assert that there is such a thing as a trustworthy source which reliably avoids errors. Furthermore, this status is justified by raw data like the education and pedigree of the sense makers. I will call this misconception justificationism. According to this philosophy, our role is to identify the perfect source of knowledge, and once we have done so, we make this source the measure of all truth. Criticizing the information and assumptions this source produces is a non-starter, since you have already established that all knowledge originates from this source.
+Advertisements are perhaps even worse. They create an incentive to optimize for click-bait and distraction, and they destroy the user experience (who, after all, hasn't cringed when an article they were reading was replaced with popups and banners)
 
-Justification in sense making is remarkably similar to justificationism
+But as PopperPlay grows, I will need money and to pay for servers and to support the time I am spending in building features and improving the site. I need your ideas about [how I should monetize](https://popperplay.com/problem/Ri7rf6GspvuCuuVL1274).
 
-### **~~Who Should We Trust encourages authoritarian and dogmatic thinking~~**
+## Peer to Peer Donations
 
-~~When we debate our answers to the question "Who Should We Trust", we are not at all debating how successful the processes of error correction different sources are using will be. Instead, we are really deciding which source has in the past had the fewest errors. We are inducing from~~
+I am currently considering something like the Patreon model, where people can donate to those they think are solving interesting problems, and PopperPlay takes a percentage of each transaction. We can avoid ads and paywalls, and PopperPlay's incentives would align with the benefit of problem solvers.
 
-### **~~Who Should We Trust expects explanationless progress~~**
+### Escape
 
-~~To the extent that we should trust an institution of sense making, it is to the degree to which it explains from first principles how it reliably creates knowledge and prunes away errors. Saying that one source has created more knowledge than another in the past without explaining why this will continue is not sufficient. Past success is not an indicator of how well an institution might fare in the future. This much is obvious when you consider the fact that when these supposedly~~
+Most importantly, we can create an escape from existing sense-making institution. People will be able to make money simply by creating knowledge. Creativity and fun no longer need to be shackled by problems like day jobs, gatekeeping, and bureaucracy.
 
-### **~~Who Should We Trust prevents the correction of errors and the generation of new ideas and priorities~~**
+## Popper's Criterion
 
-~~This is why it is necessary to generate a new institution of sense making - one that asks not, "Who should we trust?" but rather "How can we detect and eliminate errors while encouraging the creation of new ideas, and how can we do this using reason and persuasion instead of coercion and pressure?" This is the application of Popper's fallibilism to the organs of sense making. All institutions of sense making are conjectures about how to answer this question best. Unfortunately, almost all existing institutions fail to satisfy this criterion, since they have no actual explanation as to how they continually correct errors. Appeals to previous successes or to supposedly credible authorities are fallacious and turn institutions pathological in the long run.~~
+> SOCRATES: I see. I have no need to trust the source if the argument itself is persuasive. And no way of using any source unless I also have a persuasive argument.
+>
+> David Deutsch, from _A Dream of Socrates_ in _The Beginning of Infinity_ [^1]
 
-# Error Correction
+News, academia, and social media are in crisis. They are turning dogmatic, dishonest, and tribal. The source of this trouble is that we have been using the wrong criterion to judge institutions which help create knowledge. The prevailing approach focuses on sources, asking, "Who should we trust?" [^2]
 
-# Open Source
+This question is based on the same mistakes as the prevailing question in political philosophy, "Who should rule?". The philosopher Karl Popper pointed out that that since all rulers are fallible, and since they will all make mistakes, we will never find the perfect ruler who, once appointed, will dissolve problems once and for all. Similarly, there is no source of information which is free from error and bias. [^3]
 
-PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. These errors will be found in the algorithms for featuring problems and conjectures, in the layout of the website, and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjectures solutions upon. That is why PopperPlay is completely open source. I need your feedback in order to make this website a better forum for the creation of new ideas and correction or errors.
+When we ask, "Who should we trust?", we are expecting explanationless progress. We are trying to predict future success from raw data like the qualifications and track record of news organizations and academic journals. But this is not an explanation for why we should expect progress to continue.
 
-# No Ads or Paywalls
+The only rational way to create progress is to satisfy Popper's criterion. The criterion which Karl Popper created to judge political institutions is equally applicable to platforms of knowledge creation: _Does the system facilitate the correction of errors and the creation of new ideas using reason and persuasion?_
 
-# Exploratory Non Coercive Learning
+Instead of seeking higher authorities of knowledge, we can build a platform which creates progress by encouraging problem solving, idea generation, and the criticism of prevailing conjectures. Furthermore, the platform must be subject to error correction so that people can improve the structure of problem solving itself.
 
-> Learning naturally is a true pleasure; how unfortunate then it is that in most schools it is made a pain…I consider it fortunate I was left much to myself as a child, and put upon no particular plan of study…What I am I made myself.
+## Error Correction
 
-> Sir Humphry Davy
+PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. These errors will be found in the layout and structure of the website, in missing features, in the algorithms for featuring problems and conjectures (once I build them), and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjectures solutions upon. That is why PopperPlay is completely open source. I desperately need your [feedback](https://popperplay.com/feedback) in order to make this website a more fun and open forum for the creation of new ideas and correction of errors.
 
-Imagine you in college again. Your education consists of pursuing the problems you find interesting. Instead of receiving conjectures as dogma, you get to contribute to their criticism. Someone just asked why.... You find the question interesting, so you teach yourself the background knowledge necessary to conjecture more knowledge about the problem. Far from needing permission to go to the bathroom, you are encouraged to refute experts. It is hard to overstate how much creativity the education system suppresses. This platform can provide the open-ended non-coercive education that we all wish we could have had.
-
-Incidentally, I happen to be a college student. I created PopperPlay because
-
-# Reason is Fun
-
-ertrwetwer
-
-# Problem Solving
-
-> The raw material for creativity is problems. Conflicts between ideas.
+[^1]: I realize the irony of using a source to make this point. I'm not appealing to authority, only to clear writing I see no point in replicating.
+[^2]: From this are derived further bad questions like, "How do we ensure that our journalistic and academic classes are responsible and informed?", "Who should be allowed to participate in the process of sense making?", and "How should the gatekeepers be educated?"
+[^3]: If we believe that we found such a source, then we become prone to believe incredulous claims which could not survive open criticism. Furthermore, there is no rational way to resolve disputes between sources claiming to justify their own credibility. Instead, disagreements must be settled by fallacious appeals to authority (failing that, violence).

@@ -20,9 +20,9 @@ export default function Types() {
           your help in order to identify and correct them.
         </Typography> */}
         <Typography variant="h6" align="center" gutterBottom paragraph>
-          👋 I’m Dwarkesh — the maker behind this site. I'm trying to make a
-          better platform for problem solving. There is nothing more useful to
-          this mission than your feedback. Thank you!!! 🙏
+          👋 I’m Dwarkesh. I'm trying to make a platform for fun and open
+          problem solving. There is nothing more useful to this mission than
+          your feedback. Thank you!!! 🙏
         </Typography>
         <Typography variant="h5" align="center" gutterBottom paragraph>
           To give feedback, please create a problem using the tag "popperplay"
@@ -44,7 +44,7 @@ export default function Types() {
           To directly reach me, please email me at
         </Typography>
         <a href="mailto:dwarkesh.sanjay.patel@gmail.com">
-          <Typography align="center" variant="h4" color="textPrimary">
+          <Typography align="center" variant="h5" color="textPrimary">
             dwarkesh.sanjay.patel@gmail.com
           </Typography>
         </a>
