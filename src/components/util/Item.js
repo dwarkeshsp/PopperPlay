@@ -1,12 +1,14 @@
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import BuildIcon from "@material-ui/icons/Build";
 import React from "react";
+import { Link } from "react-router-dom";
 import CommentsList from "../conjectures/CommentsList";
+import CommentTextBox from "../conjectures/CommentTextBox";
 import { withFirebase } from "../firebase";
 import ProblemConjecturesList from "../problems/ProblemConjecturesList";
 import { AuthUserContext } from "../session";
@@ -15,8 +17,7 @@ import CreatePost from "./CreatePost";
 import ItemInfo from "./ItemInfo";
 import Markdown from "./Markdown";
 import VoteButton from "./VoteButton";
-import CommentTextBox from "../conjectures/CommentTextBox";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import DeleteButton from "./DeleteButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -86,9 +87,9 @@ function Item({ item, problem, problemItem, firebase }) {
             }
           </AuthUserContext.Consumer>
           <Typography
-            variant="h6"
             className={classes.childrenTitle}
             variant="h5"
+            align="center"
             gutterBottom
           >
             {problem ? "Conjectures" : "Comments"}
@@ -126,13 +127,14 @@ function Header({ item, problem }) {
   const classes = useStyles();
   return (
     <Grid container>
-      <Grid item xs={11}>
+      <Grid item xs={10}>
         <Typography variant="h6" gutterBottom>
           {item.title}
         </Typography>
         <ItemInfo item={item} />
       </Grid>
-      <Grid item xs={1}>
+      <Grid item xs={2} align="right">
+        <DeleteButton item={item} problem={problem} />
         <VoteButton item={item} problem={problem} />
       </Grid>
     </Grid>

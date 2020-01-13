@@ -22,7 +22,7 @@ import ForumIcon from "@material-ui/icons/Forum";
 import BuildIcon from "@material-ui/icons/Build";
 import { Grid } from "@material-ui/core";
 
-function VoteButton({ item, firebase, problem }) {
+function VoteButton({ item, firebase, problem, comment }) {
   const { votedBy, id } = item;
   const alertRef = React.useRef();
   const [voteIconColor, setVoteIconColor] = React.useState("default");
@@ -43,8 +43,16 @@ function VoteButton({ item, firebase, problem }) {
   }
 
   function vote() {
-    problem ? voteProblem() : voteConjecture();
+    if (problem) {
+      voteProblem();
+    } else if (comment) {
+      voteComment();
+    } else {
+      voteConjecture();
+    }
   }
+
+  function voteComment() {}
 
   function voteConjecture() {
     if (voteIconColor === "default") {

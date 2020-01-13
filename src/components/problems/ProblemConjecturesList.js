@@ -8,6 +8,7 @@ import React from "react";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { Link } from "react-router-dom";
 import { withFirebase } from "../firebase";
+import DeleteButton from "../util/DeleteButton";
 import ItemInfo from "../util/ItemInfo";
 import Markdown from "../util/Markdown";
 import VoteButton from "../util/VoteButton";
@@ -48,7 +49,6 @@ function ProblemConjecturesList({ problem, firebase }) {
       .get()
       .then(querySnapshot => {
         const data = querySnapshot.docs.map(doc => doc.data());
-        console.log(data);
         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
         setLastConjecture(querySnapshot.docs[querySnapshot.docs.length - 1]);
         setConjectures(data);
@@ -124,6 +124,7 @@ function ConjectureCard({ conjecture }) {
                 </CardContent>
               </div>
               <CardActions disableSpacing>
+                <DeleteButton item={conjecture} />
                 <VoteButton item={conjecture} />
               </CardActions>
             </Card>

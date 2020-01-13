@@ -3,11 +3,11 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import React from "react";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { Link } from "react-router-dom";
 import { withFirebase } from "../firebase";
+import DeleteButton from "../util/DeleteButton";
 import ItemInfo from "../util/ItemInfo";
 import Markdown from "../util/Markdown";
 import VoteButton from "../util/VoteButton";
@@ -115,7 +115,8 @@ function CommentCard({ comment }) {
                 </CardContent>
               </div>
               <CardActions disableSpacing>
-                {/* <VoteButton item={comment} comment /> */}
+                <DeleteButton item={comment} comment />
+                <VoteButton item={comment} comment />
               </CardActions>
             </Card>
           </CardActionArea>
