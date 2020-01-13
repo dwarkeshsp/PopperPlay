@@ -29,9 +29,9 @@ function Copyright() {
 }
 
 const useStyles = makeStyles(theme => ({
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6)
+  root: {
+    // backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(4, 0, 0)
   },
   heroButtons: {
     marginTop: theme.spacing(4)
@@ -61,9 +61,7 @@ export default function Home() {
   const classes = useStyles();
 
   return (
-    <div className={classes.heroContent}>
-      <CssBaseline />
-
+    <div className={classes.root}>
       <Container maxWidth="sm">
         <Typography
           variant="h4"
@@ -72,7 +70,7 @@ export default function Home() {
           gutterBottom
         >
           Discovery: first a problem, then conjecture, then criticism, then new
-          problem.
+          problem
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
           David Deutsch

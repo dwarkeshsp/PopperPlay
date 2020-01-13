@@ -67,23 +67,25 @@ function List({ firebase, tags, orderBy, problem }) {
 
   // acts as component did mount as well
   React.useEffect(() => {
-    // if (!filtering) {
-    firebase
-      .query(orderBy, LOADSIZE, problem)
-      .then(querySnapshot => {
-        const data = updateData(querySnapshot);
-        setItems(data);
-      })
-      .catch(error => console.log(error));
-    // } else {
-    //   firebase
-    //     .tagsQuery(orderBy, LOADSIZE, tags, problem)
-    //     .then(querySnapshot => {
-    //       const data = updateData(querySnapshot);
-    //       setItems(data);
-    //       setFiltering(true);
-    //     });
-    // }
+    if (!filtering) {
+      console.log("just order");
+      firebase
+        .query(orderBy, LOADSIZE, problem)
+        .then(querySnapshot => {
+          const data = updateData(querySnapshot);
+          setItems(data);
+        })
+        .catch(error => console.log(error));
+    } else {
+      console.log("both");
+      firebase
+        .tagsQuery(orderBy, LOADSIZE, tags, problem)
+        .then(querySnapshot => {
+          const data = updateData(querySnapshot);
+          setItems(data);
+          setFiltering(true);
+        });
+    }
   }, [orderBy]);
 
   // * currently queries if array contains any of the tags

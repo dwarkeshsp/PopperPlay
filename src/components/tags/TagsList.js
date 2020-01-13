@@ -14,22 +14,23 @@ export default function TagsList({ tags }) {
 
   return (
     <div>
-      {tags.map((tag, index) => (
-        <React.Fragment>
-          <Typography
-            component={Link}
-            to={"/tag/" + tag.replace(" ", "-")}
-            variant="overline"
-            className={classes.inline}
-            color="textPrimary"
-          >
-            {tag}
-          </Typography>
-          <Typography className={classes.inline} color="textPrimary">
-            {index < tags.length - 1 ? ",  " : ""}
-          </Typography>
-        </React.Fragment>
-      ))}
+      {tags &&
+        tags.map((tag, index) => (
+          <React.Fragment>
+            <Typography
+              component={Link}
+              to={"/tag/" + tag.replace(" ", "-")}
+              variant="overline"
+              className={classes.inline}
+              color="textPrimary"
+            >
+              {tag}
+            </Typography>
+            <Typography className={classes.inline} color="textPrimary">
+              {index < tags.length - 1 ? ",  " : ""}
+            </Typography>
+          </React.Fragment>
+        ))}
     </div>
   );
 }
