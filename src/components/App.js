@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Conjecture from "./conjectures/Conjecture";
 import Conjectures from "./conjectures/Conjectures";
 import Feedback from "./feedback/Feedback";
@@ -16,6 +16,7 @@ import Problems from "./problems/Problems";
 import { withAuthentication } from "./session";
 import Tag from "./tags/Tag";
 import Tags from "./tags/Tags";
+import NotFound from "./util/NotFound";
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route exact path="*">
+            <NotFound />
           </Route>
           <Route path="/philosophy">
             <Philosophy />
