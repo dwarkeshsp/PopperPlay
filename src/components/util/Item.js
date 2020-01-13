@@ -46,7 +46,7 @@ function Item({ item, problem, problemItem, firebase }) {
   const alertRef = React.useRef();
 
   return (
-    <Container maxWidth="sm" className={classes.root}>
+    <Container maxWidth="md" className={classes.root}>
       {item && (
         <div>
           {!problem && problemItem && <ProblemMetaData problem={problemItem} />}
