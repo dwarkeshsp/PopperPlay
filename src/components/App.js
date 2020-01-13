@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Conjecture from "./conjectures/Conjecture";
 import Conjectures from "./conjectures/Conjectures";
 import Feedback from "./feedback/Feedback";
-import Home from "./Home";
+import Home from "./home/Home";
 import Login from "./login/Login";
 import Signup from "./login/Signup";
 import Header from "./navigation/Header";
