@@ -16,16 +16,24 @@ const options = {
       component: Typography,
       props: {
         gutterBottom: true,
-        variant: "h5",
+        variant: "h3",
         align: "center"
       }
     },
-    h2: { component: Typography, props: { gutterBottom: true, variant: "h6" } },
+    h2: { component: Typography, props: { gutterBottom: true, variant: "h4" } },
     h3: {
       component: Typography,
-      props: { gutterBottom: true, variant: "subtitle1" }
+      props: { gutterBottom: true, variant: "h5" }
     },
     h4: {
+      component: Typography,
+      props: { gutterBottom: true, variant: "h6" }
+    },
+    h5: {
+      component: Typography,
+      props: { gutterBottom: true, variant: "subtitle1", paragraph: true }
+    },
+    h6: {
       component: Typography,
       props: { gutterBottom: true, variant: "caption", paragraph: true }
     },
