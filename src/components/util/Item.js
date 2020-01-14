@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: "1rem"
   },
   childrenTitle: {
-    marginTop: "2rem"
+    marginTop: "3rem"
   }
 }));
 

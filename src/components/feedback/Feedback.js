@@ -43,14 +43,12 @@ export default function Types() {
             Gitlab (click here).
           </Typography>
         </a>
-
         <Typography variant="h6" align="center" gutterBottom paragraph>
           Platform structure, feature requests, bugs, philosophy, user
           interfaces - I desperately need your help with all of these. Ideally,
           problems with PopperPlay will be solved using PopperPlay. This way,
           the entire platform can contribute and improve solutions.
         </Typography>
-
         <Typography
           variant="h6"
           align="center"
@@ -59,9 +57,9 @@ export default function Types() {
         >
           To directly reach me, please email me at
         </Typography>
-        <a href="mailto:dwarkesh.sanjay.patel@gmail.com" target="_blank">
+        <a href="mailto:dwarkesh@popperplay.com" target="_blank">
           <Typography align="center" variant="h5" color="textPrimary">
-            dwarkesh.sanjay.patel@gmail.com
+            dwarkesh@popperplay.com
           </Typography>
         </a>
       </Container>
