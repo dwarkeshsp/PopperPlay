@@ -161,11 +161,9 @@ function ItemCard({ item, problem }) {
           problem
             ? {
                 pathname: "/problem/" + item.id
-                // state: { problem: item }
               }
             : {
                 pathname: "/conjecture/" + item.problem.id + "/" + item.id
-                // state: { conjecture: item }
               }
         }
         style={{ textDecoration: "none" }}
@@ -175,6 +173,20 @@ function ItemCard({ item, problem }) {
             <Card className={classes.card}>
               <div className={classes.cardDetails}>
                 <CardContent>
+                  {/* {!problem && (
+                    <Link
+                      to={"/problem/" + item.problem.id}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Typography
+                        component="h2"
+                        variant="subtitle1"
+                        color="textSecondary"
+                      >
+                        {title()}
+                      </Typography>
+                    </Link>
+                  )} */}
                   <Typography component="h2" variant="h6">
                     {title()}
                   </Typography>

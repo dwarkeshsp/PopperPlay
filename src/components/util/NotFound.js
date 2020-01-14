@@ -20,10 +20,21 @@ export default function StickyFooter() {
           <SentimentVeryDissatisfiedIcon style={{ fontSize: 50 }} />
           {" Page not found"}
         </Typography>
-        <Typography variant="h5" align="center" gutterBottom>
-          If this is the result of a bug, please post it as a problem with the
-          tag "popperplay"
-        </Typography>
+        <a
+          href="https://gitlab.com/dwarkeshsp/popperplay/issues"
+          target="_blank"
+        >
+          <Typography
+            variant="h5"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+            paragraph
+          >
+            If this is the result of a bug, please create an issue on Gitlab
+            (click here).
+          </Typography>
+        </a>
       </Container>
     </div>
   );

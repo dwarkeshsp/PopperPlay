@@ -28,6 +28,22 @@ export default function Types() {
           To give feedback, please create a problem using the tag "popperplay"
           or solve a problem with that tag.
         </Typography>
+        <a
+          href="https://gitlab.com/dwarkeshsp/popperplay/issues"
+          target="_blank"
+        >
+          <Typography
+            variant="h5"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+            paragraph
+          >
+            🐛 To report a bug or a technical issue, please create an issue on
+            Gitlab (click here).
+          </Typography>
+        </a>
+
         <Typography variant="h6" align="center" gutterBottom paragraph>
           Platform structure, feature requests, bugs, philosophy, user
           interfaces - I desperately need your help with all of these. Ideally,
@@ -43,7 +59,7 @@ export default function Types() {
         >
           To directly reach me, please email me at
         </Typography>
-        <a href="mailto:dwarkesh.sanjay.patel@gmail.com">
+        <a href="mailto:dwarkesh.sanjay.patel@gmail.com" target="_blank">
           <Typography align="center" variant="h5" color="textPrimary">
             dwarkesh.sanjay.patel@gmail.com
           </Typography>

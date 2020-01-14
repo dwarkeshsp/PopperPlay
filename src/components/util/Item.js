@@ -35,9 +35,6 @@ const useStyles = makeStyles(theme => ({
   },
   childrenTitle: {
     marginTop: "2rem"
-  },
-  indent: {
-    marginRight: "1rem"
   }
 }));
 
@@ -112,8 +109,8 @@ function Item({ item, problem, problemItem, firebase }) {
 function ProblemMetaData({ problem }) {
   return (
     <div>
-      <Link to={"/problem/" + problem.id}>
-        <Typography variant="subtitle1" color="textPrimary" gutterBottom>
+      <Link to={"/problem/" + problem.id} style={{ textDecoration: "none" }}>
+        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
           {problem.title}
         </Typography>
       </Link>
