@@ -28,9 +28,6 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route exact path="*">
-            <NotFound />
-          </Route>
           <Route path="/philosophy">
             <Philosophy />
           </Route>
@@ -66,6 +63,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route exact path="*">
+            <NotFound />
           </Route>
         </Switch>
       </div>
