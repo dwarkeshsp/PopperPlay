@@ -1,19 +1,15 @@
-import React from "react";
-import { Link, withRouter } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import { makeStyles } from "@material-ui/core/styles";
 import BuildSharpIcon from "@material-ui/icons/BuildSharp";
 import WbIncandescentSharpIcon from "@material-ui/icons/WbIncandescentSharp";
-import MenuBookSharpIcon from "@material-ui/icons/MenuBookSharp";
-import FeedbackIcon from "@material-ui/icons/Feedback";
+import React from "react";
+import { Link, withRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     justifyContent: "center"
-    // https://stackoverflow.com/questions/54375096/styling-bottomnavigation-in-react-js-material-ui
-    // backgroundColor: "black"
   }
 }));
 
@@ -31,14 +27,10 @@ function Header(props) {
       setValue(0);
     } else if (firstLevelPath === "conjectures") {
       setValue(1);
-    } else if (firstLevelPath === "philosophy") {
-      setValue(2);
-    } else if (firstLevelPath === "feedback") {
-      setValue(3);
     } else {
       setValue(-1);
     }
-  }, [value, props.location]);
+  }, [props.location]);
 
   return (
     <BottomNavigation
@@ -60,18 +52,6 @@ function Header(props) {
         icon={<WbIncandescentSharpIcon />}
         component={Link}
         to="/conjectures"
-      />
-      <BottomNavigationAction
-        label="Philosophy"
-        icon={<MenuBookSharpIcon />}
-        component={Link}
-        to="/philosophy"
-      />
-      <BottomNavigationAction
-        label="Feedback"
-        icon={<FeedbackIcon />}
-        component={Link}
-        to="/feedback"
       />
     </BottomNavigation>
   );

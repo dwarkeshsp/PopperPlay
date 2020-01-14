@@ -1,8 +1,8 @@
 import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
@@ -14,11 +14,11 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
-
   title: {
     textDecoration: "none",
     flexGrow: 1
-  }
+  },
+  nav: { marginRight: theme.spacing(2) }
 }));
 
 function HideOnScroll(props) {
@@ -53,6 +53,14 @@ export default function Navigation(props) {
             >
               PopperPlay
             </Typography>
+            <nav className={classes.nav}>
+              <Button color="inherit" component={Link} to="/feedback">
+                Feedback
+              </Button>
+              <Button color="inherit" component={Link} to="/philosophy">
+                Philosophy
+              </Button>
+            </nav>
             <Account />
           </Toolbar>
         </AppBar>
