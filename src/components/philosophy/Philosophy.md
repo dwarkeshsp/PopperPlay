@@ -1,6 +1,6 @@
 _Many of following ideas are inspired by David Deutsch, Karl Popper, Lulie Tannet, and Mason Hartman. They are given full credit and gratitude._
 
-**January 2020 (revised continually)**
+<!-- **January 2020 (revised continually)** -->
 
 #### 👋 Hi! I'm Dwarkesh. I'm trying to make a platform that helps people solve problems and create new ideas.
 
