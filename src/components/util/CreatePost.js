@@ -34,9 +34,11 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
   const [tags, setTags] = React.useState([]);
   const [details, setDetails] = React.useState("");
   const [valid, setValid] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
   // only for conjectures
   const [parentProblemTitle, setParentProblemTitle] = React.useState("");
+
+  const [open, setOpen] = React.useState(false);
+  const [fullScreen, setFullScreen] = React.useState(false);
 
   React.useEffect(() => {
     setValid(title !== "" && parentProblemTitle !== "");
@@ -172,7 +174,9 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
       open={open}
       // onClose={handleClose}
       aria-labelledby="create-title"
-      // fullScreen
+      maxWidth="md"
+      // fullWidth
+      fullScreen={fullScreen}
     >
       <DialogTitle id="create-title">
         {problem ? "A New Problem!" : "A New Conjecture"}
@@ -245,7 +249,15 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button
+          onClick={() =>
+            fullScreen ? setFullScreen(false) : setFullScreen(true)
+          }
+          color="primary"
+        >
+          Full Screen
+        </Button>
+        <Button onClick={handleClose} color="secondary">
           Cancel
         </Button>
         <Button
