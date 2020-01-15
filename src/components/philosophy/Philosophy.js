@@ -30,9 +30,7 @@ export default function Philosophy() {
 
   return (
     <Container maxWidth="md" className={classes.root}>
-      <Markdown key={text.substring(0, 40)} className={classes.markdown}>
-        {text}
-      </Markdown>
+      <Markdown className={classes.markdown}>{text}</Markdown>
     </Container>
   );
 }

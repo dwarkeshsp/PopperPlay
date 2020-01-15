@@ -172,7 +172,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
       open={open}
       // onClose={handleClose}
       aria-labelledby="create-title"
-      fullScreen
+      // fullScreen
     >
       <DialogTitle id="create-title">
         {problem ? "A New Problem!" : "A New Conjecture"}
@@ -231,7 +231,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
             placeholder="More"
             fullWidth
             multiline
-            rows="5"
+            rows="10"
             onChange={event => setDetails(event.target.value)}
           />
           <div className={classes.padTop}>
