@@ -59,7 +59,6 @@ function List({ firebase, tags, orderBy, problem }) {
   // acts as component did mount as well
   React.useEffect(() => {
     if (!filtering) {
-      console.log("just order");
       firebase
         .query(orderBy, LOADSIZE, problem)
         .then(querySnapshot => {
@@ -68,7 +67,6 @@ function List({ firebase, tags, orderBy, problem }) {
         })
         .catch(error => console.log(error));
     } else {
-      console.log("both");
       firebase
         .tagsQuery(orderBy, LOADSIZE, tags, problem)
         .then(querySnapshot => {
@@ -187,6 +185,15 @@ function ItemCard({ item, problem }) {
                       </Typography>
                     </Link>
                   )} */}
+                  {!problem && (
+                    <Typography
+                      component="h3"
+                      variant="subtitle1"
+                      color="textSecondary"
+                    >
+                      {item.problem.title}
+                    </Typography>
+                  )}
                   <Typography component="h2" variant="h6">
                     {title()}
                   </Typography>

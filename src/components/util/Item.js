@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Item({ item, problem, problemItem, firebase }) {
+function Item({ item, problem, firebase }) {
   const classes = useStyles();
   const alertRef = React.useRef();
 
@@ -46,7 +46,7 @@ function Item({ item, problem, problemItem, firebase }) {
     <Container maxWidth="md" className={classes.root}>
       {item && (
         <div>
-          {!problem && problemItem && <ProblemMetaData problem={problemItem} />}
+          {!problem && <ProblemMetaData item={item} />}
           <Header item={item} problem={problem} />
           <Markdown className={classes.markdown}>{item.details}</Markdown>
           <Grid container className={classes.createButton}>
@@ -106,12 +106,15 @@ function Item({ item, problem, problemItem, firebase }) {
   );
 }
 
-function ProblemMetaData({ problem }) {
+function ProblemMetaData({ item }) {
   return (
     <div>
-      <Link to={"/problem/" + problem.id} style={{ textDecoration: "none" }}>
+      <Link
+        to={"/problem/" + item.problem.id}
+        style={{ textDecoration: "none" }}
+      >
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-          {problem.title}
+          {item.problem.title}
         </Typography>
       </Link>
       {/* <ItemInfo item={problem} /> */}

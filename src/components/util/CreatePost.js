@@ -40,9 +40,13 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
   const [open, setOpen] = React.useState(false);
   const [fullScreen, setFullScreen] = React.useState(false);
 
+  console.log(problemItem);
+
   React.useEffect(() => {
-    setValid(title !== "" && parentProblemTitle !== "");
-  }, [title, parentProblemTitle]);
+    setValid(
+      title !== "" && (problem || problemItem || parentProblemTitle !== "")
+    );
+  }, [title, parentProblemTitle, problem, problemItem]);
 
   useImperativeHandle(ref, () => ({
     handleOpen() {
@@ -104,35 +108,37 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
     }
 
     // post conjecture inside the problem
-    function post(problemID) {
-      let conjectureRef;
-      firebase
-        .problemConjectures(problemID)
-        .add({
-          title: title,
-          details: details,
-          tags: tags,
-          problem: firebase.db.doc(`problems/${problemID}`),
-          created: timestamp,
-          lastModified: timestamp,
-          creator: person,
-          votedBy: [],
-          votes: 0
-        })
-        .then(docRef => (conjectureRef = docRef))
-        .then(() => {
-          tags.forEach(tag => {
-            const tagRef = firebase.tag(tag);
-            tagRef.set({}, { merge: true });
-            tagRef.update({
-              conjectures: firebase.arrayUnion(conjectureRef)
-            });
-          });
-          firebase.person(person).update({
-            conjectures: firebase.arrayUnion(conjectureRef)
-          });
-        })
-        .catch(error => console.log(error));
+    async function post(problemID) {
+      const conjectureRef = await firebase.problemConjectures(problemID).add({
+        title: title,
+        details: details,
+        tags: tags,
+        created: timestamp,
+        lastModified: timestamp,
+        creator: person,
+        votedBy: [],
+        votes: 0,
+        problem: {
+          title: problemItem ? problemItem.title : parentProblemTitle,
+          tags: problemItem ? problemItem.tags : tags,
+          details: problemItem ? problemItem.details : "",
+          created: problemItem ? problemItem.created : timestamp,
+          lastModified: problemItem ? problemItem.lastModified : timestamp,
+          creator: problemItem ? problemItem.creator : person,
+          ref: firebase.db.doc(`problems/${problemID}`),
+          id: problemID
+        }
+      });
+      tags.forEach(tag => {
+        const tagRef = firebase.tag(tag);
+        tagRef.set({}, { merge: true });
+        tagRef.update({
+          conjectures: firebase.arrayUnion(conjectureRef)
+        });
+      });
+      firebase.person(person).update({
+        conjectures: firebase.arrayUnion(conjectureRef)
+      });
     }
 
     // post parent problem
@@ -235,7 +241,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
             placeholder="More"
             fullWidth
             multiline
-            rows="10"
+            // rows={fullScreen ? "10" : "5"}
             onChange={event => setDetails(event.target.value)}
           />
           <div className={classes.padTop}>

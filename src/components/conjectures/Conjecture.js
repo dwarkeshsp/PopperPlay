@@ -5,7 +5,6 @@ import Item from "../util/Item";
 
 function Conjecture({ firebase }) {
   const [conjecture, setConjecture] = React.useState(null);
-  const [problem, setProblem] = React.useState(null);
 
   const location = useLocation();
   const path = location.pathname.split("/");
@@ -23,22 +22,12 @@ function Conjecture({ firebase }) {
           setConjecture(data);
         }
       })
-      .then(() => {
-        firebase
-          .problem(problemID)
-          .get()
-          .then(doc => {
-            const data = doc.data();
-            data.id = problemID;
-            setProblem(data);
-          });
-      })
       .catch(error => console.log(error));
   }, []);
 
   return (
     <div>
-      <Item item={conjecture} problemItem={problem} />
+      <Item item={conjecture} />
     </div>
   );
 }
