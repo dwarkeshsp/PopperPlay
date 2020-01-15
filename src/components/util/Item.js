@@ -21,7 +21,7 @@ import DeleteButton from "./DeleteButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: "1rem"
+    // marginTop: "1rem"
   },
   inline: {
     display: "inline"

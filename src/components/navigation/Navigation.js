@@ -1,74 +1,85 @@
 import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Slide from "@material-ui/core/Slide";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Link from "@material-ui/core/Link";
+import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import React from "react";
-import { Link } from "react-router-dom";
 import Account from "./Account";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
+  appBar: {
+    borderBottom: `1px solid ${theme.palette.divider}`
   },
   toolbar: {
     flexWrap: "wrap"
   },
-  title: {
-    textDecoration: "none",
-    flexGrow: 1
+  toolbarTitle: {
+    flexGrow: 1,
+    textDecoration: "none"
   },
-  nav: { marginRight: theme.spacing(2) }
+  philosophy: {
+    margin: theme.spacing(2)
+  }
 }));
 
-function HideOnScroll(props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({ target: window ? window() : undefined });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
-
-export default function Navigation(props) {
+export default function Pricing() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <HideOnScroll {...props}>
-        <AppBar color="primary">
-          <Toolbar className={classes.toolbar}>
-            <Typography
-              component={Link}
-              to="/"
-              className={classes.title}
-              variant="h5"
-              noWrap
+    <React.Fragment>
+      <CssBaseline />
+      <AppBar position="static" color="default" className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
+          <Typography
+            variant="h5"
+            color="inherit"
+            noWrap
+            className={classes.toolbarTitle}
+            component={RouterLink}
+            to="/"
+          >
+            PopperPlay
+          </Typography>
+          <nav>
+            <Link
+              variant="button"
               color="inherit"
+              component={RouterLink}
+              to="/feedback"
             >
-              PopperPlay
-            </Typography>
-            <nav className={classes.nav}>
-              <Button color="inherit" component={Link} to="/feedback">
-                Feedback
-              </Button>
-              <Button color="inherit" component={Link} to="/philosophy">
-                Philosophy
-              </Button>
-            </nav>
-            <Account />
-          </Toolbar>
-        </AppBar>
-      </HideOnScroll>
-      <Box mt={"4rem"}></Box>
-    </div>
+              Feedback
+            </Link>
+            <Link
+              variant="button"
+              color="inherit"
+              className={classes.philosophy}
+              component={RouterLink}
+              to="/philosophy"
+            >
+              Philosophy
+            </Link>
+            {/* <Link
+              variant="button"
+              color="textPrimary"
+              href="#"
+              className={classes.link}
+            >
+              Support
+            </Link> */}
+          </nav>
+          {/* <Button
+            href="#"
+            color="primary"
+            variant="outlined"
+            className={classes.link}
+          >
+            Login
+          </Button> */}
+          <Account />
+        </Toolbar>
+      </AppBar>
+    </React.Fragment>
   );
 }

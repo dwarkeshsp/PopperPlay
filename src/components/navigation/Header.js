@@ -9,7 +9,8 @@ import { Link, withRouter } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: theme.palette.background.default
   }
 }));
 
@@ -33,27 +34,29 @@ function Header(props) {
   }, [props.location]);
 
   return (
-    <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      showLabels
-      className={classes.root}
-    >
-      <BottomNavigationAction
-        label="Problems"
-        icon={<BuildSharpIcon />}
-        component={Link}
-        to="/problems"
-      />
-      <BottomNavigationAction
-        label="Conjectures"
-        icon={<WbIncandescentSharpIcon />}
-        component={Link}
-        to="/conjectures"
-      />
-    </BottomNavigation>
+    <React.Fragment>
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        showLabels
+        className={classes.root}
+      >
+        <BottomNavigationAction
+          label="Problems"
+          icon={<BuildSharpIcon />}
+          component={Link}
+          to="/problems"
+        />
+        <BottomNavigationAction
+          label="Conjectures"
+          icon={<WbIncandescentSharpIcon />}
+          component={Link}
+          to="/conjectures"
+        />
+      </BottomNavigation>
+    </React.Fragment>
   );
 }
 

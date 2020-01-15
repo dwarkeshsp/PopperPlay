@@ -1,12 +1,12 @@
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import React from "react";
 import { Link } from "react-router-dom";
 import { withFirebase } from "../firebase";
 import { AuthUserContext } from "../session";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 
 export default function Account() {
   return (
@@ -37,7 +37,7 @@ function LoggedIn() {
         aria-controls="menu-appbar"
         aria-haspopup="true"
         onClick={handleMenu}
-        color="inherit"
+        color="primary"
       >
         <AccountCircle />
       </IconButton>
@@ -67,15 +67,10 @@ function LoggedIn() {
 function NotLoggedIn() {
   return (
     <div>
-      <Button variant="outlined" color="inherit" component={Link} to="/signup">
+      <Button variant="outlined" color="primary" component={Link} to="/signup">
         Signup
       </Button>
-      <Button
-        color="inherit"
-        // variant="contained"
-        component={Link}
-        to="/login"
-      >
+      <Button color="primary" component={Link} to="/login">
         Login
       </Button>
     </div>
