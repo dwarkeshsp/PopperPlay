@@ -8,9 +8,28 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import TagsMenu from "../tags/TagsMenu";
+import Grid from "@material-ui/core/Grid";
+import Markdown from "../util/Markdown";
+import { makeStyles } from "@material-ui/core/styles";
+import { setObservableConfig } from "recompose";
+
 const { forwardRef, useImperativeHandle } = React;
 
+const useStyles = makeStyles(theme => ({
+  markdown: {
+    ...theme.typography
+  },
+  padTop: {
+    marginTop: "1rem"
+  },
+  padTopSlight: {
+    marginTop: "0.25rem"
+  }
+}));
+
 const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
+  const classes = useStyles();
+
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [details, setDetails] = React.useState("");
@@ -20,8 +39,8 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
   const [parentProblemTitle, setParentProblemTitle] = React.useState("");
 
   React.useEffect(() => {
-    setValid(title !== "");
-  }, [title]);
+    setValid(title !== "" && parentProblemTitle !== "");
+  }, [title, parentProblemTitle]);
 
   useImperativeHandle(ref, () => ({
     handleOpen() {
@@ -30,6 +49,11 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
   }));
 
   function handleClose() {
+    setTitle("");
+    setParentProblemTitle("");
+    setTags([]);
+    setDetails("");
+    setValid(false);
     setOpen(false);
   }
 
@@ -148,6 +172,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
       open={open}
       // onClose={handleClose}
       aria-labelledby="create-title"
+      fullScreen
     >
       <DialogTitle id="create-title">
         {problem ? "A New Problem!" : "A New Conjecture"}
@@ -163,7 +188,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
           <React.Fragment>
             <DialogContentText>
               To solve an already posted problem, please find it on the problems
-              page
+              page.
             </DialogContentText>
             <TextField
               required
@@ -190,21 +215,34 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
         <Typography variant="caption">
           {tags.length} {tags.length === 1 ? "tag" : "tags"}
         </Typography>
-        {/* <a
+        <a
           href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
           target="_blank"
         >
-          <Typography variant="body2">Markdown is supported below</Typography>
-        </a> */}
-        <TextField
-          id="details"
-          label="More"
-          placeholder="More"
-          fullWidth
-          multiline
-          rows="5"
-          onChange={event => setDetails(event.target.value)}
-        />
+          <Typography className={classes.padTop} variant="body2">
+            Markdown is supported below
+          </Typography>
+        </a>
+        <Grid container spacing={1}>
+          <TextField
+            className={classes.padTopSlight}
+            id="details"
+            label="More"
+            placeholder="More"
+            fullWidth
+            multiline
+            rows="5"
+            onChange={event => setDetails(event.target.value)}
+          />
+          <div className={classes.padTop}>
+            {!details && (
+              <Typography color="textSecondary" variant="h5">
+                Markdown Formatted Preview...
+              </Typography>
+            )}
+            <Markdown className={classes.markdown}>{details}</Markdown>
+          </div>
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
