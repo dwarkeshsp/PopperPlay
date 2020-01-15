@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
+  toolbar: {
+    flexWrap: "wrap"
+  },
   title: {
     textDecoration: "none",
     flexGrow: 1
@@ -42,7 +45,7 @@ export default function Navigation(props) {
     <div className={classes.root}>
       <HideOnScroll {...props}>
         <AppBar color="primary">
-          <Toolbar>
+          <Toolbar className={classes.toolbar}>
             <Typography
               component={Link}
               to="/"
