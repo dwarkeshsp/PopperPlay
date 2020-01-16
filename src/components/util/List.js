@@ -1,20 +1,10 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import BuildIcon from "@material-ui/icons/Build";
 import React from "react";
 import BottomScrollListener from "react-bottom-scroll-listener";
-import { Link } from "react-router-dom";
 import { withFirebase } from "../firebase";
-import Markdown from "../util/Markdown";
-import ItemInfo from "./ItemInfo";
-import VoteButton from "./VoteButton";
-import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Card from "./Card";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -117,104 +107,12 @@ function List({ firebase, tags, orderBy, problem }) {
   return (
     <div>
       {items.map(item => (
-        <ItemCard item={item} problem={problem} />
+        <Card item={item} problem={problem} />
       ))}
       <BottomScrollListener onBottom={lazyLoad} />
       <Grid container justify="center" className={classes.loading}>
         <CircularProgress />
       </Grid>
-    </div>
-  );
-}
-
-function ItemCard({ item, problem }) {
-  const classes = useStyles();
-
-  function title() {
-    const TITLELENGTH = 250;
-
-    let title = item.title.substr(0, TITLELENGTH);
-    if (item.title.substr(TITLELENGTH)) {
-      title += "...";
-    }
-    title = title.replace(/(\r\n|\n|\r)/gm, "");
-    return title;
-  }
-
-  function details() {
-    const DETAILLENGTH = 400;
-
-    let details = item.details.substr(0, DETAILLENGTH);
-    if (item.details.substr(DETAILLENGTH)) {
-      details += "...";
-    }
-    details = details.replace(/(\r\n|\n|\r)/gm, "");
-    return details;
-  }
-
-  return (
-    <div>
-      <Link
-        to={
-          problem
-            ? {
-                pathname: "/problem/" + item.id
-              }
-            : {
-                pathname: "/conjecture/" + item.problem.id + "/" + item.id
-              }
-        }
-        style={{ textDecoration: "none" }}
-      >
-        <div>
-          <CardActionArea component="a" href="#">
-            <Card className={classes.card}>
-              <div className={classes.cardDetails}>
-                <CardContent>
-                  {/* {!problem && (
-                    <Link
-                      to={"/problem/" + item.problem.id}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <Typography
-                        component="h2"
-                        variant="subtitle1"
-                        color="textSecondary"
-                      >
-                        {title()}
-                      </Typography>
-                    </Link>
-                  )} */}
-                  {!problem && (
-                    <Typography
-                      component="h3"
-                      variant="subtitle1"
-                      color="textSecondary"
-                    >
-                      {item.problem.title}
-                    </Typography>
-                  )}
-                  <Typography component="h2" variant="h6">
-                    {title()}
-                  </Typography>
-                  <ItemInfo item={item} />
-                  <Markdown className={classes.markdown}>{details()}</Markdown>
-                </CardContent>
-              </div>
-              <CardActions disableSpacing>
-                <Button
-                  variant="text"
-                  color="primary"
-                  startIcon={<BuildIcon />}
-                >
-                  {problem ? "Solve" : "Improve"}
-                </Button>
-                <VoteButton item={item} problem={problem} />
-              </CardActions>
-            </Card>
-          </CardActionArea>
-        </div>
-      </Link>
     </div>
   );
 }

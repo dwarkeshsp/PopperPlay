@@ -15,6 +15,7 @@ import { AuthUserContext } from "../session";
 import Dialog from "../util/AlertDialog";
 import CreatePost from "./CreatePost";
 import ItemInfo from "./ItemInfo";
+import MaterialLink from "@material-ui/core/Link";
 import Markdown from "./Markdown";
 import VoteButton from "./VoteButton";
 import DeleteButton from "./DeleteButton";
@@ -113,9 +114,9 @@ function ProblemMetaData({ item }) {
         to={"/problem/" + item.problem.id}
         style={{ textDecoration: "none" }}
       >
-        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+        <MaterialLink component="h3" variant="h6" color="textSecondary">
           {item.problem.title}
-        </Typography>
+        </MaterialLink>
       </Link>
       {/* <ItemInfo item={problem} /> */}
     </div>
@@ -127,7 +128,7 @@ function Header({ item, problem }) {
   return (
     <Grid container>
       <Grid item xs={10}>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           {item.title}
         </Typography>
         <ItemInfo item={item} />

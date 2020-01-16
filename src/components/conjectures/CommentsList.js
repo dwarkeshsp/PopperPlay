@@ -38,14 +38,14 @@ function CommentsList({ conjecture, firebase }) {
 
   const LOADSIZE = 5;
   const orderBy = "created";
+  const path =
+    "problems/" +
+    conjecture.problem.id +
+    "/conjectures/" +
+    conjecture.id +
+    "/comments";
 
   React.useEffect(() => {
-    const path =
-      "problems/" +
-      conjecture.problem.id +
-      "/conjectures/" +
-      conjecture.id +
-      "/comments";
     firebase
       .collection(path)
       .orderBy(orderBy, "desc")
@@ -62,7 +62,7 @@ function CommentsList({ conjecture, firebase }) {
   function lazyLoad() {
     if (lastComment) {
       firebase
-        .startAfterQuery(orderBy, LOADSIZE, lastComment)
+        .commentStartAfterQuery(orderBy, LOADSIZE, lastComment, path)
         .then(querySnapshot => {
           const data = querySnapshot.docs.map(doc => doc.data());
           querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
@@ -85,7 +85,6 @@ function CommentsList({ conjecture, firebase }) {
 
 function CommentCard({ comment }) {
   const classes = useStyles();
-
   function content() {
     const DETAILLENGTH = 400;
 

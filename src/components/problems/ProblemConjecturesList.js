@@ -1,37 +1,8 @@
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import React from "react";
 import BottomScrollListener from "react-bottom-scroll-listener";
-import { Link } from "react-router-dom";
 import { withFirebase } from "../firebase";
-import DeleteButton from "../util/DeleteButton";
-import ItemInfo from "../util/ItemInfo";
-import Markdown from "../util/Markdown";
-import VoteButton from "../util/VoteButton";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%",
-    // maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
-  },
-  inline: {
-    display: "inline"
-  },
-  markdown: {
-    ...theme.typography.caption
-  },
-  card: {
-    display: "flex"
-  },
-  cardDetails: {
-    flex: 1
-  }
-}));
+import Card from "../util/Card";
 
 function ProblemConjecturesList({ problem, firebase }) {
   const [conjectures, setConjectures] = React.useState([]);
@@ -72,65 +43,9 @@ function ProblemConjecturesList({ problem, firebase }) {
   return (
     <div>
       {conjectures.map(conjecture => (
-        <ConjectureCard conjecture={conjecture} />
+        <Card item={conjecture} noProblemInfo />
       ))}
       <BottomScrollListener onBottom={lazyLoad} />
-    </div>
-  );
-}
-
-function ConjectureCard({ conjecture }) {
-  const classes = useStyles();
-
-  function title() {
-    const TITLELENGTH = 250;
-
-    let title = conjecture.title.substr(0, TITLELENGTH);
-    if (conjecture.title.substr(TITLELENGTH)) {
-      title += "...";
-    }
-    return title;
-  }
-
-  function details() {
-    const DETAILLENGTH = 400;
-
-    let details = conjecture.details.substr(0, DETAILLENGTH);
-    if (conjecture.details.substr(DETAILLENGTH)) {
-      details += "...";
-    }
-    return details;
-  }
-
-  return (
-    <div>
-      <Link
-        to={{
-          pathname: "/conjecture/" + conjecture.problem.id + "/" + conjecture.id
-          // state: { conjecture: conjecture }
-        }}
-        style={{ textDecoration: "none" }}
-      >
-        <div>
-          <CardActionArea component="a" href="#">
-            <Card className={classes.card}>
-              <div className={classes.cardDetails}>
-                <CardContent>
-                  <Typography component="h2" variant="h6">
-                    {title()}
-                  </Typography>
-                  <ItemInfo item={conjecture} />
-                  <Markdown className={classes.markdown}>{details()}</Markdown>
-                </CardContent>
-              </div>
-              <CardActions disableSpacing>
-                <DeleteButton item={conjecture} />
-                <VoteButton item={conjecture} />
-              </CardActions>
-            </Card>
-          </CardActionArea>
-        </div>
-      </Link>
     </div>
   );
 }

@@ -125,22 +125,6 @@ class Firebase {
       .limit(LOADSIZE)
       .get();
 
-  // *** Comments API ***
-  comment = (problemID, conjectureID, commentID) =>
-    this.db.doc(
-      "problems/" +
-        problemID +
-        "/conjectures/" +
-        conjectureID +
-        "/comments/" +
-        commentID
-    );
-  // comments = (problemID, conjectureID) =>
-  //   this.db.collection(
-  //     "problems/" + problemID + "/conjectures/" + conjectureID
-  //   );
-  collection = path => this.db.collection(path);
-
   // *** Query API ***
   query = (orderBy, LOADSIZE, problem) =>
     problem
@@ -158,6 +142,24 @@ class Firebase {
   // *** Tag API ***
   tag = tagID => this.db.doc(`tags/${tagID}`);
   tags = () => this.db.collection("tags");
+
+  // *** Comments API ***
+  comment = (problemID, conjectureID, commentID) =>
+    this.db.doc(
+      "problems/" +
+        problemID +
+        "/conjectures/" +
+        conjectureID +
+        "/comments/" +
+        commentID
+    );
+  collection = path => this.db.collection(path);
+  commentStartAfterQuery = (orderBy, LOADSIZE, lastDoc, path) =>
+    this.collection(path)
+      .orderBy(orderBy, "desc")
+      .startAfter(lastDoc)
+      .limit(LOADSIZE)
+      .get();
 
   // *** FieldValue API ***
   arrayUnion = item => this.firestore.FieldValue.arrayUnion(item);
