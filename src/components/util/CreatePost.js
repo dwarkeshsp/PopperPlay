@@ -5,9 +5,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
+import MUIRichTextEditor from "mui-rte";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import TagsMenu from "../tags/TagsMenu";
+import { draftjsToMd } from "draftjs-md-converter";
+import { EditorState, convertToRaw } from "draft-js";
 import Grid from "@material-ui/core/Grid";
 import Markdown from "../util/Markdown";
 import { makeStyles } from "@material-ui/core/styles";
@@ -60,6 +63,11 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
     setDetails("");
     setValid(false);
     setOpen(false);
+  }
+
+  function changeText(state) {
+    const details = draftjsToMd(convertToRaw(state.getCurrentContent()));
+    setDetails(details);
   }
 
   function postProblem() {
@@ -203,7 +211,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
               multiline
               margin="dense"
               id="title"
-              label="Problem"
+              label="Problem Title"
               fullWidth
               onChange={event => setParentProblemTitle(event.target.value)}
             />
@@ -222,7 +230,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
           multiline
           margin="dense"
           id="title"
-          label={problem ? "Problem" : "Conjecture"}
+          label={problem ? "Problem Title" : "Conjecture Title"}
           fullWidth
           onChange={event => setTitle(event.target.value)}
         />
@@ -230,34 +238,26 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
         <Typography variant="caption">
           {tags.length} {tags.length === 1 ? "tag" : "tags"}
         </Typography>
-        <a
-          href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
-          target="_blank"
-        >
-          <Typography className={classes.padTop} variant="body2">
-            Markdown is supported below
-          </Typography>
-        </a>
-        <Grid container spacing={1}>
-          <TextField
-            className={classes.padTopSlight}
-            id="details"
-            label="More"
-            placeholder="More"
-            fullWidth
-            multiline
-            // rows={fullScreen ? "10" : "5"}
-            onChange={event => setDetails(event.target.value)}
-          />
-          <div className={classes.padTop}>
-            {!details && (
-              <Typography color="textSecondary" variant="h5">
-                Markdown Formatted Preview...
-              </Typography>
-            )}
-            <Markdown className={classes.markdown}>{details}</Markdown>
-          </div>
-        </Grid>
+        <MUIRichTextEditor
+          label="Text (optional)..."
+          onChange={changeText}
+          controls={[
+            "title",
+            "bold",
+            "italic",
+            "underline",
+            "strikethrough",
+            "highlight",
+            "undo",
+            "redo",
+            "link",
+            "numberList",
+            "bulletList",
+            "quote",
+            "code",
+            "clear"
+          ]}
+        />
       </DialogContent>
       <DialogActions>
         <Button

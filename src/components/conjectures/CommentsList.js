@@ -85,15 +85,15 @@ function CommentsList({ conjecture, firebase }) {
 
 function CommentCard({ comment }) {
   const classes = useStyles();
-  function content() {
-    const DETAILLENGTH = 400;
+  // function content() {
+  //   const DETAILLENGTH = 1000;
 
-    let content = comment.content.substr(0, DETAILLENGTH);
-    if (comment.content.substr(DETAILLENGTH)) {
-      content += "...";
-    }
-    return content;
-  }
+  //   let content = comment.content.substr(0, DETAILLENGTH);
+  //   if (comment.content.substr(DETAILLENGTH)) {
+  //     content += "...";
+  //   }
+  //   return content;
+  // }
 
   return (
     <div>
@@ -110,7 +110,9 @@ function CommentCard({ comment }) {
               <div className={classes.cardDetails}>
                 <CardContent>
                   <ItemInfo item={comment} />
-                  <Markdown className={classes.markdown}>{content()}</Markdown>
+                  <Markdown className={classes.markdown}>
+                    {comment.content}
+                  </Markdown>
                 </CardContent>
               </div>
               <CardActions disableSpacing>

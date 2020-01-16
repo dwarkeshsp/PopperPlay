@@ -17,8 +17,8 @@ export default function StickyFooter() {
     <div className={classes.root}>
       <Container component="main" maxWidth="sm">
         <Typography variant="h2" align="center" gutterBottom>
-          <SentimentVeryDissatisfiedIcon style={{ fontSize: 50 }} />
-          {" Page not found"}
+          {/* <SentimentVeryDissatisfiedIcon style={{ fontSize: 50 }} /> */}
+          {"👀 Page Not Found"}
         </Typography>
         <a
           href="https://gitlab.com/dwarkeshsp/popperplay/issues"
