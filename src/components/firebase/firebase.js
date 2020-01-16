@@ -1,5 +1,6 @@
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/analytics";
 import app from "firebase/app";
 
 import config from "./config";
@@ -9,6 +10,7 @@ class Firebase {
     app.initializeApp(config);
     this.auth = app.auth();
     this.db = app.firestore();
+    this.analytics = app.analytics();
     this.firestore = app.firestore;
   }
 

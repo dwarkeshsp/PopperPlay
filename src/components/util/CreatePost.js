@@ -11,7 +11,6 @@ import TagsMenu from "../tags/TagsMenu";
 import Grid from "@material-ui/core/Grid";
 import Markdown from "../util/Markdown";
 import { makeStyles } from "@material-ui/core/styles";
-import { setObservableConfig } from "recompose";
 
 const { forwardRef, useImperativeHandle } = React;
 
@@ -193,7 +192,6 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
             ? "You have discovered where existing conjectures are inadequate! Bravo!"
             : "You are solving a problem by making a creative conjecture. Bravo!"}
         </DialogContentText>
-
         {!problem && !problemItem && (
           <React.Fragment>
             <DialogContentText>
@@ -209,6 +207,13 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
               fullWidth
               onChange={event => setParentProblemTitle(event.target.value)}
             />
+          </React.Fragment>
+        )}
+        {!problem && problemItem && (
+          <React.Fragment>
+            <DialogContentText variant="h6">
+              {problemItem.title}
+            </DialogContentText>
           </React.Fragment>
         )}
         <TextField

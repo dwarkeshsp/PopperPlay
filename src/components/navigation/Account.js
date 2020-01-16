@@ -1,5 +1,5 @@
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+import Fab from "@material-ui/core/Fab";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -18,7 +18,7 @@ export default function Account() {
   );
 }
 
-function LoggedIn() {
+function LoggedInBase({ firebase }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -32,15 +32,10 @@ function LoggedIn() {
 
   return (
     <div>
-      <IconButton
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        onClick={handleMenu}
-        color="primary"
-      >
-        <AccountCircle />
-      </IconButton>
+      <Fab variant="extended" color="primary" onClick={handleMenu}>
+        <AccountCircle style={{ marginRight: "0.5rem" }} />
+        {firebase.currentPerson().displayName}
+      </Fab>
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}
@@ -80,5 +75,7 @@ function NotLoggedIn() {
 function SignOutBase(props) {
   return <MenuItem onClick={props.firebase.doSignOut}>Sign Out</MenuItem>;
 }
+
+const LoggedIn = withFirebase(LoggedInBase);
 
 const SignOut = withFirebase(SignOutBase);
