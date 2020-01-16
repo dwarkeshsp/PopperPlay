@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ItemCard({ item, problem, noProblemInfo, comment }) {
+export default function ItemCard({ item, problem, noProblemInfo, noDetails }) {
   const classes = useStyles();
 
   function title() {
@@ -98,19 +98,25 @@ export default function ItemCard({ item, problem, noProblemInfo, comment }) {
                     {title()}
                   </Typography>
                   <ItemInfo item={item} />
-                  <Markdown className={classes.markdown}>{details()}</Markdown>
+                  {!noDetails && (
+                    <Markdown className={classes.markdown}>
+                      {details()}
+                    </Markdown>
+                  )}
                 </CardContent>
               </div>
-              <CardActions disableSpacing>
-                <Button
-                  variant="text"
-                  color="primary"
-                  startIcon={<BuildIcon />}
-                >
-                  {problem ? "Solve" : "Improve"}
-                </Button>
-                <VoteButton item={item} problem={problem} />
-              </CardActions>
+              {!noDetails && (
+                <CardActions disableSpacing>
+                  <Button
+                    variant="text"
+                    color="primary"
+                    startIcon={<BuildIcon />}
+                  >
+                    {problem ? "Solve" : "Improve"}
+                  </Button>
+                  <VoteButton item={item} problem={problem} />
+                </CardActions>
+              )}
             </Card>
           </CardActionArea>
         </div>

@@ -1,37 +1,11 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { withFirebase } from "../firebase";
 import Card from "./Card";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%",
-    // maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
-  },
-  inline: {
-    display: "inline"
-  },
-  markdown: {
-    ...theme.typography.caption
-  },
-  card: {
-    display: "flex"
-  },
-  cardDetails: {
-    flex: 1
-  },
-  loading: {
-    marginTop: "0.5rem"
-  }
-}));
-
 function List({ firebase, tags, orderBy, problem }) {
-  const classes = useStyles();
-
   const [items, setItems] = React.useState([]);
   const [lastDoc, setLastDoc] = React.useState(null);
   const [filtering, setFiltering] = React.useState(false);
@@ -110,7 +84,7 @@ function List({ firebase, tags, orderBy, problem }) {
         <Card item={item} problem={problem} />
       ))}
       <BottomScrollListener onBottom={lazyLoad} />
-      <Grid container justify="center" className={classes.loading}>
+      <Grid container justify="center">
         <CircularProgress />
       </Grid>
     </div>
