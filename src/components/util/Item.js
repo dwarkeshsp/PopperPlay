@@ -17,8 +17,8 @@ import CreatePost from "./CreatePost";
 import ItemInfo from "./ItemInfo";
 import MaterialLink from "@material-ui/core/Link";
 import Markdown from "./Markdown";
-import VoteButton from "./VoteButton";
-import DeleteButton from "./DeleteButton";
+import VoteButton from "./buttons/Vote";
+import Delete from "./buttons/Delete";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -134,7 +134,8 @@ function Header({ item, problem }) {
         <ItemInfo item={item} />
       </Grid>
       <Grid item xs={2} align="right">
-        <DeleteButton item={item} problem={problem} />
+        {/* <Delete item={item} problem={problem} /> */}
+
         <VoteButton item={item} problem={problem} />
       </Grid>
     </Grid>

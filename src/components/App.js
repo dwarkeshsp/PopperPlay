@@ -16,7 +16,7 @@ import Problems from "./problems/Problems";
 import { withAuthentication } from "./session";
 import Tag from "./tags/Tag";
 import Tags from "./tags/Tags";
-import NotFound from "./util/NotFound";
+import NotFound from "./util/pages/NotFound";
 
 function App() {
   return (

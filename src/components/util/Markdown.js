@@ -24,16 +24,16 @@ const options = {
       component: Typography,
       props: {
         gutterBottom: true,
-        variant: "h4",
-        align: "center"
+        variant: "h4"
+        // align: "center"
       }
     },
     h3: {
       component: Typography,
       props: {
         gutterBottom: true,
-        variant: "h5",
-        align: "center"
+        variant: "h5"
+        // align: "center"
       }
     },
     h4: {

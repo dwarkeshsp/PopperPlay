@@ -2,9 +2,9 @@ import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import React from "react";
 import { Link } from "react-router-dom";
-import { withFirebase } from "../firebase";
-import { AuthUserContext } from "../session";
-import Dialog from "./AlertDialog";
+import { withFirebase } from "../../firebase";
+import { AuthUserContext } from "../../session";
+import Dialog from "../AlertDialog";
 
 function VoteButton({ item, firebase, problem, comment }) {
   const { votedBy, id } = item;

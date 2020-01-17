@@ -7,10 +7,10 @@ import React from "react";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { Link } from "react-router-dom";
 import { withFirebase } from "../firebase";
-import DeleteButton from "../util/DeleteButton";
+import Delete from "../util/buttons/Delete";
 import ItemInfo from "../util/ItemInfo";
 import Markdown from "../util/Markdown";
-import VoteButton from "../util/VoteButton";
+import VoteButton from "../util/buttons/Vote";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -116,7 +116,7 @@ function CommentCard({ comment }) {
                 </CardContent>
               </div>
               <CardActions disableSpacing>
-                <DeleteButton item={comment} comment />
+                {/* <Delete item={comment} comment /> */}
                 <VoteButton item={comment} comment />
               </CardActions>
             </Card>

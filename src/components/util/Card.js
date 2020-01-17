@@ -13,7 +13,7 @@ import { withFirebase } from "../firebase";
 import Markdown from "../util/Markdown";
 import Link from "@material-ui/core/Link";
 import ItemInfo from "./ItemInfo";
-import VoteButton from "./VoteButton";
+import VoteButton from "./buttons/Vote";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 

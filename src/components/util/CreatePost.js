@@ -5,33 +5,16 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
-import MUIRichTextEditor from "mui-rte";
 import Typography from "@material-ui/core/Typography";
+import { convertToRaw } from "draft-js";
+import { draftjsToMd } from "draftjs-md-converter";
+import MUIRichTextEditor from "mui-rte";
 import React from "react";
 import TagsMenu from "../tags/TagsMenu";
-import { draftjsToMd } from "draftjs-md-converter";
-import { EditorState, convertToRaw } from "draft-js";
-import Grid from "@material-ui/core/Grid";
-import Markdown from "../util/Markdown";
-import { makeStyles } from "@material-ui/core/styles";
 
 const { forwardRef, useImperativeHandle } = React;
 
-const useStyles = makeStyles(theme => ({
-  markdown: {
-    ...theme.typography
-  },
-  padTop: {
-    marginTop: "1rem"
-  },
-  padTopSlight: {
-    marginTop: "0.25rem"
-  }
-}));
-
 const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
-  const classes = useStyles();
-
   const [title, setTitle] = React.useState("");
   const [tags, setTags] = React.useState([]);
   const [details, setDetails] = React.useState("");
@@ -41,8 +24,6 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
 
   const [open, setOpen] = React.useState(false);
   const [fullScreen, setFullScreen] = React.useState(false);
-
-  console.log(problemItem);
 
   React.useEffect(() => {
     setValid(
