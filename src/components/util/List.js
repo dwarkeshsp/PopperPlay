@@ -15,7 +15,6 @@ function List({ firebase, tags, orderBy, problem }) {
   const updateData = querySnapshot => {
     const data = querySnapshot.docs.map(doc => doc.data());
     querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-
     setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
     return data;
   };

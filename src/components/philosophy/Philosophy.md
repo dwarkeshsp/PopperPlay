@@ -2,7 +2,9 @@ _Many of following ideas are inspired by David Deutsch and Karl Popper. They are
 
 <!-- **January 2020 (revised continually)** -->
 
-##### PopperPlay helps people identify and solve problems.
+#### PopperPlay helps people identify and solve problems.
+
+&nbsp;
 
 ## Problem Solving
 

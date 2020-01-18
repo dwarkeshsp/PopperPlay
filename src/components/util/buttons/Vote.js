@@ -26,6 +26,7 @@ function VoteButton({ item, firebase, problem, comment }) {
     }
   }
 
+  // *** Not synced across devices
   function vote() {
     if (problem) {
       voteProblem();

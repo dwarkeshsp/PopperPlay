@@ -20,7 +20,7 @@ export default function Types() {
           your help in order to identify and correct them.
         </Typography> */}
         <Typography variant="h6" align="center" gutterBottom paragraph>
-          👋 I’m Dwarkesh. I'm trying to make a platform for fun and open
+          👋 Hi, I’m Dwarkesh. I'm trying to make a platform for fun and open
           problem solving. There is nothing more useful to this mission than
           your feedback. Thank you for your help! 🙏
         </Typography>
