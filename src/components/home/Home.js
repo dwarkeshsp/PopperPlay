@@ -20,7 +20,7 @@ import Vote from "../util/buttons/Vote";
 const useStyles = makeStyles(theme => ({
   root: {
     // backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(5, 0, 0)
+    padding: theme.spacing(4, 0, 0)
   },
   buttons: {
     marginTop: theme.spacing(4)

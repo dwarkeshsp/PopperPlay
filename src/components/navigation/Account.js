@@ -62,7 +62,7 @@ function LoggedInBase({ firebase }) {
 function NotLoggedIn() {
   return (
     <div>
-      <Button variant="outlined" color="primary" component={Link} to="/signup">
+      <Button variant="contained" color="primary" component={Link} to="/signup">
         Signup
       </Button>
       <Button color="primary" component={Link} to="/login">

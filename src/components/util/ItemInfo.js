@@ -9,10 +9,6 @@ import TagsList from "../tags/TagsList";
 const useStyles = makeStyles(theme => ({
   inline: {
     display: "inline"
-  },
-  markdown: {
-    ...theme.typography.caption,
-    padding: theme.spacing(3, 0)
   }
 }));
 

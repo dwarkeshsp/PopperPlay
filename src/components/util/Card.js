@@ -3,19 +3,15 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import BuildIcon from "@material-ui/icons/Build";
 import React from "react";
-import BottomScrollListener from "react-bottom-scroll-listener";
 import { Link as RouterLink } from "react-router-dom";
-import { withFirebase } from "../firebase";
 import Markdown from "../util/Markdown";
-import Link from "@material-ui/core/Link";
-import ItemInfo from "./ItemInfo";
 import VoteButton from "./buttons/Vote";
-import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import ItemInfo from "./ItemInfo";
 
 const useStyles = makeStyles(theme => ({
   root: {

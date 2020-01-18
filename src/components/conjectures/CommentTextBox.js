@@ -67,7 +67,7 @@ function CommentTextBox({ conjecture, firebase }) {
             <TextField
               className={classes.textbox}
               id="comment-textbox"
-              label="Comment"
+              label="Criticize / Improve"
               multiline
               rowsMax="4"
               //   variant="outlined"

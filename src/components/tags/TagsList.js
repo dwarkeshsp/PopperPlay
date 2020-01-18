@@ -13,7 +13,8 @@ export default function TagsList({ tags }) {
   const classes = useStyles();
 
   return (
-    <div>
+    <React.Fragment>
+      {" "}
       {tags &&
         tags.map((tag, index) => (
           <React.Fragment>
@@ -31,6 +32,6 @@ export default function TagsList({ tags }) {
             </Typography>
           </React.Fragment>
         ))}
-    </div>
+    </React.Fragment>
   );
 }
