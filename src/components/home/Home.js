@@ -41,12 +41,9 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   footer: {
-    padding: theme.spacing(3, 2),
-    marginTop: "auto",
-    backgroundColor:
-      theme.palette.type === "dark"
-        ? theme.palette.grey[800]
-        : theme.palette.grey[200]
+    backgroundColor: theme.palette.background.paper,
+    // marginTop: theme.spacing(8),
+    padding: theme.spacing(6, 0)
   }
 }));
 
@@ -115,27 +112,51 @@ function Footer() {
   const classes = useStyles();
 
   return (
-    <div style={{ marginTop: "5rem" }}>
-      <CssBaseline />
-
-      <footer className={classes.footer}>
-        <Container>
-          <a href="https://gitlab.com/dwarkeshsp/popperplay/" target="_blank">
-            <Link variant="h5" color="textPrimary">
-              Source Code
-            </Link>
-          </a>
-          <Typography variant="body1" color="textPrimary">
-            Please feel free to email me for any reason at
+    <footer className={classes.footer}>
+      <Container maxWidth="lg">
+        <Typography variant="h6" align="center" gutterBottom>
+          PopperPlay
+        </Typography>
+        <Typography variant="body1" align="center" color="textSecondary">
+          Please feel free to contact me for any reason at
+        </Typography>
+        <Link color="inherit" href="mailto:dwarkesh@popperplay.com">
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="textPrimary"
+            component="p"
+          >
+            dwarkesh.sanjay.patel@gmail.com
           </Typography>
-          <a href="mailto:dwarkesh@popperplay.com" target="_blank">
-            <Link variant="h5" color="textPrimary">
-              dwarkesh@popperplay.com
-            </Link>
-          </a>
-        </Container>
-      </footer>
-    </div>
+        </Link>
+        <Link color="inherit" href="https://gitlab.com/dwarkeshsp/popperplay">
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="textPrimary"
+            component="p"
+            gutterBottom
+          >
+            Source Code
+          </Typography>
+        </Link>
+        <Copyright />
+      </Container>
+    </footer>
+  );
+}
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://popperplay.com/">
+        PopperPlay
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }
 
