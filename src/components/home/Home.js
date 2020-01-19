@@ -16,6 +16,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Vote from "../util/buttons/Vote";
+import ItemInfo from "../util/ItemInfo";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,12 +69,7 @@ function Header() {
         Discovery: first a problem, then conjecture, then criticism, then new
         problem
       </Typography>
-      <Typography
-        variant="subtitle1"
-        align="center"
-        color="textSecondary"
-        paragraph
-      >
+      <Typography variant="h5" align="center" color="textSecondary" paragraph>
         David Deutsch
       </Typography>
       <div className={classes.buttons}>
@@ -165,6 +161,7 @@ function ProblemsBase({ firebase }) {
                     <Typography gutterBottom variant="h6" component="h2">
                       {title(problem)}
                     </Typography>
+                    <ItemInfo item={problem} />
                     <Typography variant="caption">
                       {details(problem)}
                     </Typography>

@@ -28,14 +28,15 @@ const useStyles = makeStyles(theme => ({
     display: "inline"
   },
   markdown: {
+    marginTop: "1rem",
     ...theme.typography.body1
   },
-  createButton: {
+  create: {
     justifyContent: "center",
-    marginTop: "1rem"
+    marginTop: "3rem"
   },
   childrenTitle: {
-    marginTop: "3rem"
+    marginTop: "1rem"
   }
 }));
 
@@ -50,7 +51,7 @@ function Item({ item, problem, firebase }) {
           {!problem && <ProblemMetaData item={item} />}
           <Header item={item} problem={problem} />
           <Markdown className={classes.markdown}>{item.details}</Markdown>
-          <Grid container className={classes.createButton}>
+          <Grid container className={classes.create}>
             {problem ? (
               <Button
                 variant="contained"
@@ -114,7 +115,12 @@ function ProblemMetaData({ item }) {
         to={"/problem/" + item.problem.id}
         style={{ textDecoration: "none" }}
       >
-        <MaterialLink component="h3" variant="h6" color="textSecondary">
+        <MaterialLink
+          component="h3"
+          variant="h5"
+          color="textSecondary"
+          gutterBottom
+        >
           {item.problem.title}
         </MaterialLink>
       </Link>

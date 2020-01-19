@@ -30,7 +30,7 @@ PopperPlay is the ever-improving solution. Here, anyone can identify where preva
 
 Eric Weinstein has explained the inspiring meaning of a [portal](https://www.youtube.com/watch?v=pb_yvBNLjNk) - an idea, a place, an experience that helps us escape our hum-drum lives and shows us how brilliantly interesting the world is. I conjecture that what one feels upon entering a portal is optimism. A person is introduced to a beautiful and novel problem and realizes that they can solve it.
 
-In my own quest for portals, I found no fun and open way to identify and solve problems. [^1] So I built PopperPlay. I want to make it easy for myself and others to experience the freedom and joy of problem solving. ...
+In my own quest for portals, I found no fun and open way to identify and solve problems. [^1] So I built PopperPlay. I want to make it easy for myself and others to go on intellectual adventures. 
 
 (Incorrect? Grammarly)
 
@@ -39,7 +39,7 @@ How much fun it would be to identify where existing explanations were inadequate
 ## Popper's Criterion
 
 > The question about the sources of our knowledge ... has always been asked in the spirit of: ‘What are the best sources of our knowledge - the most reliable ones, those which will not lead us into error, and those to which
-> we can and must turn, in case of doubt, as the last court of appeal?’ I propose to assume, instead, that no such ideal sources exist - no more than ideal rulers - and that all ‘sources’ are liable to lead us into error at times. And I propose to replace, therefore, the question of the sources of our knowledge by the entirely different question: 'How can we hope to detect and eliminate error?
+> we can and must turn, in case of doubt, as the last court of appeal?’ I propose to assume, instead, that no such ideal sources exist - no more than ideal rulers - and that all ‘sources’ are liable to lead us into error at times. And I propose to replace, therefore, the question of the sources of our knowledge by the entirely different question: 'How can we hope to detect and eliminate error?'
 >
 > Karl Popper, *Knowledge without Authority* [^1]
 

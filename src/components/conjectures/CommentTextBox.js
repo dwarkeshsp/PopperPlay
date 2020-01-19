@@ -20,7 +20,7 @@ function CommentTextBox({ conjecture, firebase }) {
   const [value, setValue] = React.useState("");
   const alertRef = React.useRef();
 
-  function post() {
+  async function post() {
     const path =
       "problems/" +
       conjecture.problem.id +
@@ -29,34 +29,28 @@ function CommentTextBox({ conjecture, firebase }) {
       "/comments/";
     const timestamp = firebase.timestamp();
     const person = firebase.currentPerson().displayName;
-    let commentRef;
-    firebase
-      .collection(path)
-      .add({
-        content: value,
-        creator: person,
-        votedBy: [],
-        votes: 0,
-        created: timestamp,
-        lastModified: timestamp,
-        path: path
-        // tags: conjecture.tags
-      })
-      .then(docRef => (commentRef = docRef))
-      .then(() => {
-        conjecture.tags.forEach(tag => {
-          const tagRef = firebase.tag(tag);
-          tagRef.set({}, { merge: true });
-          tagRef.update({
-            comments: firebase.arrayUnion(commentRef)
-          });
-        });
-        firebase.person(person).update({
-          comments: firebase.arrayUnion(commentRef)
-        });
-      })
-      .then(() => setValue(""))
-      .catch(error => console.log(error));
+    const commentRef = await firebase.collection(path).add({
+      content: value,
+      creator: person,
+      votedBy: [],
+      votes: 0,
+      created: timestamp,
+      lastModified: timestamp,
+      path: path,
+      level: 0
+      // tags: conjecture.tags
+    });
+    await conjecture.tags.forEach(tag => {
+      const tagRef = firebase.tag(tag);
+      tagRef.set({}, { merge: true });
+      tagRef.update({
+        comments: firebase.arrayUnion(commentRef)
+      });
+    });
+    await firebase.person(person).update({
+      comments: firebase.arrayUnion(commentRef)
+    });
+    setValue("");
   }
 
   return (
@@ -70,7 +64,7 @@ function CommentTextBox({ conjecture, firebase }) {
               label="Criticize / Improve"
               multiline
               rowsMax="4"
-              //   variant="outlined"
+              variant="outlined"
               value={value}
               onChange={event => setValue(event.target.value)}
             />
