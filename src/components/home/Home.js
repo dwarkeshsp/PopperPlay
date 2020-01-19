@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
-    // marginTop: theme.spacing(8),
+    marginTop: theme.spacing(3),
     padding: theme.spacing(6, 0)
   }
 }));
@@ -127,7 +127,7 @@ function Footer() {
             color="textPrimary"
             component="p"
           >
-            dwarkesh.sanjay.patel@gmail.com
+            dwarkesh@popperplay.com
           </Typography>
         </Link>
         <Link color="inherit" href="https://gitlab.com/dwarkeshsp/popperplay">
@@ -141,7 +141,7 @@ function Footer() {
             Source Code
           </Typography>
         </Link>
-        <Copyright />
+        {/* <Copyright /> */}
       </Container>
     </footer>
   );

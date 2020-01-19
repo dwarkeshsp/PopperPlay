@@ -8,19 +8,36 @@
 
 _Many of following ideas are inspired by David Deutsch and Karl Popper. They are given full credit and gratitude._
 
+## Popper's Criterion
+
+> The question about the sources of our knowledge ... has always been asked in the spirit of: ‘What are the best sources of our knowledge - the most reliable ones, those which will not lead us into error, and those to which
+> we can and must turn, in case of doubt, as the last court of appeal?’ I propose to assume, instead, that no such ideal sources exist - no more than ideal rulers - and that all ‘sources’ are liable to lead us into error at times. And I propose to replace, therefore, the question of the sources of our knowledge by the entirely different question: 'How can we hope to detect and eliminate error?'
+>
+> Karl Popper, *Knowledge without Authority* [^1]
+
+News, academia, and social media are in crisis. They are turning dogmatic, dishonest, and tribal. The source of this trouble is that we have been using the wrong criterion to judge institutions which help create knowledge. The prevailing approach focuses on sources, asking, "Which authority should we trust?" [^2]
+
+This question is based on the same mistakes as the prevailing question in political philosophy, "Who should rule?". The philosopher Karl Popper pointed out that that since all rulers are fallible, and since they will all make mistakes, we will never find the perfect ruler who, once appointed, will dissolve problems once and for all. Similarly, there is no source of information which is free from error and bias. If we believe that we found such a source, then we become prone to believe incredulous claims which could not survive open criticism. Furthermore, there is no rational way to resolve disputes between sources claiming to justify their own credibility. Instead, disagreements must be settled by irrational appeals to authority and failing that, violence.
+
+When we ask, "Who should we trust?", we are expecting explanationless progress. We are trying to predict future success from raw data like the qualifications and track record of news organizations and academic journals. But this is not an explanation for why we should expect progress to continue without any error correction.
+
+The only rational way to create progress is to create a platform which satisfies Popper's criterion: _Does the system facilitate the correction of errors and the creation of new ideas?_
+
+Instead of seeking higher authorities of knowledge, we can allow people to identify problems with prevailing explanations, conjecture solutions upon them, and then criticize these tentative guesses. These new explanations will generate even more interesting problems, and we will solve them as well. And we will subject our platform itself to error correction so that we can improve the process of problem solving and thus better fulfill Popper's Criterion.
+
+Only in this way can we prevent the entrenchment of errors and the suppression of new ideas.
+
 ## Problem Solving
 
 > All evils are caused by insufficient knowledge.
 >
 > David Deutsch
 
-Where a conscious being suffers or dies, where a truth about the universe remains unknown, where we fail to explore, create, and understand - the cause is that we have lack the knowledge to solve some problem. Given this truth, our entire civilization should be dedicated to helping people solve problems. Every human being has the capacity to create knowledge, and we should be doing everything we possibly can to utilize their creativity and problem-solving. 
+Where a conscious being suffers or dies, where a truth about the universe remains unknown, where we fail to explore, create, and understand - the cause is that we have lack the knowledge to solve some problem. Given this fact, our entire civilization should be dedicated to helping people solve problems. Every human being has the capacity to create knowledge, and we should be doing everything we possibly can to utilize their creativity and problem-solving. 
 
-(Not clear)
+But tragically, our institutions fail to help people solve problems. Instead of empowering the entire repertoire of human thought, we only give a select few the resources, information, and platform to create knowledge. This is in and of itself a severe problem, because it is handicapping the solution of all other problems.
 
-But tragically, this is not so. Instead of empowering the entire repertoire of human thought, we only give a select few the resources, information, and platform to create knowledge. This is in and of itself a severe problem, because it is handicapping the solution of all other problems.
-
-PopperPlay is the ever-improving solution. Here, anyone can identify where prevailing conjectures are inadequate. Anyone can create a tentative assertion which solves the problem. Anyone can criticize and improve the conjectures others have made. People can 
+PopperPlay is the ever-improving solution. Here, anyone can identify problems with prevailing conjectures. Anyone can create new knowledge and solve these problems. Through this open process of conjecture and refutation, we can enable the creation of new knowledge and thus reduce the suffering, error, and stasis in our civilization.
 
 ## A Portal
 
@@ -30,42 +47,25 @@ PopperPlay is the ever-improving solution. Here, anyone can identify where preva
 
 Eric Weinstein has explained the inspiring meaning of a [portal](https://www.youtube.com/watch?v=pb_yvBNLjNk) - an idea, a place, an experience that helps us escape our hum-drum lives and shows us how brilliantly interesting the world is. I conjecture that what one feels upon entering a portal is optimism. A person is introduced to a beautiful and novel problem and realizes that they can solve it.
 
-In my own quest for portals, I found no fun and open way to identify and solve problems. [^1] So I built PopperPlay. I want to make it easy for myself and others to go on intellectual adventures. 
-
-(Incorrect? Grammarly)
+In my own quest for portals, I found no fun and easy entrances to open problems.[^1] So I built PopperPlay. I want to make it easy for myself and others to go on intellectual adventures and create new knowledge.
 
 How much fun it would be to identify where existing explanations were inadequate and create new ones! How much progress could be unleashed if problem solving was freed from the gatekeeping, bureaucracy, and inertia that currently impinges on it!
 
-## Popper's Criterion
-
-> The question about the sources of our knowledge ... has always been asked in the spirit of: ‘What are the best sources of our knowledge - the most reliable ones, those which will not lead us into error, and those to which
-> we can and must turn, in case of doubt, as the last court of appeal?’ I propose to assume, instead, that no such ideal sources exist - no more than ideal rulers - and that all ‘sources’ are liable to lead us into error at times. And I propose to replace, therefore, the question of the sources of our knowledge by the entirely different question: 'How can we hope to detect and eliminate error?'
->
-> Karl Popper, *Knowledge without Authority* [^1]
-
-News, academia, and social media are in crisis. They are turning dogmatic, dishonest, and tribal. The source of this trouble is that we have been using the wrong criterion to judge institutions which help create knowledge. The prevailing approach focuses on sources, asking, "Who should we trust?" [^2]
-
-This question is based on the same mistakes as the prevailing question in political philosophy, "Who should rule?". The philosopher Karl Popper pointed out that that since all rulers are fallible, and since they will all make mistakes, we will never find the perfect ruler who, once appointed, will dissolve problems once and for all. Similarly, there is no source of information which is free from error and bias. If we believe that we found such a source, then we become prone to believe incredulous claims which could not survive open criticism. Furthermore, there is no rational way to resolve disputes between sources claiming to justify their own credibility. Instead, disagreements must be settled by irrational appeals to authority. Failing that, violence must be used to suppress those that reject the authoritative truth.
-
-When we ask, "Who should we trust?", we are expecting explanationless progress. We are trying to predict future success from raw data like the qualifications and track record of news organizations and academic journals. But this is not an explanation for why we should expect progress to continue without any error correction.
-
-The only rational way to create progress is to satisfy Popper's criterion. The criterion which Karl Popper created to judge political institutions is equally applicable to platforms of knowledge creation: _Does the system facilitate the correction of errors and the creation of new ideas?_
-
-Instead of seeking higher authorities of knowledge, we can allow people to identify problems with prevailing explanations, conjecture solutions upon them, and then criticize these tentative guesses. Only in this way can we correct errors, 
-
-These new explanations will generate even more interesting problems, and we will solve them as well.
-
-build a platform which creates knowledge by encouraging problem solving, idea generation, and the criticism of prevailing conjectures. And we can subject our platform to error correction so that we can improve the structure of problem solving itself.
+PopperPlay houses portals in the form of problems. Each problem is the beginning of an infinity of more problems, each more interesting than the last, and each requiring human creativity to solve. 
 
 ## Error Correction
 
-PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. These errors will be found in the layout and structure of the website, in missing features, in the algorithms for featuring problems and conjectures (once I build them), and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjecture solutions upon. That is why **PopperPlay is completely open source**. I need your [feedback](https://popperplay.com/feedback) in order to make this website a more fun and open forum for the creation of new ideas and correction of errors.
+PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. These errors will be found in the layout and structure of the platform, in missing features, in the algorithms for featuring problems and conjectures, and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjecture solutions upon. That is why **PopperPlay is completely open source**. I need your [feedback](https://popperplay.com/feedback) in order to make this website a more fun and open forum for the creation of new ideas and correction of errors. And because 
 
 ## No Ads or Paywalls
 
-Ads and paywalls are bad solutions to the problem of monetization. I think it's wrong to make people pay to receive or create knowledge. As a college student, I probably wouldn't be able to afford PopperPlay myself if it was paywalled.
+> If you have something important to say, it's wrong to say it in a paywalled publication.
+>
+> Paul Graham
 
-Advertisements are perhaps even worse. They create an incentive to optimize for click-bait and distraction, and they destroy the user experience (who, after all, hasn't cringed when an article they were reading was replaced with popups and banners)
+Ads and paywalls are bad solutions to the problem of monetization. I think it's wrong to make people pay to receive or create knowledge.[^3] As a college student, I probably wouldn't be able to afford PopperPlay myself if it was paywalled.
+
+Advertisements are perhaps even worse. They create an incentive to optimize for click-bait and distraction, and they destroy the user experience. It seems like every time I read something online, I am cringing at the sight of popups and banners replacing my article.
 
 But as PopperPlay grows, I will need money and to pay for servers and to support the time I am spending in building features and improving the site. I need your ideas about [how I should monetize](https://popperplay.com/problem/Ri7rf6GspvuCuuVL1274).
 
@@ -80,4 +80,5 @@ Most importantly, we can help people escape from existing channels. People will 
 [^1]: As a college student, I realized that not only was I was I not solving problems, I wasn't even learning how to solve problems. Instead, I was learning how to pretend like I was solving an interesting problem creatively while being neither creative nor interested.
 [^1]: I realize the irony of using a source to make this point. I'm not appealing to authority, only to good writing.
 [^2]: From this are derived further bad questions like, "How do we ensure that our journalistic and academic classes are responsible and informed?", "Who should be allowed to participate in the process of sense making?", and "How should the gatekeepers be educated?"
-[^3]:
+[^3]:Unless the paywall is absolutely necessary to sustain your channel of knowledge creation. And even then, the paywall becomes a problem you should solve with a better alternative.
+
