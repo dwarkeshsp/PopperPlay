@@ -42,6 +42,7 @@ function TagMenu(props) {
           props.setValue(value.map(tag => tag.toLowerCase()))
         }
         onOpen={() => setOptions(allTags())}
+        defaultValue={props.defaultValue}
       />
     </div>
   );

@@ -215,7 +215,11 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
           fullWidth
           onChange={event => setTitle(event.target.value)}
         />
-        <TagsMenu setValue={setTags} variant="outlined" />
+        <TagsMenu
+          setValue={setTags}
+          defaultValue={problemItem ? problemItem.tags : []}
+          variant="outlined"
+        />
         <Typography variant="caption">
           {tags.length} {tags.length === 1 ? "tag" : "tags"}
         </Typography>
