@@ -37,8 +37,8 @@ function CommentTextBox({ conjecture, firebase }) {
       created: timestamp,
       lastModified: timestamp,
       path: path,
-      level: 0
-      // tags: conjecture.tags
+      level: 0,
+      tags: conjecture.tags
     });
     await conjecture.tags.forEach(tag => {
       const tagRef = firebase.tag(tag);
