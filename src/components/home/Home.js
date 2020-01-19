@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import React from "react";
+import Link from "@material-ui/core/Link";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { Link as RouterLink } from "react-router-dom";
 import ItemCard from "../util/Card";
 import Card from "@material-ui/core/Card";
@@ -37,6 +39,14 @@ const useStyles = makeStyles(theme => ({
   },
   cardContent: {
     flexGrow: 1
+  },
+  footer: {
+    padding: theme.spacing(3, 2),
+    marginTop: "auto",
+    backgroundColor:
+      theme.palette.type === "dark"
+        ? theme.palette.grey[800]
+        : theme.palette.grey[200]
   }
 }));
 
@@ -56,6 +66,7 @@ export default function Home() {
         {/* </Grid>
         </Grid> */}
       </Container>
+      <Footer />
     </div>
   );
 }
@@ -96,6 +107,34 @@ function Header() {
           </Grid>
         </Grid>
       </div>
+    </div>
+  );
+}
+
+function Footer() {
+  const classes = useStyles();
+
+  return (
+    <div style={{ marginTop: "5rem" }}>
+      <CssBaseline />
+
+      <footer className={classes.footer}>
+        <Container>
+          <a href="https://gitlab.com/dwarkeshsp/popperplay/" target="_blank">
+            <Link variant="h5" color="textPrimary">
+              Source Code
+            </Link>
+          </a>
+          <Typography variant="body1" color="textPrimary">
+            Please feel free to email me for any reason at
+          </Typography>
+          <a href="mailto:dwarkesh@popperplay.com" target="_blank">
+            <Link variant="h5" color="textPrimary">
+              dwarkesh@popperplay.com
+            </Link>
+          </a>
+        </Container>
+      </footer>
     </div>
   );
 }
@@ -144,7 +183,7 @@ function ProblemsBase({ firebase }) {
       <Typography
         variant="h4"
         align="center"
-        style={{ marginTop: "2.5rem", marginBottom: "1rem" }}
+        style={{ marginTop: "3rem", marginBottom: "1rem" }}
       >
         Top Problems
       </Typography>

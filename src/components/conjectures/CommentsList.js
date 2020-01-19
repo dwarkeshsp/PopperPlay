@@ -99,8 +99,6 @@ function CommentsList({ conjecture, firebase }) {
   );
 }
 
-const CommentCard = withFirebase(CommentCardBase);
-
 function CommentCardBase({ comment, firebase }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -217,7 +215,7 @@ function ChildrenBase({ comment, expanded, firebase }) {
         setComments(data);
         console.log(data);
       });
-  }, []);
+  }, [expanded]);
 
   function lazyLoad() {
     if (lastComment) {
@@ -238,12 +236,13 @@ function ChildrenBase({ comment, expanded, firebase }) {
       <div>
         {comments.map(child => (
           <CommentCard comment={child} />
-          // <Typography>{child.content}</Typography>
         ))}
       </div>
     </Collapse>
   );
 }
+
+const CommentCard = withFirebase(CommentCardBase);
 
 const Children = withFirebase(ChildrenBase);
 

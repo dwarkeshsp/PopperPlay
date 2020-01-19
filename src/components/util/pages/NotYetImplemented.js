@@ -15,8 +15,9 @@ export default function StickyFooter() {
   return (
     <div className={classes.root}>
       <Container maxWidth="sm">
-        <Typography variant="h2" align="center" gutterBottom>
-          🥘 getting cooked up right now
+        <Typography variant="h3" align="center" gutterBottom>
+          🥘 This page is still being cooked up. It will be finished promptly!
+          Sorry! 😞
         </Typography>
       </Container>
     </div>
