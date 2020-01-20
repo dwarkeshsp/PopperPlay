@@ -4,12 +4,12 @@ import Container from "@material-ui/core/Container";
 
 export default function Feedback() {
   return (
-    <div>
+    <div style={{ marginTop: "1rem" }}>
       <Container maxWidth="md">
         <Typography variant="h6" align="center" gutterBottom paragraph>
-          👋 Hi, I’m Dwarkesh. I'm trying to make a platform for fun and open
-          problem solving. There is nothing more useful to this mission than
-          your feedback. Thank you for your help! 🙏
+          👋 Hi, I’m Dwarkesh. I'm trying to make a platform that helps people
+          identify problems and create new ideas. There is nothing more helpful
+          to this mission than your feedback. Thank you! 🙏
         </Typography>
         <Typography variant="h4" align="center" gutterBottom paragraph>
           📝 To give feedback, please create or solve a problem with the tag
@@ -21,16 +21,30 @@ export default function Feedback() {
           your help in order to identify and correct them.
         </Typography> */}
         <Typography variant="h6" align="center" gutterBottom paragraph>
-          I'm hoping that problems with PopperPlay will be solved using
+          I want to see if problems with PopperPlay can be solved using
           PopperPlay. This way, the entire platform can contribute and improve
           ideas.
         </Typography>
         <Typography variant="h6" align="center" gutterBottom paragraph>
           Every problem, comment, and suggestion you have is tremendously
           helpful at this early stage. Everything is subject to improvement:
-          Platform structure, features, bugs, philosophy, user interfaces.
+          platform structure, features, philosophy, user interfaces.
         </Typography>
-
+        <a
+          href="https://gitlab.com/dwarkeshsp/popperplay/issues"
+          target="_blank"
+        >
+          <Typography
+            variant="h5"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+            paragraph
+          >
+            🐛 To report a bug or a technical issue, please create an issue on
+            Gitlab (click here).
+          </Typography>
+        </a>
         <Typography
           variant="h6"
           align="center"
@@ -48,21 +62,6 @@ export default function Feedback() {
             // style={{ marginBottom: "3rem" }}
           >
             dwarkesh@popperplay.com
-          </Typography>
-        </a>
-        <a
-          href="https://gitlab.com/dwarkeshsp/popperplay/issues"
-          target="_blank"
-        >
-          <Typography
-            variant="h5"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-            paragraph
-          >
-            🐛 To report a bug or a technical issue, please create an issue on
-            Gitlab (click here).
           </Typography>
         </a>
       </Container>

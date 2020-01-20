@@ -6,7 +6,8 @@ import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: "1rem"
+    marginTop: "1rem",
+    marginBottom: "3rem"
   },
   markdown: {
     ...theme.typography
