@@ -18,6 +18,7 @@ import ItemInfo from "./ItemInfo";
 import MaterialLink from "@material-ui/core/Link";
 import Markdown from "./Markdown";
 import VoteButton from "./buttons/Vote";
+import EditButton from "./buttons/Edit";
 import Delete from "./buttons/Delete";
 
 const useStyles = makeStyles(theme => ({
@@ -141,7 +142,7 @@ function Header({ item, problem }) {
       </Grid>
       <Grid item xs={2} align="right">
         {/* <Delete item={item} problem={problem} /> */}
-
+        {/* <EditButton item={item} problem={problem} /> */}
         <VoteButton item={item} problem={problem} />
       </Grid>
     </Grid>

@@ -42,8 +42,8 @@ const useStyles = makeStyles(theme => ({
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
-    marginTop: theme.spacing(3),
-    padding: theme.spacing(6, 0)
+    marginTop: theme.spacing(6),
+    padding: theme.spacing(2, 0)
   }
 }));
 
@@ -120,7 +120,11 @@ function Footer() {
         <Typography variant="body1" align="center" color="textSecondary">
           Please feel free to contact me for any reason at
         </Typography>
-        <Link color="inherit" href="mailto:dwarkesh@popperplay.com">
+        <Link
+          color="inherit"
+          href="mailto:dwarkesh@popperplay.com"
+          target="_blank"
+        >
           <Typography
             variant="subtitle1"
             align="center"
@@ -130,7 +134,11 @@ function Footer() {
             dwarkesh@popperplay.com
           </Typography>
         </Link>
-        <Link color="inherit" href="https://gitlab.com/dwarkeshsp/popperplay">
+        <Link
+          color="inherit"
+          href="https://gitlab.com/dwarkeshsp/popperplay"
+          target="_blank"
+        >
           <Typography
             variant="subtitle1"
             align="center"

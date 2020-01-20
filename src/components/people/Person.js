@@ -1,7 +1,7 @@
 import React from "react";
 import NotYetImplemented from "../util/pages/NotYetImplemented";
 
-export default function StickyFooter() {
+export default function Person() {
   return (
     <div>
       <NotYetImplemented />

@@ -49,7 +49,8 @@ export default function ItemInfo({ item }) {
         {" "}
         {timeago(item.created.seconds * 1000)}
       </Typography>
-      <TagsList tags={item.tags} />
+      {/* item.path only exists in comments */}
+      {!item.path && <TagsList tags={item.tags} />}
     </div>
   );
 }
