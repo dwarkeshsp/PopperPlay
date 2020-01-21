@@ -1,3 +1,4 @@
+import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -25,9 +26,12 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
   const [open, setOpen] = React.useState(false);
   const [fullScreen, setFullScreen] = React.useState(false);
 
+  const MINTITLELENGTH = 25;
+
   React.useEffect(() => {
     setValid(
-      title !== "" && (problem || problemItem || parentProblemTitle !== "")
+      title.length >= MINTITLELENGTH &&
+        (problem || problemItem || parentProblemTitle.length >= MINTITLELENGTH)
     );
   }, [title, parentProblemTitle, problem, problemItem]);
 
@@ -169,101 +173,117 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
       // onClose={handleClose}
       aria-labelledby="create-title"
       maxWidth="md"
-      // fullWidth
+      fullWidth
       fullScreen={fullScreen}
     >
-      <DialogTitle id="create-title">
-        {problem ? "A New Problem!" : "A New Conjecture"}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          {problem
-            ? "You have discovered where existing conjectures are inadequate! Bravo!"
-            : "You are solving a problem by making a creative conjecture. Bravo!"}
-        </DialogContentText>
-        {!problem && !problemItem && (
-          <React.Fragment>
-            <DialogContentText>
-              To solve an already posted problem, please find it on the problems
-              page.
-            </DialogContentText>
-            <TextField
-              required
-              multiline
-              margin="dense"
-              id="title"
-              label="Problem Title"
-              fullWidth
-              onChange={event => setParentProblemTitle(event.target.value)}
-            />
-          </React.Fragment>
-        )}
-        {!problem && problemItem && (
-          <React.Fragment>
-            <DialogContentText variant="h6">
-              {problemItem.title}
-            </DialogContentText>
-          </React.Fragment>
-        )}
-        <TextField
-          required
-          autoFocus
-          multiline
-          margin="dense"
-          id="title"
-          label={problem ? "Problem Title" : "Conjecture Title"}
-          fullWidth
-          onChange={event => setTitle(event.target.value)}
-        />
-        <TagsMenu
-          setValue={setTags}
-          defaultValue={problemItem ? problemItem.tags : []}
-          variant="outlined"
-        />
-        <Typography variant="caption">
-          {tags.length} {tags.length === 1 ? "tag" : "tags"}
-        </Typography>
-        <MUIRichTextEditor
-          label="Text (optional)..."
-          onChange={changeText}
-          controls={[
-            "title",
-            "bold",
-            "italic",
-            "underline",
-            "strikethrough",
-            "highlight",
-            "undo",
-            "redo",
-            "link",
-            "numberList",
-            "bulletList",
-            "quote",
-            "code",
-            "clear"
-          ]}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button
-          onClick={() =>
-            fullScreen ? setFullScreen(false) : setFullScreen(true)
-          }
-          color="primary"
-        >
-          Full Screen
-        </Button>
-        <Button onClick={handleClose} color="secondary">
-          Cancel
-        </Button>
-        <Button
-          onClick={problem ? postProblem : postConjecture}
-          color="primary"
-          disabled={!valid}
-        >
-          Post
-        </Button>
-      </DialogActions>
+      <Container maxWidth="md">
+        <DialogTitle id="create-title">
+          {problem ? "A New Problem!" : "A New Conjecture"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {problem
+              ? "You have discovered where existing conjectures are inadequate! Bravo!"
+              : "You are solving a problem by making a creative conjecture. Bravo!"}
+          </DialogContentText>
+          {!problem && !problemItem && (
+            <React.Fragment>
+              <DialogContentText>
+                To solve an already posted problem, please find it on the
+                problems page.
+              </DialogContentText>
+              <TextField
+                required
+                multiline
+                // error={
+                //   parentProblemTitle &&
+                //   parentProblemTitle.length < MINTITLELENGTH
+                // }
+                helperText={
+                  parentProblemTitle.length < MINTITLELENGTH &&
+                  "Problem title does not meet minimum length"
+                }
+                margin="dense"
+                id="title"
+                label="Problem Title"
+                fullWidth
+                onChange={event => setParentProblemTitle(event.target.value)}
+              />
+            </React.Fragment>
+          )}
+          {!problem && problemItem && (
+            <React.Fragment>
+              <DialogContentText variant="h6">
+                {problemItem.title}
+              </DialogContentText>
+            </React.Fragment>
+          )}
+          <TextField
+            required
+            autoFocus
+            multiline
+            // error={title && title.length < MINTITLELENGTH}
+            helperText={
+              title.length < MINTITLELENGTH &&
+              "Title does not meet minimum length"
+            }
+            margin="dense"
+            id="title"
+            label={problem ? "Problem Title" : "Conjecture Title"}
+            fullWidth
+            onChange={event => setTitle(event.target.value)}
+          />
+          <TagsMenu
+            setValue={setTags}
+            defaultValue={problemItem ? problemItem.tags : []}
+            variant="outlined"
+          />
+          <Typography variant="caption">
+            {tags.length} {tags.length === 1 ? "tag" : "tags"}
+          </Typography>
+          <MUIRichTextEditor
+            label="Text (optional)..."
+            onChange={changeText}
+            draftEditorProps={{ spellCheck: true }}
+            controls={[
+              "title",
+              "bold",
+              "italic",
+              "underline",
+              // "strikethrough",
+              // "highlight",
+              "undo",
+              "redo",
+              // "link",
+              "numberList",
+              "bulletList",
+              "quote",
+              "code",
+              "clear"
+            ]}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() =>
+              fullScreen ? setFullScreen(false) : setFullScreen(true)
+            }
+            color="primary"
+          >
+            Full Screen
+          </Button>
+          <Button onClick={handleClose} color="secondary">
+            Cancel
+          </Button>
+          <Button
+            onClick={problem ? postProblem : postConjecture}
+            color="primary"
+            disabled={!valid}
+          >
+            Post
+          </Button>
+        </DialogActions>
+      </Container>
     </Dialog>
   );
 });

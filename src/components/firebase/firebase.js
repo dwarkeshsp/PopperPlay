@@ -87,12 +87,14 @@ class Firebase {
       .orderBy(orderBy, "desc")
       .limit(LOADSIZE)
       .get();
+
   problemsTagsQuery = (orderBy, LOADSIZE, tags) =>
     this.problems()
       .where("tags", "array-contains-any", tags)
       .orderBy(orderBy, "desc")
       .limit(LOADSIZE)
       .get();
+
   problemsStartAfterQuery = (orderBy, LOADSIZE, lastDoc) =>
     this.problems()
       .orderBy(orderBy, "desc")

@@ -46,58 +46,63 @@ function Item({ item, problem, firebase }) {
   const alertRef = React.useRef();
 
   return (
-    <Container maxWidth="md" className={classes.root}>
+    <React.Fragment>
       {item && (
         <div>
-          {!problem && <ProblemMetaData item={item} />}
-          <Header item={item} problem={problem} />
-          <Markdown className={classes.markdown}>{item.details}</Markdown>
-          <Grid container className={classes.create}>
-            {problem ? (
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<BuildIcon />}
-                onClick={() => alertRef.current.handleOpen()}
-              >
-                Solve
-              </Button>
-            ) : (
-              <CommentTextBox conjecture={item} />
-            )}
-          </Grid>
-          <AuthUserContext.Consumer>
-            {authUser =>
-              authUser ? (
-                <CreatePost
-                  ref={alertRef}
-                  firebase={firebase}
-                  problemItem={problem ? item : null}
-                  problem={!problem}
-                />
+          <Container maxWidth="sm" className={classes.root}>
+            {!problem && <ProblemMetaData item={item} />}
+            <Header item={item} problem={problem} />
+            <Markdown className={classes.markdown}>{item.details}</Markdown>
+            <Grid container className={classes.create}>
+              {problem ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<BuildIcon />}
+                  onClick={() => alertRef.current.handleOpen()}
+                >
+                  Solve
+                </Button>
               ) : (
-                <Dialog
-                  ref={alertRef}
-                  title="Not logged in"
-                  message={"You must login in order to perform this action."}
-                  button="Okay"
-                />
-              )
-            }
-          </AuthUserContext.Consumer>
-          <Typography
-            className={classes.childrenTitle}
-            variant="h5"
-            align="center"
-            gutterBottom
-          >
-            {problem ? "Conjectures" : "Comments"}
-          </Typography>
-          {problem ? (
-            <ProblemConjecturesList problem={item} />
-          ) : (
-            <CommentsList conjecture={item} />
-          )}
+                <CommentTextBox conjecture={item} />
+              )}
+            </Grid>
+            <AuthUserContext.Consumer>
+              {authUser =>
+                authUser ? (
+                  <CreatePost
+                    ref={alertRef}
+                    firebase={firebase}
+                    problemItem={problem ? item : null}
+                    problem={!problem}
+                  />
+                ) : (
+                  <Dialog
+                    ref={alertRef}
+                    title="Not logged in"
+                    message={"You must login in order to perform this action."}
+                    button="Okay"
+                  />
+                )
+              }
+            </AuthUserContext.Consumer>
+          </Container>
+          <Container maxWidth="md">
+            <Typography
+              className={classes.childrenTitle}
+              variant="h5"
+              align="center"
+              gutterBottom
+              paragraph
+            >
+              {problem ? "Conjectures" : "Comments"}
+            </Typography>
+            {problem ? (
+              <ProblemConjecturesList problem={item} />
+            ) : (
+              <CommentsList conjecture={item} />
+            )}
+          </Container>
         </div>
       )}
       {!item && (
@@ -105,7 +110,7 @@ function Item({ item, problem, firebase }) {
           <CircularProgress />
         </Grid>
       )}
-    </Container>
+    </React.Fragment>
   );
 }
 

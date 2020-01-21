@@ -30,7 +30,7 @@ export default function Philosophy() {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="md" className={classes.root}>
+    <Container maxWidth="sm" className={classes.root}>
       <Markdown className={classes.markdown}>{text}</Markdown>
     </Container>
   );

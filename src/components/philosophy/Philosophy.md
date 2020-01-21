@@ -30,10 +30,6 @@ Imagine how much fun it would be to identify where existing explanations were in
 
 PopperPlay houses endless portals in the form of problems. Every problem is the beginning of an infinity of subsequent problems, each more interesting than the last, and each requiring human creativity to solve.
 
-## Open Source
-
-PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. Errors will be found in the layout and structure of the platform, in missing features, in the algorithms for featuring problems and conjectures, and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjecture solutions upon. That is why **PopperPlay is completely open-source**. I need your [feedback](https://popperplay.com/feedback) on how this platform can better help people identify problems and create new ideas.
-
 ## No Ads or Paywalls
 
 Ads and paywalls are bad solutions to the problem of monetization. I think it's wrong to make people pay to receive or create knowledge.[^2] As a college student, I probably wouldn't be able to afford PopperPlay myself if it was paywalled.
@@ -65,6 +61,10 @@ The only rational way to create progress is to create a platform which satisfies
 Instead of seeking higher authorities of knowledge, we can allow people to identify problems with prevailing explanations, conjecture solutions upon them, and then criticize these tentative guesses. These new explanations will generate even more interesting problems, and we will solve them as well. And we will subject our platform itself to error correction so that we can improve the process of problem-solving and thus better satisfy Popper's Criterion.
 
 Only in this way can we prevent the entrenchment of errors and the suppression of new ideas.
+
+## Open Source
+
+PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. Errors will be found in the layout and structure of the platform, in missing features, in the algorithms for featuring problems and conjectures, and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjecture solutions upon. That is why **PopperPlay is completely open-source**. I need your [feedback](https://popperplay.com/feedback) on how this platform can better help people identify problems and create new ideas.
 
 [^1]: As a college student, I realized that not only was I not solving problems, I wasn't even learning how to solve problems. Instead, I was learning how to pretend like I was solving an interesting problem creatively while being neither creative nor interested.
 [^2]: Unless the paywall is necessary to sustain your channel of knowledge creation. And even then, the paywall becomes a problem you should solve with a better alternative.

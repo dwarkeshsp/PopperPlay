@@ -30,11 +30,10 @@ function Quote() {
         Karl Popper
       </Typography> */}
       <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
-        Through creative conjecture and criticism we try to find and remove
-        errors and so progress, tentatively, from problems to better problems
+        All rational thought consists of conjecture and criticism
       </Typography>
       <Typography variant="subtitle1" align="center" color="textSecondary">
-        David Deutsch
+        Karl Popper
       </Typography>
     </div>
   );
