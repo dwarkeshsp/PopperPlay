@@ -103,13 +103,13 @@ export default function ItemCard({ item, problem, noProblemInfo, noDetails }) {
               </div>
               {!noDetails && (
                 <CardActions disableSpacing>
-                  <Button
+                  {/* <Button
                     variant="text"
                     color="primary"
                     startIcon={<BuildIcon />}
                   >
                     {problem ? "Solve" : "Improve"}
-                  </Button>
+                  </Button> */}
                   <VoteButton item={item} problem={problem} />
                 </CardActions>
               )}
