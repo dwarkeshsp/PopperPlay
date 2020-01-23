@@ -8,8 +8,8 @@ export default function Feedback() {
       <Container maxWidth="sm">
         <Typography variant="h6" gutterBottom paragraph>
           👋 Hi, I’m Dwarkesh. I'm trying to make a platform that helps people
-          identify problems and create new ideas. There is nothing more helpful
-          to this mission than your feedback. Thank you! 🙏
+          identify open problems and create new ideas. There is nothing more
+          helpful to this mission than your feedback. Thank you! 🙏
         </Typography>
         <Typography
           style={{ marginTop: "2rem" }}
@@ -60,7 +60,7 @@ export default function Feedback() {
         >
           Please feel free to contact me for any reason at
         </Typography>
-        <a href="mailto:dwarkesh@popperplay.com" target="_blank">
+        <a href="mailto:dwarkesh.sanjay.patel@gmail.com" target="_blank">
           <Typography
             align="center"
             variant="h5"
@@ -68,7 +68,7 @@ export default function Feedback() {
             gutterBottom
             // style={{ marginBottom: "3rem" }}
           >
-            dwarkesh@popperplay.com
+            dwarkesh.sanjay.patel@gmail.com
           </Typography>
         </a>
       </Container>
