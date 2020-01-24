@@ -53,17 +53,17 @@ export default function Home() {
       <Container maxWidth="sm">
         <Header />
       </Container>
-      <Container maxWidth="md">
-        {/* <Grid container spacing={3} justify="center">
+      {/* <Container maxWidth="md"> */}
+      {/* <Grid container spacing={3} justify="center">
           <Grid item sm={6}> */}
-        <Problems />
-        {/* </Grid>
+      {/* <Problems /> */}
+      {/* </Grid>
           <Grid item sm={6}> */}
-        {/* <Conjectures /> */}
-        {/* </Grid>
+      {/* <Conjectures /> */}
+      {/* </Grid>
         </Grid> */}
-      </Container>
-      <Footer />
+      {/* </Container> */}
+      {/* <Footer /> */}
     </div>
   );
 }
