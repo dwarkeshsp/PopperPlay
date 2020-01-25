@@ -122,7 +122,7 @@ function Footer() {
         </Typography>
         <Link
           color="inherit"
-          href="mailto:dwarkesh.sanjay.patel@gmail.com"
+          href="mailto:dwarkesh@popperplay.com"
           target="_blank"
         >
           <Typography
@@ -131,7 +131,7 @@ function Footer() {
             color="textPrimary"
             component="p"
           >
-            dwarkesh.sanjay.patel@gmail.com
+            dwarkesh@popperplay.com
           </Typography>
         </Link>
         <Link

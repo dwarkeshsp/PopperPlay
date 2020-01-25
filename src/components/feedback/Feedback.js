@@ -11,7 +11,8 @@ export default function Feedback() {
           identify open problems and create new ideas. There is nothing more
           helpful to this mission than your feedback. Thank you! 🙏
         </Typography>
-        <Typography
+
+        {/* <Typography
           style={{ marginTop: "2rem" }}
           variant="h5"
           // align="center"
@@ -21,11 +22,6 @@ export default function Feedback() {
           To give feedback 📝, please create or solve a problem with the tag
           "popperplay"
         </Typography>
-        {/* <Typography variant="body1"  align="center" gutterBottom >
-          PopperPlay is my conjecture about how we can create a platform for
-          knowledge creation. But it contains many errors. I desperately need
-          your help in order to identify and correct them.
-        </Typography> */}
         <Typography variant="body1" gutterBottom paragraph>
           I want to see if problems with PopperPlay can be solved using
           PopperPlay. This way, the entire platform can contribute and improve
@@ -51,16 +47,17 @@ export default function Feedback() {
             🐛 To report a bug or a technical issue, please create an issue on
             Gitlab (click here).
           </Typography>
-        </a>
+        </a> */}
+
         <Typography
           variant="h6"
           align="center"
           color="textSecondary"
           gutterBottom
         >
-          Please feel free to contact me for any reason at
+          Please email me with any suggestions, problems, or questions you have
         </Typography>
-        <a href="mailto:dwarkesh.sanjay.patel@gmail.com" target="_blank">
+        <a href="mailto:dwarkesh@popperplay.com" target="_blank">
           <Typography
             align="center"
             variant="h5"
@@ -68,7 +65,7 @@ export default function Feedback() {
             gutterBottom
             // style={{ marginBottom: "3rem" }}
           >
-            dwarkesh.sanjay.patel@gmail.com
+            dwarkesh@popperplay.com
           </Typography>
         </a>
       </Container>
