@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
   image: {
     backgroundImage:
-      "url(https://images.pexels.com/photos/1274260/pexels-photo-1274260.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260)",
+      "url(https://images.pexels.com/photos/2026960/pexels-photo-2026960.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "dark"
@@ -106,8 +106,8 @@ function LoginBase(props) {
     <div>
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
-        <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5} elevation={0} square>
+        <Grid item xs={false} sm={6} md={6} className={classes.image} />
+        <Grid item xs={12} sm={6} md={6} elevation={0} square>
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />

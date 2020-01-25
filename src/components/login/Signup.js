@@ -50,7 +50,7 @@ function SignUpBase(props) {
   const [emailValid, setEmailValid] = React.useState(false);
   const [password, setPassword] = React.useState("");
   const [passwordValid, setPasswordValid] = React.useState(false);
-  const [checkedBox, setCheckedBox] = React.useState(false);
+  const [checkedBox, setCheckedBox] = React.useState(true);
   const [isInvalid, setIsInvalid] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState(null);
 
@@ -231,7 +231,7 @@ function SignUpBase(props) {
                   </Typography>
                 </Grid>
               )}
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -242,7 +242,7 @@ function SignUpBase(props) {
                   }
                   label="Blah blah blah blah"
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
