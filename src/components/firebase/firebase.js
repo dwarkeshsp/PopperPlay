@@ -103,9 +103,8 @@ class Firebase {
       .get();
 
   // *** Conjecture API ***
-  conjecture = (problemID, conjectureID) =>
-    this.db.doc("problems/" + problemID + "/conjectures/" + conjectureID);
-  conjectures = () => this.db.collectionGroup("conjectures");
+  conjecture = conjectureID => this.db.doc("/conjectures/" + conjectureID);
+  conjectures = () => this.db.collection("conjectures");
   problemConjectures = problemID =>
     this.db.doc(`problems/${problemID}`).collection("conjectures");
 

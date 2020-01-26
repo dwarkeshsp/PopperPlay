@@ -40,13 +40,6 @@ function CommentTextBox({ conjecture, firebase }) {
       level: 0,
       tags: conjecture.tags
     });
-    await conjecture.tags.forEach(tag => {
-      const tagRef = firebase.tag(tag);
-      tagRef.set({}, { merge: true });
-      tagRef.update({
-        comments: firebase.arrayUnion(commentRef)
-      });
-    });
     await firebase.person(person).update({
       comments: firebase.arrayUnion(commentRef)
     });

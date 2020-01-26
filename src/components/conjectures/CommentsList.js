@@ -122,13 +122,6 @@ function CommentCardBase({ comment, firebase }) {
       level: level,
       tags: comment.tags
     });
-    await comment.tags.forEach(tag => {
-      const tagRef = firebase.tag(tag);
-      tagRef.set({}, { merge: true });
-      tagRef.update({
-        comments: firebase.arrayUnion(commentRef)
-      });
-    });
     await firebase.person(person).update({
       comments: firebase.arrayUnion(commentRef)
     });

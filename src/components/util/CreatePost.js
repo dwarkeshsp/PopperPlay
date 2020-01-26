@@ -69,17 +69,12 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
         lastModified: timestamp,
         creator: person,
         votedBy: [],
-        votes: 0
+        votes: 0,
+        parentConjectures: [],
+        childConjectures: []
       })
       .then(docRef => (problemRef = docRef))
       .then(() => {
-        tags.forEach(tag => {
-          const tagRef = firebase.tag(tag);
-          tagRef.set({}, { merge: true });
-          tagRef.update({
-            problems: firebase.arrayUnion(problemRef)
-          });
-        });
         firebase.person(person).update({
           problems: firebase.arrayUnion(problemRef)
         });
@@ -121,13 +116,6 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
           id: problemID
         }
       });
-      tags.forEach(tag => {
-        const tagRef = firebase.tag(tag);
-        tagRef.set({}, { merge: true });
-        tagRef.update({
-          conjectures: firebase.arrayUnion(conjectureRef)
-        });
-      });
       firebase.person(person).update({
         conjectures: firebase.arrayUnion(conjectureRef)
       });
@@ -150,13 +138,6 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
         })
         .then(docRef => (problemRef = docRef))
         .then(() => {
-          tags.forEach(tag => {
-            const tagRef = firebase.tag(tag);
-            tagRef.set({}, { merge: true });
-            tagRef.update({
-              problems: firebase.arrayUnion(problemRef)
-            });
-          });
           firebase.person(person).update({
             problems: firebase.arrayUnion(problemRef)
           });
