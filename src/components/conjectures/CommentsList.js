@@ -11,7 +11,7 @@ import clsx from "clsx";
 import React from "react";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { withFirebase } from "../firebase";
-import MessageIcon from "@material-ui/icons/Message";
+import ReplyIcon from "@material-ui/icons/Reply";
 import VoteButton from "../util/buttons/Vote";
 import ItemInfo from "../util/ItemInfo";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -54,12 +54,7 @@ function CommentsList({ conjecture, firebase }) {
 
   const LOADSIZE = 5;
   const orderBy = "created";
-  const path =
-    "problems/" +
-    conjecture.problem.id +
-    "/conjectures/" +
-    conjecture.id +
-    "/comments";
+  const path = "conjectures/" + conjecture.id + "/comments";
 
   React.useEffect(() => {
     firebase
@@ -101,7 +96,7 @@ function CommentsList({ conjecture, firebase }) {
 
 function CommentCardBase({ comment, firebase }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(true);
   const [replying, setReplying] = React.useState(false);
   const [value, setValue] = React.useState("");
   const margin = (comment.level * 2).toString() + "rem";
@@ -145,7 +140,7 @@ function CommentCardBase({ comment, firebase }) {
                 aria-label="comment"
                 onClick={() => setReplying(true)}
               >
-                <MessageIcon />
+                <ReplyIcon />
               </IconButton>
             )}
             {replying && (
@@ -165,7 +160,7 @@ function CommentCardBase({ comment, firebase }) {
                   color="primary"
                   disabled={!value}
                 >
-                  <MessageIcon />
+                  <ReplyIcon />
                 </IconButton>
               </React.Fragment>
             )}

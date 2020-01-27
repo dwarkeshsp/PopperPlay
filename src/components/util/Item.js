@@ -50,7 +50,6 @@ function Item({ item, problem, firebase }) {
       {item && (
         <div>
           <Container maxWidth="sm" className={classes.root}>
-            {!problem && <ProblemMetaData item={item} />}
             <Header item={item} problem={problem} />
             <Markdown className={classes.markdown}>{item.details}</Markdown>
             <Grid container className={classes.create}>
@@ -111,27 +110,6 @@ function Item({ item, problem, firebase }) {
         </Grid>
       )}
     </React.Fragment>
-  );
-}
-
-function ProblemMetaData({ item }) {
-  return (
-    <div>
-      <Link
-        to={"/problem/" + item.problem.id}
-        style={{ textDecoration: "none" }}
-      >
-        <MaterialLink
-          component="h3"
-          variant="h5"
-          color="textSecondary"
-          gutterBottom
-        >
-          {item.problem.title}
-        </MaterialLink>
-      </Link>
-      {/* <ItemInfo item={problem} /> */}
-    </div>
   );
 }
 

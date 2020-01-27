@@ -5,13 +5,22 @@ import { withFirebase } from "../firebase";
 import Button from "@material-ui/core/Button";
 import { AuthUserContext } from "../session";
 import Dialog from "../util/AlertDialog";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = makeStyles(theme => ({
-  textbox: {
+  root: {
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
     width: "100%"
   },
+  textbox: {
+    marginLeft: theme.spacing(1),
+    flex: 1
+  },
   post: {
-    marginTop: "1rem"
+    padding: 10
   }
 }));
 
@@ -21,12 +30,7 @@ function CommentTextBox({ conjecture, firebase }) {
   const alertRef = React.useRef();
 
   async function post() {
-    const path =
-      "problems/" +
-      conjecture.problem.id +
-      "/conjectures/" +
-      conjecture.id +
-      "/comments/";
+    const path = "conjectures/" + conjecture.id + "/comments/";
     const timestamp = firebase.timestamp();
     const person = firebase.currentPerson().displayName;
     const commentRef = await firebase.collection(path).add({
@@ -51,25 +55,27 @@ function CommentTextBox({ conjecture, firebase }) {
       <AuthUserContext.Consumer>
         {authUser => (
           <React.Fragment>
-            <TextField
-              className={classes.textbox}
-              id="comment-textbox"
-              label="Criticize / Improve"
-              multiline
-              rowsMax="4"
-              variant="outlined"
-              value={value}
-              onChange={event => setValue(event.target.value)}
-            />
-            <Button
-              className={classes.post}
-              variant="contained"
-              color="primary"
-              disabled={!value}
-              onClick={authUser ? post : () => alertRef.current.handleOpen()}
-            >
-              Post
-            </Button>
+            <Paper component="form" className={classes.root}>
+              <InputBase
+                className={classes.textbox}
+                placeholder="Criticize / Improve"
+                inputProps={{ "aria-label": "comment-textbox" }}
+                multiline
+                rowsMax="10"
+                variant="outlined"
+                value={value}
+                onChange={event => setValue(event.target.value)}
+              />
+              <Button
+                className={classes.post}
+                // variant="contained"
+                color="primary"
+                disabled={!value}
+                onClick={authUser ? post : () => alertRef.current.handleOpen()}
+              >
+                Comment
+              </Button>
+            </Paper>
             <Dialog
               ref={alertRef}
               title="Not logged in"

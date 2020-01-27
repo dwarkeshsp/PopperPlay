@@ -14,7 +14,12 @@ function ProblemConjecturesList({ problem, firebase }) {
 
   React.useEffect(() => {
     firebase
-      .problemConjectures(problemID)
+      .conjectures()
+      .where(
+        "parentProblems",
+        "array-contains",
+        firebase.db.doc(`problems/${problemID}`)
+      )
       .orderBy("votes", "desc")
       .limit(LOADSIZE)
       .get()

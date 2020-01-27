@@ -73,11 +73,6 @@ function Header() {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
-        Thanks to your feedback, I am building the next iteration of PopperPlay
-        which will allow for freer and deeper relationships between problems and
-        conjectures. Stay tuned! 😃
-      </Typography>
       <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
         Discovery: first a problem, then conjecture, then criticism, then new
         problem
@@ -278,7 +273,7 @@ function ConjecturesBase({ firebase }) {
         Top Conjectures
       </Typography>
       {conjectures.map(conjecture => (
-        <Card item={conjecture} problem={false} noDetails />
+        <Card item={conjecture} problem={false} comment />
       ))}
     </div>
   );

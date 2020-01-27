@@ -8,12 +8,11 @@ function Conjecture({ firebase }) {
 
   const location = useLocation();
   const path = location.pathname.split("/");
-  const problemID = path[path.length - 2];
   const conjectureID = path[path.length - 1];
 
   React.useEffect(() => {
     firebase
-      .conjecture(problemID, conjectureID)
+      .conjecture(conjectureID)
       .get()
       .then(doc => {
         if (doc.exists) {

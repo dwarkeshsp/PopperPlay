@@ -96,7 +96,7 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
 
     // post conjecture inside the problem
     async function post(problemID) {
-      const conjectureRef = await firebase.problemConjectures(problemID).add({
+      const conjectureRef = await firebase.conjectures().add({
         title: title,
         details: details,
         tags: tags,
@@ -105,22 +105,18 @@ const CreatePost = forwardRef(({ firebase, problem, problemItem }, ref) => {
         creator: person,
         votedBy: [],
         votes: 0,
-        problem: {
-          title: problemItem ? problemItem.title : parentProblemTitle,
-          tags: problemItem ? problemItem.tags : tags,
-          details: problemItem ? problemItem.details : "",
-          created: problemItem ? problemItem.created : timestamp,
-          lastModified: problemItem ? problemItem.lastModified : timestamp,
-          creator: problemItem ? problemItem.creator : person,
-          ref: firebase.db.doc(`problems/${problemID}`),
-          id: problemID
-        }
+        parentProblems: [firebase.db.doc(`problems/${problemID}`)],
+        childProblems: [],
+        parentConjectures: [],
+        childConjectures: []
+      });
+      firebase.problem(problemID).update({
+        childConjectures: firebase.arrayUnion(conjectureRef)
       });
       firebase.person(person).update({
         conjectures: firebase.arrayUnion(conjectureRef)
       });
     }
-
     // post parent problem
     function postParentProblem() {
       let problemRef;
