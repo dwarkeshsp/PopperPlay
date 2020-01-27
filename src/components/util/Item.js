@@ -4,7 +4,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import BuildIcon from "@material-ui/icons/Build";
+import AddIcon from "@material-ui/icons/Add";
 import React from "react";
 import { Link } from "react-router-dom";
 import CommentsList from "../conjectures/CommentsList";
@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
   create: {
     justifyContent: "center",
-    marginTop: "3rem"
+    marginTop: "1rem"
   },
   childrenTitle: {
     marginTop: "1rem"
@@ -52,15 +52,22 @@ function Item({ item, problem, firebase }) {
           <Container maxWidth="sm" className={classes.root}>
             <Header item={item} problem={problem} />
             <Markdown className={classes.markdown}>{item.details}</Markdown>
+            <Typography
+              className={classes.childrenTitle}
+              variant="h5"
+              align="center"
+            >
+              {problem ? "Conjectures" : "Comments"}
+            </Typography>
             <Grid container className={classes.create}>
               {problem ? (
                 <Button
                   variant="contained"
                   color="primary"
-                  startIcon={<BuildIcon />}
+                  startIcon={<AddIcon />}
                   onClick={() => alertRef.current.handleOpen()}
                 >
-                  Solve
+                  new conjecture
                 </Button>
               ) : (
                 <CommentTextBox conjecture={item} />
@@ -86,16 +93,7 @@ function Item({ item, problem, firebase }) {
               }
             </AuthUserContext.Consumer>
           </Container>
-          <Container maxWidth="md">
-            <Typography
-              className={classes.childrenTitle}
-              variant="h5"
-              align="center"
-              gutterBottom
-              paragraph
-            >
-              {problem ? "Conjectures" : "Comments"}
-            </Typography>
+          <Container maxWidth="sm" style={{ marginTop: "1rem" }}>
             {problem ? (
               <ProblemConjecturesList problem={item} />
             ) : (
