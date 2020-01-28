@@ -80,6 +80,13 @@ const CreatePost = forwardRef(
           : [],
         childConjectures: []
       });
+      tags.forEach(tag => {
+        const tagRef = firebase.tag(tag);
+        tagRef.set({}, { merge: true });
+        tagRef.update({
+          problems: firebase.arrayUnion(problemRef)
+        });
+      });
       conjectureItem &&
         (await firebase.conjecture(conjectureItem.id).update({
           childProblems: firebase.arrayUnion(problemRef)
@@ -122,30 +129,37 @@ const CreatePost = forwardRef(
         firebase.person(person).update({
           conjectures: firebase.arrayUnion(conjectureRef)
         });
+        tags.forEach(tag => {
+          const tagRef = firebase.tag(tag);
+          tagRef.set({}, { merge: true });
+          tagRef.update({
+            conjectures: firebase.arrayUnion(conjectureRef)
+          });
+        });
       }
       // post parent problem
-      function postParentProblem() {
-        let problemRef;
-        return firebase
-          .problems()
-          .add({
-            title: parentProblemTitle,
-            tags: tags,
-            details: "",
-            created: timestamp,
-            lastModified: timestamp,
-            creator: person,
-            votedBy: [],
-            votes: 0
-          })
-          .then(docRef => (problemRef = docRef))
-          .then(() => {
-            firebase.person(person).update({
-              problems: firebase.arrayUnion(problemRef)
-            });
-            return problemRef;
-          })
-          .catch(error => console.log(error));
+      async function postParentProblem() {
+        const problemRef = firebase.problems().add({
+          title: parentProblemTitle,
+          tags: tags,
+          details: "",
+          created: timestamp,
+          lastModified: timestamp,
+          creator: person,
+          votedBy: [],
+          votes: 0
+        });
+        await firebase.person(person).update({
+          problems: firebase.arrayUnion(problemRef)
+        });
+        tags.forEach(tag => {
+          const tagRef = firebase.tag(tag);
+          tagRef.set({}, { merge: true });
+          tagRef.update({
+            problems: firebase.arrayUnion(problemRef)
+          });
+        });
+        return problemRef;
       }
       handleClose();
     }
@@ -175,7 +189,10 @@ const CreatePost = forwardRef(
                   {conjectureItem.title}
                 </DialogContentText>
               ) : (
-                <div></div>
+                <DialogContentText>
+                  To identify a problem with an already posted conjecture,
+                  please find it on the conjectures page.
+                </DialogContentText>
               )
             ) : problemItem ? (
               <DialogContentText variant="h6">
