@@ -20,6 +20,7 @@ import Markdown from "./Markdown";
 import VoteButton from "./buttons/Vote";
 import EditButton from "./buttons/Edit";
 import Delete from "./buttons/Delete";
+import Graph from "./Graph";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,6 +52,7 @@ function Item({ item, problem, firebase }) {
         <div>
           <Container maxWidth="sm" className={classes.root}>
             <Header item={item} problem={problem} />
+            <Graph item={item} problem={problem} />
             <Markdown className={classes.markdown}>{item.details}</Markdown>
             <Typography
               className={classes.childrenTitle}
