@@ -141,7 +141,7 @@ function Graph({ item, problem, firebase }) {
 
   return (
     <React.Fragment>
-      {data && (
+      {data && data.nodes.length > 1 && (
         <D3Graph
           id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
           data={data}

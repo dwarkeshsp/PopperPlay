@@ -201,7 +201,6 @@ function ChildrenBase({ comment, expanded, firebase }) {
         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
         setLastComment(querySnapshot.docs[querySnapshot.docs.length - 1]);
         setComments(data);
-        console.log(data);
       });
   }, [expanded]);
 

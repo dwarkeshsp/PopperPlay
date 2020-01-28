@@ -34,8 +34,7 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.body1
   },
   create: {
-    justifyContent: "center",
-    marginTop: "1rem"
+    justifyContent: "center"
   },
   childrenTitle: {
     marginTop: "1rem"
@@ -44,65 +43,38 @@ const useStyles = makeStyles(theme => ({
 
 function Item({ item, problem, firebase }) {
   const classes = useStyles();
-  const alertRef = React.useRef();
 
   return (
     <React.Fragment>
       {item && (
-        <div>
-          <Container maxWidth="sm" className={classes.root}>
-            <Header item={item} problem={problem} />
-            <Graph item={item} problem={problem} />
-            <Markdown className={classes.markdown}>{item.details}</Markdown>
-            <Typography
-              className={classes.childrenTitle}
-              variant="h5"
-              align="center"
-            >
-              {problem ? "Conjectures" : "Comments"}
-            </Typography>
-            <Grid container className={classes.create}>
-              {problem ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<AddIcon />}
-                  onClick={() => alertRef.current.handleOpen()}
-                >
-                  new conjecture
-                </Button>
-              ) : (
-                <CommentTextBox conjecture={item} />
-              )}
-            </Grid>
-            <AuthUserContext.Consumer>
-              {authUser =>
-                authUser ? (
-                  <CreatePost
-                    ref={alertRef}
-                    firebase={firebase}
-                    problemItem={problem ? item : null}
-                    problem={!problem}
-                  />
-                ) : (
-                  <Dialog
-                    ref={alertRef}
-                    title="Not logged in"
-                    message={"You must login in order to perform this action."}
-                    button="Okay"
-                  />
-                )
-              }
-            </AuthUserContext.Consumer>
-          </Container>
-          <Container maxWidth="sm" style={{ marginTop: "1rem" }}>
-            {problem ? (
+        <Container maxWidth="sm" className={classes.root}>
+          <Header item={item} problem={problem} firebase={firebase} />
+          <Graph item={item} problem={problem} />
+          <Markdown className={classes.markdown}>{item.details}</Markdown>
+          {problem ? (
+            <PostButton item={item} problem={problem} />
+          ) : (
+            <PostButton item={item} problem={problem} />
+          )}
+          <Typography
+            className={classes.childrenTitle}
+            variant="h5"
+            align="center"
+            gutterBottom
+          >
+            {problem ? "Conjectures" : "Comments"}
+          </Typography>
+          {problem ? (
+            <React.Fragment>
               <ProblemConjecturesList problem={item} />
-            ) : (
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <CommentTextBox conjecture={item} />
               <CommentsList conjecture={item} />
-            )}
-          </Container>
-        </div>
+            </React.Fragment>
+          )}
+        </Container>
       )}
       {!item && (
         <Grid container justify="center">
@@ -114,16 +86,15 @@ function Item({ item, problem, firebase }) {
 }
 
 function Header({ item, problem }) {
-  const classes = useStyles();
   return (
     <Grid container>
-      <Grid item xs={10}>
+      <Grid item xs={9}>
         <Typography variant="h5" gutterBottom>
           {item.title}
         </Typography>
         <ItemInfo item={item} />
       </Grid>
-      <Grid item xs={2} align="right">
+      <Grid item xs={3} align="right">
         {/* <Delete item={item} problem={problem} /> */}
         {/* <EditButton item={item} problem={problem} /> */}
         <VoteButton item={item} problem={problem} />
@@ -131,5 +102,45 @@ function Header({ item, problem }) {
     </Grid>
   );
 }
+
+function PostButtonBase({ item, problem, firebase }) {
+  const classes = useStyles();
+  const alertRef = React.useRef();
+
+  return (
+    <Grid container className={classes.create}>
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={<AddIcon />}
+        onClick={() => alertRef.current.handleOpen()}
+      >
+        {problem ? "conjecture" : "problem"}
+      </Button>
+      <AuthUserContext.Consumer>
+        {authUser =>
+          authUser ? (
+            <CreatePost
+              ref={alertRef}
+              firebase={firebase}
+              problemItem={problem ? item : null}
+              conjectureItem={problem ? null : item}
+              problem={!problem}
+            />
+          ) : (
+            <Dialog
+              ref={alertRef}
+              title="Not logged in"
+              message={"You must login in order to perform this action."}
+              button="Okay"
+            />
+          )
+        }
+      </AuthUserContext.Consumer>
+    </Grid>
+  );
+}
+
+const PostButton = withFirebase(PostButtonBase);
 
 export default withFirebase(Item);
