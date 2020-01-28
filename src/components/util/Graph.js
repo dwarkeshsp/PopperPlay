@@ -3,75 +3,84 @@ import React from "react";
 import { withFirebase } from "../firebase";
 
 // graph payload (with minimalist structure)
-async function itemToGraphData(item, setData, problem, firebase) {
+async function itemToGraphData(item, setData, problem) {
   const getSize = votes => 50 * votes + 500;
 
-  const childNode = node =>
+  const childNode = (node, type) =>
     node.get().then(doc => {
       if (doc.exists) {
         const nodeData = doc.data();
         data.nodes.push({
-          id: nodeData.title,
+          id: doc.id,
+          name: nodeData.title,
           size: getSize(nodeData.votes)
         });
         data.links.push({
-          source: item.title,
-          target: nodeData.title
+          source: item.id,
+          target: doc.id
         });
+        console.log(doc);
       }
     });
 
-  const parentNode = node =>
+  const parentNode = (node, type) =>
     node.get().then(doc => {
       if (doc.exists) {
         const nodeData = doc.data();
         data.nodes.push({
-          id: nodeData.title,
+          id: doc.id,
+          name: nodeData.title,
           size: getSize(nodeData.votes)
         });
         data.links.push({
-          source: nodeData.title,
-          target: item.title
+          source: doc.id,
+          target: item.id
         });
       }
     });
 
   // main node
   let data = {
-    nodes: [{ id: item.title, size: 1000 }],
+    nodes: [
+      {
+        id: item.id,
+        name: item.title,
+        size: 1000
+      }
+    ],
     links: []
   };
 
   if (problem) {
     await Promise.all(
       item.childConjectures.map(async node => {
-        await childNode(node);
+        await childNode(node, "c");
       })
     );
     await Promise.all(
       item.parentConjectures.map(async node => {
-        await parentNode(node);
+        await parentNode(node, "c");
       })
     );
   } else {
     await Promise.all(
       item.childConjectures.map(async node => {
-        await childNode(node);
+        await childNode(node, "c");
       })
     );
     await Promise.all(
       item.parentConjectures.map(async node => {
-        await parentNode(node);
+        await parentNode(node, "c");
       })
     );
     await Promise.all(
       item.childProblems.map(async node => {
-        await childNode(node);
+        await childNode(node, "p");
       })
     );
     await Promise.all(
       item.parentProblems.map(async node => {
-        await parentNode(node);
+        await parentNode(node, "p");
       })
     );
   }
@@ -110,7 +119,7 @@ const config = {
     highlightFontWeight: "bold",
     highlightStrokeColor: "red",
     highlightStrokeWidth: 1.5,
-    labelProperty: n => (n.name ? `${n.id} - ${n.name}` : n.id),
+    labelProperty: n => (n.name ? n.name : n.id),
     mouseCursor: "crosshair",
     opacity: 0.9,
     renderLabel: true,
@@ -139,6 +148,10 @@ function Graph({ item, problem, firebase }) {
     itemToGraphData(item, setData, problem, firebase);
   }, []);
 
+  const onClickNode = function(nodeId) {
+    window.alert(`Clicked node ${nodeId}`);
+  };
+
   return (
     <React.Fragment>
       {data && data.nodes.length > 1 && (
@@ -146,6 +159,7 @@ function Graph({ item, problem, firebase }) {
           id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
           data={data}
           config={config}
+          onClickNode={onClickNode}
         />
       )}
     </React.Fragment>
