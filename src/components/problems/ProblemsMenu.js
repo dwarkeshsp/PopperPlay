@@ -9,7 +9,7 @@ function TagMenu(props) {
   function allTags() {
     let options = [];
     props.firebase
-      .tags()
+      .problems()
       .get()
       .then(
         querySnapshot =>
@@ -22,7 +22,7 @@ function TagMenu(props) {
   return (
     <div>
       <Autocomplete
-        id="tags"
+        id="problems"
         freeSolo
         multiple
         options={options}
@@ -30,13 +30,13 @@ function TagMenu(props) {
           <TextField
             {...params}
             variant={props.variant === "outlined" ? "outlined" : "standard"}
-            label="Tags"
+            label="problems"
             margin="dense"
             fullWidth
           />
         )}
         onChange={(event, value) =>
-          props.setValue(value.map(tag => tag.toLowerCase()))
+          props.setValue(value.map(Problem => Problem.toLowerCase()))
         }
         onOpen={() => setOptions(allTags())}
         defaultValue={props.defaultValue}

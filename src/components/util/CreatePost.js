@@ -275,7 +275,7 @@ const CreatePost = forwardRef(
               }
               color="primary"
             >
-              Full Screen
+              {fullScreen ? "Minimize" : "Maximize"}
             </Button>
             <Button onClick={handleClose} color="secondary">
               Cancel

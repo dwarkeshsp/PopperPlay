@@ -1,6 +1,7 @@
 import { Graph as D3Graph } from "react-d3-graph";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import useWindowDimensions from "./useWindowDimensions";
 
 // graph payload (with minimalist structure)
 async function itemToGraphData(item, setData, problem) {
@@ -90,6 +91,7 @@ async function itemToGraphData(item, setData, problem) {
 export default function Graph({ item, problem }) {
   const history = useHistory();
 
+  const { height, width } = useWindowDimensions();
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
@@ -114,7 +116,7 @@ const config = {
   directed: true,
   automaticRearrangeAfterDropNode: true,
   height: 200,
-  width: 500,
+  width: 300,
   highlightDegree: 0,
   highlightOpacity: 0.2,
   linkHighlightBehavior: false,
@@ -157,6 +159,6 @@ const config = {
     opacity: 1,
     semanticStrokeWidth: true,
     strokeWidth: 3,
-    type: "STRAIGHT"
+    type: "CURVE_SMOOTH"
   }
 };

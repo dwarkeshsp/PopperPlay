@@ -56,7 +56,7 @@ export default function Home() {
       {/* <Container maxWidth="md"> */}
       {/* <Grid container spacing={3} justify="center">
           <Grid item sm={6}> */}
-      {/* <Problems /> */}
+      <Problems />
       {/* </Grid>
           <Grid item sm={6}> */}
       {/* <Conjectures /> */}
