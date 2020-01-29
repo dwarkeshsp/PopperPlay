@@ -21,15 +21,10 @@ const CreatePost = forwardRef(
     const [tags, setTags] = React.useState([]);
     const [details, setDetails] = React.useState("");
     const [valid, setValid] = React.useState(false);
-    // only for conjectures
-    const [parentProblemTitle, setParentProblemTitle] = React.useState("");
-    // only for problems
-    const [parentConjectureTitle, setParentConjectureTitle] = React.useState(
-      ""
-    );
-
     const [open, setOpen] = React.useState(false);
     const [fullScreen, setFullScreen] = React.useState(true);
+    // only for conjectures
+    const [parentProblemTitle, setParentProblemTitle] = React.useState("");
 
     const MINTITLELENGTH = 1;
 
@@ -51,16 +46,10 @@ const CreatePost = forwardRef(
     function handleClose() {
       setTitle("");
       setParentProblemTitle("");
-      setParentConjectureTitle("");
       setTags([]);
       setDetails("");
       setValid(false);
       setOpen(false);
-    }
-
-    function changeText(state) {
-      const details = draftjsToMd(convertToRaw(state.getCurrentContent()));
-      setDetails(details);
     }
 
     async function postProblem() {
@@ -164,6 +153,62 @@ const CreatePost = forwardRef(
       handleClose();
     }
 
+    const ProblemHeader = () =>
+      conjectureItem ? (
+        <DialogContentText variant="h6">
+          {conjectureItem.title}
+        </DialogContentText>
+      ) : (
+        <DialogContentText>
+          To identify a problem with an already posted conjecture, please find
+          it on the conjectures page.
+        </DialogContentText>
+      );
+
+    const ConjectureHeader = () =>
+      problemItem ? (
+        <DialogContentText variant="h6">{problemItem.title}</DialogContentText>
+      ) : (
+        <React.Fragment>
+          <TextField
+            required
+            multiline
+            helperText={
+              parentProblemTitle.length < MINTITLELENGTH &&
+              "Problem title does not meet minimum length"
+            }
+            margin="dense"
+            id="title"
+            label="Problem Title"
+            fullWidth
+            onChange={event => setParentProblemTitle(event.target.value)}
+          />
+        </React.Fragment>
+      );
+
+    const Actions = () => (
+      <DialogActions>
+        <Button
+          onClick={() =>
+            fullScreen ? setFullScreen(false) : setFullScreen(true)
+          }
+          color="primary"
+        >
+          {fullScreen ? "Minimize" : "Maximize"}
+        </Button>
+        <Button onClick={handleClose} color="secondary">
+          Cancel
+        </Button>
+        <Button
+          onClick={problem ? postProblem : postConjecture}
+          color="primary"
+          disabled={!valid}
+        >
+          Post
+        </Button>
+      </DialogActions>
+    );
+
     return (
       <Dialog
         open={open}
@@ -178,56 +223,10 @@ const CreatePost = forwardRef(
             {problem ? "A New Problem!" : "A New Conjecture"}
           </DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              {problem
-                ? "You have discovered where existing conjectures are inadequate! Bravo!"
-                : "You are solving a problem by making a creative conjecture. Bravo!"}
-            </DialogContentText>
-            {problem ? (
-              conjectureItem ? (
-                <DialogContentText variant="h6">
-                  {conjectureItem.title}
-                </DialogContentText>
-              ) : (
-                <DialogContentText>
-                  To identify a problem with an already posted conjecture,
-                  please find it on the conjectures page.
-                </DialogContentText>
-              )
-            ) : problemItem ? (
-              <DialogContentText variant="h6">
-                {problemItem.title}
-              </DialogContentText>
-            ) : (
-              <React.Fragment>
-                <DialogContentText>
-                  To solve an already posted problem, please find it on the
-                  problems page.
-                </DialogContentText>
-                <TextField
-                  required
-                  multiline
-                  // error={
-                  //   parentProblemTitle &&
-                  //   parentProblemTitle.length < MINTITLELENGTH
-                  // }
-                  helperText={
-                    parentProblemTitle.length < MINTITLELENGTH &&
-                    "Problem title does not meet minimum length"
-                  }
-                  margin="dense"
-                  id="title"
-                  label="Problem Title"
-                  fullWidth
-                  onChange={event => setParentProblemTitle(event.target.value)}
-                />
-              </React.Fragment>
-            )}
+            {problem ? <ProblemHeader /> : <ConjectureHeader />}
             <TextField
               required
-              autoFocus
               multiline
-              // error={title && title.length < MINTITLELENGTH}
               helperText={
                 title.length < MINTITLELENGTH &&
                 "Title does not meet minimum length"
@@ -246,52 +245,44 @@ const CreatePost = forwardRef(
             <Typography variant="caption">
               {tags.length} {tags.length === 1 ? "tag" : "tags"}
             </Typography>
-            <MUIRichTextEditor
-              label="Text (optional)..."
-              onChange={changeText}
-              draftEditorProps={{ spellCheck: true }}
-              controls={[
-                "title",
-                "bold",
-                "italic",
-                "underline",
-                // "strikethrough",
-                // "highlight",
-                "undo",
-                "redo",
-                // "link",
-                "numberList",
-                "bulletList",
-                "quote",
-                "code",
-                "clear"
-              ]}
-            />
+            <Editor setDetails={setDetails} />
           </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() =>
-                fullScreen ? setFullScreen(false) : setFullScreen(true)
-              }
-              color="primary"
-            >
-              {fullScreen ? "Minimize" : "Maximize"}
-            </Button>
-            <Button onClick={handleClose} color="secondary">
-              Cancel
-            </Button>
-            <Button
-              onClick={problem ? postProblem : postConjecture}
-              color="primary"
-              disabled={!valid}
-            >
-              Post
-            </Button>
-          </DialogActions>
+          <Actions />
         </Container>
       </Dialog>
     );
   }
 );
+
+const Editor = ({ setDetails }) => {
+  function changeText(state) {
+    const details = draftjsToMd(convertToRaw(state.getCurrentContent()));
+    setDetails(details);
+  }
+
+  return (
+    <MUIRichTextEditor
+      label="Text (optional)..."
+      onChange={changeText}
+      draftEditorProps={{ spellCheck: true }}
+      controls={[
+        "title",
+        "bold",
+        "italic",
+        "underline",
+        // "strikethrough",
+        // "highlight",
+        "undo",
+        "redo",
+        // "link",
+        "numberList",
+        "bulletList",
+        "quote",
+        "code",
+        "clear"
+      ]}
+    />
+  );
+};
 
 export default CreatePost;
