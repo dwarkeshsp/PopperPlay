@@ -73,15 +73,6 @@ function Header() {
 
   return (
     <div className={classes.root}>
-<<<<<<< HEAD
-      <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
-        Thanks to your feedback, I am building the next version of PopperPlay
-        which will allow for more relationships between problems and
-        conjectures. There might be missing content or technical issues in the
-        meantime 😬 Stay tuned 😃
-      </Typography>
-=======
->>>>>>> graph_database
       <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
         Discovery: first a problem, then conjecture, then criticism, then new
         problem
