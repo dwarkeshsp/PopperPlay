@@ -1,7 +1,8 @@
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Checkbox from "@material-ui/core/Checkbox";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -9,34 +10,21 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import TwitterIcon from "@material-ui/icons/Twitter";
 import React from "react";
-import { Link as RouterLink, useHistory, withRouter } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import { compose } from "recompose";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
+import FacebookIcon from "@material-ui/icons/Facebook";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    height: "100vh"
-  },
-  image: {
-    backgroundImage:
-      "url(https://images.pexels.com/photos/2026960/pexels-photo-2026960.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)",
-    backgroundRepeat: "no-repeat",
-    backgroundColor:
-      theme.palette.type === "dark"
-        ? theme.palette.grey[900]
-        : theme.palette.grey[50],
-    backgroundSize: "cover",
-    backgroundPosition: "center"
-  },
   paper: {
-    margin: theme.spacing(8, 4),
+    margin: theme.spacing(2, 4),
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
@@ -51,10 +39,16 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  socialLogin: {
+    // marginTop: "1rem",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   }
 }));
 
-function LoginBase(props) {
+function LoginBase({ firebase }) {
   const classes = useStyles();
 
   const alertRef = React.useRef();
@@ -64,7 +58,7 @@ function LoginBase(props) {
   const [password, setPassword] = React.useState("");
   const [isInvalid, setIsInvalid] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
-  const [persistence, setPersistence] = React.useState(props.firebase.SESSION);
+  const [persistence, setPersistence] = React.useState(firebase.SESSION);
 
   let history = useHistory();
 
@@ -78,12 +72,12 @@ function LoginBase(props) {
   }, [email]);
 
   const onSubmit = event => {
-    props.firebase.setPersistence(persistence).then(function() {
-      props.firebase
+    firebase.setPersistence(persistence).then(function() {
+      firebase
         .doSignInWithEmailAndPassword(email, password)
         .then(() => {
-          const timestamp = props.firebase.timestamp();
-          props.firebase.person(props.firebase.currentPerson().displayName).set(
+          const timestamp = firebase.timestamp();
+          firebase.person(firebase.currentPerson().displayName).set(
             {
               lastSignin: timestamp
             },
@@ -102,99 +96,105 @@ function LoginBase(props) {
     event.preventDefault();
   };
 
+  const onSubmitTwitter = event => {
+    firebase.doSignInWithTwitter().then(socialAuthUser => {
+      // Create a user in your Firebase Realtime Database too
+      return this.firebase.user(socialAuthUser.user.uid).set({
+        username: socialAuthUser.additionalUserInfo.profile.name,
+        email: socialAuthUser.additionalUserInfo.profile.email,
+        roles: {}
+      });
+    });
+
+    event.preventDefault();
+  };
+
   return (
     <div>
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <Grid item xs={false} sm={6} md={6} className={classes.image} />
-        <Grid item xs={12} sm={6} md={6} elevation={0} square>
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <form className={classes.form} noValidate>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={event => setEmail(event.target.value)}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={event => setPassword(event.target.value)}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="remember"
-                    color="primary"
-                    onChange={event => {
-                      if (event.target.checked) {
-                        setPersistence(props.firebase.LOCAL);
-                      } else {
-                        setPersistence(props.firebase.SESSION);
-                      }
-                    }}
-                  />
-                }
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disabled={isInvalid}
-                onClick={event => onSubmit(event)}
-              >
-                Sign In
+      <Container maxWidth="sm">
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={event => setEmail(event.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={event => setPassword(event.target.value)}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="remember"
+                  color="primary"
+                  onChange={event => {
+                    if (event.target.checked) {
+                      setPersistence(firebase.LOCAL);
+                    } else {
+                      setPersistence(firebase.SESSION);
+                    }
+                  }}
+                />
+              }
+              label="Remember me"
+            />
+            <div className={classes.socialLogin}>
+              <Button variant="contained" color="primary">
+                <TwitterIcon />
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  {/* <Link variant="body2" onClick={handleClickOpen}>
-                    Forgot password?
-                  </Link> */}
-                  <ForgotPassword />
-                </Grid>
-                <Grid item>
-                  <Link
-                    // href="#"
-                    variant="body2"
-                    component={RouterLink}
-                    to="/signup"
-                  >
-                    {"Sign Up"}
-                  </Link>
-                </Grid>
+            </div>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              disabled={isInvalid}
+              onClick={event => onSubmit(event)}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <ForgotPassword />
               </Grid>
-            </form>
-          </div>
-        </Grid>
-        <Dialog
-          ref={alertRef}
-          title="Error"
-          message={errorMessage}
-          button="Okay"
-        />
-      </Grid>
+              <Grid item>
+                <Link variant="body2" component={RouterLink} to="/signup">
+                  Sign Up
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Container>
+      <Dialog
+        ref={alertRef}
+        title="Error"
+        message={errorMessage}
+        button="Okay"
+      />
     </div>
   );
 }
@@ -248,6 +248,4 @@ function ForgotPassword() {
   );
 }
 
-const Login = compose(withRouter, withFirebase)(LoginBase);
-
-export default Login;
+export default withFirebase(LoginBase);

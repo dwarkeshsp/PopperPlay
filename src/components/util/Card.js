@@ -12,6 +12,9 @@ import { Link as RouterLink } from "react-router-dom";
 import Markdown from "../util/Markdown";
 import VoteButton from "./buttons/Vote";
 import ItemInfo from "./ItemInfo";
+import { TwitterShareButton } from "react-share";
+import Fab from "@material-ui/core/Fab";
+import TwitterIcon from "@material-ui/icons/Twitter";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -78,7 +81,7 @@ export default function ItemCard({ item, problem, noProblemInfo, comment }) {
       >
         <div>
           <CardActionArea component="a" href="#">
-            <Card className={classes.card} elevation={4}>
+            <Card className={classes.card} elevation={5}>
               <div className={classes.cardDetails}>
                 <CardContent>
                   {/* {!problem && !noProblemInfo && (
@@ -103,13 +106,23 @@ export default function ItemCard({ item, problem, noProblemInfo, comment }) {
               </div>
               {!comment && (
                 <CardActions disableSpacing>
-                  <Button
+                  {/* <Button
                     variant="text"
                     color="primary"
                     // startIcon={<BuildIcon />}
                   >
                     {problem ? "Solve" : "Improve"}
-                  </Button>
+                  </Button> */}
+                  <TwitterShareButton
+                    url={window.location.href}
+                    children={
+                      <Fab color="primary">
+                        <TwitterIcon />
+                      </Fab>
+                    }
+                    title={"PopperPlay - " + item.title}
+                    hashtags={item.tags}
+                  />
                   <VoteButton item={item} problem={problem} />
                 </CardActions>
               )}

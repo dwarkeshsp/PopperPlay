@@ -12,6 +12,9 @@ class Firebase {
     this.db = app.firestore();
     this.analytics = app.analytics();
     this.firestore = app.firestore;
+    this.googleProvider = new app.auth.GoogleAuthProvider();
+    this.facebookProvider = new app.auth.FacebookAuthProvider();
+    this.twitterProvider = new app.auth.TwitterAuthProvider();
   }
 
   // *** Auth API ***
