@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ItemCard({ item, problem, noProblemInfo, noDetails }) {
+export default function ItemCard({ item, problem, noProblemInfo, comment }) {
   const classes = useStyles();
 
   function title() {
@@ -71,17 +71,17 @@ export default function ItemCard({ item, problem, noProblemInfo, noDetails }) {
                 pathname: "/problem/" + item.id
               }
             : {
-                pathname: "/conjecture/" + item.problem.id + "/" + item.id
+                pathname: "/conjecture/" + item.id
               }
         }
         style={{ textDecoration: "none" }}
       >
         <div>
           <CardActionArea component="a" href="#">
-            <Card className={classes.card}>
+            <Card className={classes.card} elevation={4}>
               <div className={classes.cardDetails}>
                 <CardContent>
-                  {!problem && !noProblemInfo && (
+                  {/* {!problem && !noProblemInfo && (
                     <Link
                       component="h3"
                       variant="subtitle1"
@@ -89,27 +89,27 @@ export default function ItemCard({ item, problem, noProblemInfo, noDetails }) {
                     >
                       {item.problem.title}
                     </Link>
-                  )}
+                  )} */}
                   <Typography component="h2" variant="h6">
                     {title()}
                   </Typography>
                   <ItemInfo item={item} />
-                  {!noDetails && (
+                  {!comment && (
                     <Markdown className={classes.markdown}>
                       {details()}
                     </Markdown>
                   )}
                 </CardContent>
               </div>
-              {!noDetails && (
+              {!comment && (
                 <CardActions disableSpacing>
-                  {/* <Button
+                  <Button
                     variant="text"
                     color="primary"
-                    startIcon={<BuildIcon />}
+                    // startIcon={<BuildIcon />}
                   >
                     {problem ? "Solve" : "Improve"}
-                  </Button> */}
+                  </Button>
                   <VoteButton item={item} problem={problem} />
                 </CardActions>
               )}

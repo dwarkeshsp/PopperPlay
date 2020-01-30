@@ -9,4 +9,15 @@ const config = {
   measurementId: "G-7H18ZCSCW2"
 };
 
-export default config;
+const testConfig = {
+  apiKey: "AIzaSyDIUPIlbClknbcSFMnO02PR8E1cuo_crR8",
+  authDomain: "popperplay0.firebaseapp.com",
+  databaseURL: "https://popperplay0.firebaseio.com",
+  projectId: "popperplay0",
+  storageBucket: "popperplay0.appspot.com",
+  messagingSenderId: "544078376171",
+  appId: "1:544078376171:web:3a24bb67ab4470a60c62ae",
+  measurementId: "G-9SSX21EFEC"
+};
+
+export { config, testConfig };

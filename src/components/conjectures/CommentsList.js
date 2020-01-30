@@ -11,7 +11,7 @@ import clsx from "clsx";
 import React from "react";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { withFirebase } from "../firebase";
-import MessageIcon from "@material-ui/icons/Message";
+import ReplyIcon from "@material-ui/icons/Reply";
 import VoteButton from "../util/buttons/Vote";
 import ItemInfo from "../util/ItemInfo";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -52,20 +52,15 @@ function CommentsList({ conjecture, firebase }) {
   const [comments, setComments] = React.useState([]);
   const [lastComment, setLastComment] = React.useState(null);
 
-  const LOADSIZE = 5;
+  // const LOADSIZE = 5;
   const orderBy = "created";
-  const path =
-    "problems/" +
-    conjecture.problem.id +
-    "/conjectures/" +
-    conjecture.id +
-    "/comments";
+  const path = "conjectures/" + conjecture.id + "/comments";
 
   React.useEffect(() => {
     firebase
       .collection(path)
       .orderBy(orderBy, "desc")
-      .limit(LOADSIZE)
+      // .limit(LOADSIZE)
       .get()
       .then(querySnapshot => {
         const data = querySnapshot.docs.map(doc => doc.data());
@@ -75,19 +70,19 @@ function CommentsList({ conjecture, firebase }) {
       });
   }, []);
 
-  function lazyLoad() {
-    if (lastComment) {
-      firebase
-        .commentStartAfterQuery(orderBy, LOADSIZE, lastComment, path)
-        .then(querySnapshot => {
-          const data = querySnapshot.docs.map(doc => doc.data());
-          querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
-          setLastComment(querySnapshot.docs[querySnapshot.docs.length - 1]);
-          setComments(comments.concat(data));
-        })
-        .catch(error => console.log(error));
-    }
-  }
+  // function lazyLoad() {
+  //   if (lastComment) {
+  //     firebase
+  //       .commentStartAfterQuery(orderBy, LOADSIZE, lastComment, path)
+  //       .then(querySnapshot => {
+  //         const data = querySnapshot.docs.map(doc => doc.data());
+  //         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
+  //         setLastComment(querySnapshot.docs[querySnapshot.docs.length - 1]);
+  //         setComments(comments.concat(data));
+  //       })
+  //       .catch(error => console.log(error));
+  //   }
+  // }
 
   return (
     <div style={{ marginBottom: "1rem" }}>
@@ -101,7 +96,7 @@ function CommentsList({ conjecture, firebase }) {
 
 function CommentCardBase({ comment, firebase }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(true);
   const [replying, setReplying] = React.useState(false);
   const [value, setValue] = React.useState("");
   const margin = (comment.level * 2).toString() + "rem";
@@ -121,13 +116,6 @@ function CommentCardBase({ comment, firebase }) {
       path: path,
       level: level,
       tags: comment.tags
-    });
-    await comment.tags.forEach(tag => {
-      const tagRef = firebase.tag(tag);
-      tagRef.set({}, { merge: true });
-      tagRef.update({
-        comments: firebase.arrayUnion(commentRef)
-      });
     });
     await firebase.person(person).update({
       comments: firebase.arrayUnion(commentRef)
@@ -152,7 +140,7 @@ function CommentCardBase({ comment, firebase }) {
                 aria-label="comment"
                 onClick={() => setReplying(true)}
               >
-                <MessageIcon />
+                <ReplyIcon />
               </IconButton>
             )}
             {replying && (
@@ -172,7 +160,7 @@ function CommentCardBase({ comment, firebase }) {
                   color="primary"
                   disabled={!value}
                 >
-                  <MessageIcon />
+                  <ReplyIcon />
                 </IconButton>
               </React.Fragment>
             )}
@@ -213,7 +201,6 @@ function ChildrenBase({ comment, expanded, firebase }) {
         querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
         setLastComment(querySnapshot.docs[querySnapshot.docs.length - 1]);
         setComments(data);
-        console.log(data);
       });
   }, [expanded]);
 
