@@ -55,7 +55,7 @@ export default function Feedback() {
           color="textSecondary"
           gutterBottom
         >
-          Please email me with any suggestions, problems, or questions you have
+          Please email me with any suggestions, problems, and questions you have
         </Typography>
         <a href="mailto:dwarkesh@popperplay.com" target="_blank">
           <Typography

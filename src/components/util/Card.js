@@ -78,7 +78,7 @@ export default function ItemCard({ item, problem, noProblemInfo, comment }) {
       >
         <div>
           <CardActionArea component="a" href="#">
-            <Card className={classes.card} elevation={10}>
+            <Card className={classes.card} elevation={4}>
               <div className={classes.cardDetails}>
                 <CardContent>
                   {/* {!problem && !noProblemInfo && (

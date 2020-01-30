@@ -216,7 +216,9 @@ const CreatePost = forwardRef(
 
 const Editor = ({ setDetails }) => {
   function changeText(state) {
-    const details = draftjsToMd(convertToRaw(state.getCurrentContent()));
+    let details = draftjsToMd(convertToRaw(state.getCurrentContent()));
+    // convert single line breaks into double
+    details = details.replace(/(^|[^\n])\n([^\n]|$)/g, "$1\n\n$2");
     setDetails(details);
   }
 
