@@ -12,7 +12,9 @@ import CommentTextBox from "../conjectures/CommentTextBox";
 import { withFirebase } from "../firebase";
 import ProblemConjecturesList from "../problems/ProblemConjecturesList";
 import { AuthUserContext } from "../session";
+import TwitterIcon from "@material-ui/icons/Twitter";
 import Dialog from "../util/AlertDialog";
+import Fab from "@material-ui/core/Fab";
 import CreatePost from "./CreatePost";
 import ItemInfo from "./ItemInfo";
 import MaterialLink from "@material-ui/core/Link";
@@ -21,6 +23,7 @@ import VoteButton from "./buttons/Vote";
 import EditButton from "./buttons/Edit";
 import Delete from "./buttons/Delete";
 import Graph from "./Graph";
+import { TwitterShareButton } from "react-share";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -97,6 +100,16 @@ function Header({ item, problem }) {
       <Grid item xs={3} align="right">
         {/* <Delete item={item} problem={problem} /> */}
         {/* <EditButton item={item} problem={problem} /> */}
+        <TwitterShareButton
+          url={window.location.href}
+          children={
+            <Fab color="primary">
+              <TwitterIcon />
+            </Fab>
+          }
+          title={"PopperPlay - " + item.title}
+          hashtags={item.tags}
+        />
         <VoteButton item={item} problem={problem} />
       </Grid>
     </Grid>
