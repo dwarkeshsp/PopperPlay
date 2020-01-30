@@ -3,17 +3,17 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import React from "react";
 import { withFirebase } from "../firebase";
 
-function TagMenu(props) {
-  const [options, setOptions] = React.useState([]);
-
-  function allTags() {
+function ProblemsMenu(props) {
+  function allProblems() {
     let options = [];
     props.firebase
       .problems()
       .get()
       .then(
         querySnapshot =>
-          (options = querySnapshot.forEach(doc => options.push(doc.id)))
+          (options = querySnapshot.forEach(doc =>
+            options.push({ title: doc.data().title, id: doc.id })
+          ))
       )
       .catch(error => console.log(error));
     return options;
@@ -23,26 +23,24 @@ function TagMenu(props) {
     <div>
       <Autocomplete
         id="problems"
-        freeSolo
         multiple
-        options={options}
+        options={allProblems()}
+        getOptionLabel={option => option.title}
         renderInput={params => (
           <TextField
             {...params}
             variant={props.variant === "outlined" ? "outlined" : "standard"}
-            label="problems"
+            label="Problems Getting Solved"
             margin="dense"
             fullWidth
           />
         )}
         onChange={(event, value) =>
-          props.setValue(value.map(Problem => Problem.toLowerCase()))
+          props.setValue(value.map(problem => problem.id))
         }
-        onOpen={() => setOptions(allTags())}
-        defaultValue={props.defaultValue}
       />
     </div>
   );
 }
 
-export default withFirebase(TagMenu);
+export default withFirebase(ProblemsMenu);

@@ -12,6 +12,8 @@ import { draftjsToMd } from "draftjs-md-converter";
 import MUIRichTextEditor from "mui-rte";
 import React from "react";
 import TagsMenu from "../tags/TagsMenu";
+import ProblemsMenu from "../problems/ProblemsMenu";
+import { firestore } from "firebase";
 
 const { forwardRef, useImperativeHandle } = React;
 
@@ -25,17 +27,14 @@ const CreatePost = forwardRef(
     const [fullScreen, setFullScreen] = React.useState(true);
     // only for conjectures
     const [parentProblemTitle, setParentProblemTitle] = React.useState("");
+    const [parentProblems, setParentProblems] = React.useState([]);
 
     const MINTITLELENGTH = 1;
 
     React.useEffect(() => {
-      setValid(
-        title.length >= MINTITLELENGTH &&
-          (problem ||
-            problemItem ||
-            parentProblemTitle.length >= MINTITLELENGTH)
-      );
-    }, [title, parentProblemTitle, problem, problemItem]);
+      let valid = title.length >= MINTITLELENGTH;
+      setValid(valid);
+    }, [title]);
 
     useImperativeHandle(ref, () => ({
       handleOpen() {
@@ -89,15 +88,18 @@ const CreatePost = forwardRef(
     async function postConjecture() {
       const timestamp = firebase.timestamp();
       const person = firebase.currentPerson().displayName;
-      if (!problemItem) {
-        const problemRef = await postParentProblem();
-        await post(problemRef.id);
-      } else {
-        await post(problemItem.id);
-      }
+
+      const problemIDs = problemItem ? [problemItem.id] : parentProblems;
+
+      await post(problemIDs);
+
+      handleClose();
 
       // post conjecture inside the problem
-      async function post(problemID) {
+      async function post(problemIDs) {
+        const parentProblemsID = problemIDs.map(id =>
+          firebase.db.doc(`problems/${id}`)
+        );
         const conjectureRef = await firebase.conjectures().add({
           title: title,
           details: details,
@@ -107,14 +109,16 @@ const CreatePost = forwardRef(
           creator: person,
           votedBy: [],
           votes: 0,
-          parentProblems: [firebase.db.doc(`problems/${problemID}`)],
+          parentProblems: parentProblemsID,
           childProblems: [],
           parentConjectures: [],
           childConjectures: []
         });
-        firebase.problem(problemID).update({
-          childConjectures: firebase.arrayUnion(conjectureRef)
-        });
+        parentProblems.map(problemID =>
+          firebase.problem(problemID).update({
+            childConjectures: firebase.arrayUnion(conjectureRef)
+          })
+        );
         firebase.person(person).update({
           conjectures: firebase.arrayUnion(conjectureRef)
         });
@@ -126,31 +130,6 @@ const CreatePost = forwardRef(
           });
         });
       }
-      // post parent problem
-      async function postParentProblem() {
-        const problemRef = firebase.problems().add({
-          title: parentProblemTitle,
-          tags: tags,
-          details: "",
-          created: timestamp,
-          lastModified: timestamp,
-          creator: person,
-          votedBy: [],
-          votes: 0
-        });
-        await firebase.person(person).update({
-          problems: firebase.arrayUnion(problemRef)
-        });
-        tags.forEach(tag => {
-          const tagRef = firebase.tag(tag);
-          tagRef.set({}, { merge: true });
-          tagRef.update({
-            problems: firebase.arrayUnion(problemRef)
-          });
-        });
-        return problemRef;
-      }
-      handleClose();
     }
 
     const ProblemHeader = () =>
@@ -165,35 +144,9 @@ const CreatePost = forwardRef(
         </DialogContentText>
       );
 
-    const ConjectureHeader = () =>
-      problemItem ? (
-        <DialogContentText variant="h6">{problemItem.title}</DialogContentText>
-      ) : (
-        <React.Fragment>
-          <TextField
-            required
-            multiline
-            helperText={
-              parentProblemTitle.length < MINTITLELENGTH &&
-              "Problem title does not meet minimum length"
-            }
-            margin="dense"
-            id="title"
-            label="Problem Title"
-            fullWidth
-            onChange={event => setParentProblemTitle(event.target.value)}
-          />
-        </React.Fragment>
-      );
-
     const Actions = () => (
       <DialogActions>
-        <Button
-          onClick={() =>
-            fullScreen ? setFullScreen(false) : setFullScreen(true)
-          }
-          color="primary"
-        >
+        <Button onClick={() => setFullScreen(!fullScreen)} color="primary">
           {fullScreen ? "Minimize" : "Maximize"}
         </Button>
         <Button onClick={handleClose} color="secondary">
@@ -213,7 +166,6 @@ const CreatePost = forwardRef(
       <Dialog
         open={open}
         // onClose={handleClose}
-        aria-labelledby="create-title"
         maxWidth="md"
         fullWidth
         fullScreen={fullScreen}
@@ -223,7 +175,15 @@ const CreatePost = forwardRef(
             {problem ? "A New Problem!" : "A New Conjecture"}
           </DialogTitle>
           <DialogContent>
-            {problem ? <ProblemHeader /> : <ConjectureHeader />}
+            {problem ? (
+              <ProblemHeader />
+            ) : problemItem ? (
+              <DialogContentText variant="h6">
+                {problemItem.title}
+              </DialogContentText>
+            ) : (
+              <ProblemsMenu setValue={setParentProblems} variant="outlined" />
+            )}
             <TextField
               required
               multiline
