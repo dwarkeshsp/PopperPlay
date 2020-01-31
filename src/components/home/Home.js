@@ -52,7 +52,7 @@ export default function Home() {
     <div>
       <Container maxWidth="sm">
         <Header />
-        <Video />
+        {/* <Video /> */}
       </Container>
       {/* <Container maxWidth="md"> */}
       {/* <Grid container spacing={3} justify="center">
