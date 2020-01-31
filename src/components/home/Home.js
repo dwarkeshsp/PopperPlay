@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import React from "react";
 import Link from "@material-ui/core/Link";
+import ReactPlayer from "react-player";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Link as RouterLink } from "react-router-dom";
 import ItemCard from "../util/Card";
@@ -22,8 +23,7 @@ import ItemInfo from "../util/ItemInfo";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(4, 0, 0)
+    padding: theme.spacing(5, 0, 0)
   },
   buttons: {
     marginTop: theme.spacing(4)
@@ -52,6 +52,7 @@ export default function Home() {
     <div>
       <Container maxWidth="sm">
         <Header />
+        <Video />
       </Container>
       {/* <Container maxWidth="md"> */}
       {/* <Grid container spacing={3} justify="center">
@@ -80,6 +81,7 @@ function Header() {
       <Typography variant="h5" align="center" color="textSecondary" paragraph>
         David Deutsch
       </Typography>
+
       <div className={classes.buttons}>
         <Grid container spacing={2} justify="center">
           <Grid item>
@@ -107,6 +109,15 @@ function Header() {
     </div>
   );
 }
+
+const Video = () => (
+  <ReactPlayer
+    style={{ marginTop: "4rem" }}
+    controls
+    url="https://www.youtube.com/watch?time_continue=1&v=ffL5ayz6Zk0"
+    width="600"
+  />
+);
 
 function Footer() {
   const classes = useStyles();

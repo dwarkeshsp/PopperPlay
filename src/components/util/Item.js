@@ -23,7 +23,7 @@ import VoteButton from "./buttons/Vote";
 import EditButton from "./buttons/Edit";
 import Delete from "./buttons/Delete";
 import Graph from "./Graph";
-import { TwitterShareButton } from "react-share";
+import TwitterShare from "./buttons/TwitterShare";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,7 +50,7 @@ function Item({ item, problem, firebase }) {
   return (
     <React.Fragment>
       {item && (
-        <Container maxWidth="sm" className={classes.root}>
+        <Container maxWidth="md" className={classes.root}>
           <Header item={item} problem={problem} firebase={firebase} />
           <Graph item={item} problem={problem} />
           <Markdown className={classes.markdown}>{item.details}</Markdown>
@@ -91,25 +91,16 @@ function Item({ item, problem, firebase }) {
 function Header({ item, problem }) {
   return (
     <Grid container>
-      <Grid item xs={9}>
+      <Grid item xs={10}>
         <Typography variant="h5" gutterBottom>
           {item.title}
         </Typography>
         <ItemInfo item={item} />
       </Grid>
-      <Grid item xs={3} align="right">
+      <Grid item xs={2} align="right">
         {/* <Delete item={item} problem={problem} /> */}
         {/* <EditButton item={item} problem={problem} /> */}
-        <TwitterShareButton
-          url={window.location.href}
-          children={
-            <Fab color="primary">
-              <TwitterIcon />
-            </Fab>
-          }
-          title={"PopperPlay - " + item.title}
-          hashtags={item.tags}
-        />
+        <TwitterShare item={item} problem={problem} />
         <VoteButton item={item} problem={problem} />
       </Grid>
     </Grid>

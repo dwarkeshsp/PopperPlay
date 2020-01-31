@@ -102,7 +102,7 @@ export default function Graph({ item, problem }) {
     <React.Fragment>
       {data && data.nodes.length > 1 && (
         <D3Graph
-          id="graph-id" // id is mandatory, if no id is defined rd3g will throw an error
+          id="graph-id"
           data={data}
           config={config}
           onClickNode={nodeID => history.push(nodeID)}
@@ -116,15 +116,13 @@ const config = {
   directed: true,
   automaticRearrangeAfterDropNode: true,
   height: 200,
-  width: 300,
+  width: 800,
   highlightDegree: 0,
   highlightOpacity: 0.2,
   linkHighlightBehavior: false,
   maxZoom: 12,
   minZoom: 0.05,
   nodeHighlightBehavior: true,
-  panAndZoom: false,
-  staticGraph: false,
   d3: {
     alphaTarget: 0.05,
     gravity: -250,
@@ -134,10 +132,10 @@ const config = {
   node: {
     color: "lightBlue",
     fontColor: "black",
-    fontSize: 10,
+    fontSize: 15,
     fontWeight: "normal",
     highlightColor: "blue",
-    highlightFontSize: 14,
+    highlightFontSize: 20,
     highlightFontWeight: "bold",
     highlightStrokeColor: "red",
     highlightStrokeWidth: 1.5,

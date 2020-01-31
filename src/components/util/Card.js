@@ -15,6 +15,7 @@ import ItemInfo from "./ItemInfo";
 import { TwitterShareButton } from "react-share";
 import Fab from "@material-ui/core/Fab";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import TwitterShare from "./buttons/TwitterShare";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -113,16 +114,7 @@ export default function ItemCard({ item, problem, noProblemInfo, comment }) {
                   >
                     {problem ? "Solve" : "Improve"}
                   </Button> */}
-                  <TwitterShareButton
-                    url={window.location.href}
-                    children={
-                      <Fab color="primary">
-                        <TwitterIcon />
-                      </Fab>
-                    }
-                    title={"PopperPlay - " + item.title}
-                    hashtags={item.tags}
-                  />
+                  <TwitterShare item={item} problem={problem} />
                   <VoteButton item={item} problem={problem} />
                 </CardActions>
               )}

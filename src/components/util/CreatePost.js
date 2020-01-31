@@ -114,7 +114,7 @@ const CreatePost = forwardRef(
           parentConjectures: [],
           childConjectures: []
         });
-        parentProblems.map(problemID =>
+        problemIDs.map(problemID =>
           firebase.problem(problemID).update({
             childConjectures: firebase.arrayUnion(conjectureRef)
           })
