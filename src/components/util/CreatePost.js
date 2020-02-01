@@ -32,9 +32,11 @@ const CreatePost = forwardRef(
     const MINTITLELENGTH = 1;
 
     React.useEffect(() => {
-      let valid = title.length >= MINTITLELENGTH;
+      let valid =
+        title.length >= MINTITLELENGTH &&
+        (problemItem || parentProblemTitle.length >= MINTITLELENGTH);
       setValid(valid);
-    }, [title]);
+    }, [title, parentProblemTitle]);
 
     useImperativeHandle(ref, () => ({
       handleOpen() {
@@ -44,18 +46,22 @@ const CreatePost = forwardRef(
 
     function handleClose() {
       setTitle("");
-      setParentProblemTitle("");
+      // setParentProblemTitle("");
       setTags([]);
       setDetails("");
       setValid(false);
       setOpen(false);
     }
 
-    async function postProblem() {
+    async function postProblemBase(
+      problemTitle,
+      parentConjectures,
+      childConjectures
+    ) {
       const timestamp = firebase.timestamp();
       const person = firebase.currentPerson().displayName;
       const problemRef = await firebase.problems().add({
-        title: title,
+        title: problemTitle,
         details: details,
         tags: tags,
         created: timestamp,
@@ -63,10 +69,8 @@ const CreatePost = forwardRef(
         creator: person,
         votedBy: [],
         votes: 0,
-        parentConjectures: conjectureItem
-          ? [firebase.db.doc(`conjectures/${conjectureItem.id}`)]
-          : [],
-        childConjectures: []
+        parentConjectures: parentConjectures,
+        childConjectures: childConjectures
       });
       tags.forEach(tag => {
         const tagRef = firebase.tag(tag);
@@ -79,58 +83,69 @@ const CreatePost = forwardRef(
         (await firebase.conjecture(conjectureItem.id).update({
           childProblems: firebase.arrayUnion(problemRef)
         }));
-      await firebase.person(person).update({
+      firebase.person(person).update({
         problems: firebase.arrayUnion(problemRef)
       });
+      return problemRef.id;
+    }
+
+    async function postProblem() {
+      const parentConjectures = conjectureItem
+        ? [firebase.db.doc(`conjectures/${conjectureItem.id}`)]
+        : [];
+      await postProblemBase(title, parentConjectures, []);
       handleClose();
+    }
+
+    async function postConjectureBase(problemIDs) {
+      const timestamp = firebase.timestamp();
+      const person = firebase.currentPerson().displayName;
+      const parentProblemsID = problemIDs.map(id =>
+        firebase.db.doc(`problems/${id}`)
+      );
+      const conjectureRef = await firebase.conjectures().add({
+        title: title,
+        details: details,
+        tags: tags,
+        created: timestamp,
+        lastModified: timestamp,
+        creator: person,
+        votedBy: [],
+        votes: 0,
+        parentProblems: parentProblemsID,
+        childProblems: [],
+        parentConjectures: [],
+        childConjectures: []
+      });
+      problemIDs.map(problemID =>
+        firebase.problem(problemID).update({
+          childConjectures: firebase.arrayUnion(conjectureRef)
+        })
+      );
+      firebase.person(person).update({
+        conjectures: firebase.arrayUnion(conjectureRef)
+      });
+      tags.forEach(tag => {
+        const tagRef = firebase.tag(tag);
+        tagRef.set({}, { merge: true });
+        tagRef.update({
+          conjectures: firebase.arrayUnion(conjectureRef)
+        });
+      });
     }
 
     async function postConjecture() {
-      const timestamp = firebase.timestamp();
-      const person = firebase.currentPerson().displayName;
-
-      const problemIDs = problemItem ? [problemItem.id] : parentProblems;
-
-      await post(problemIDs);
+      let problemIDs;
+      if (problemItem) {
+        problemIDs = problemItem.id;
+      } else {
+        problemIDs = await postProblemBase(parentProblemTitle, [], []);
+      }
+      await postConjectureBase([problemIDs]);
 
       handleClose();
-
-      // post conjecture inside the problem
-      async function post(problemIDs) {
-        const parentProblemsID = problemIDs.map(id =>
-          firebase.db.doc(`problems/${id}`)
-        );
-        const conjectureRef = await firebase.conjectures().add({
-          title: title,
-          details: details,
-          tags: tags,
-          created: timestamp,
-          lastModified: timestamp,
-          creator: person,
-          votedBy: [],
-          votes: 0,
-          parentProblems: parentProblemsID,
-          childProblems: [],
-          parentConjectures: [],
-          childConjectures: []
-        });
-        problemIDs.map(problemID =>
-          firebase.problem(problemID).update({
-            childConjectures: firebase.arrayUnion(conjectureRef)
-          })
-        );
-        firebase.person(person).update({
-          conjectures: firebase.arrayUnion(conjectureRef)
-        });
-        tags.forEach(tag => {
-          const tagRef = firebase.tag(tag);
-          tagRef.set({}, { merge: true });
-          tagRef.update({
-            conjectures: firebase.arrayUnion(conjectureRef)
-          });
-        });
-      }
     }
+    // post conjecture inside the problem
 
     const ProblemHeader = () =>
       conjectureItem ? (
@@ -182,7 +197,25 @@ const CreatePost = forwardRef(
                 {problemItem.title}
               </DialogContentText>
             ) : (
-              <ProblemsMenu setValue={setParentProblems} variant="outlined" />
+              <React.Fragment>
+                <DialogContentText>
+                  To solve an already posted problem, please find it on the
+                  problems page.
+                </DialogContentText>
+                <TextField
+                  required
+                  multiline
+                  helperText={
+                    parentProblemTitle.length < MINTITLELENGTH &&
+                    "Problem title does not meet minimum length"
+                  }
+                  margin="dense"
+                  id="title"
+                  label="Problem Title"
+                  fullWidth
+                  onChange={event => setParentProblemTitle(event.target.value)}
+                />
+              </React.Fragment>
             )}
             <TextField
               required
