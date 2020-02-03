@@ -10,8 +10,8 @@ import VideoCallIcon from "@material-ui/icons/VideoCall";
 export default function Feedback() {
   return (
     <div style={{ marginTop: "3rem", marginBottom: "3rem" }}>
-      <Container maxWidth="md">
-        <Typography variant="h6" align="center" gutterBottom paragraph>
+      <Container maxWidth="sm">
+        <Typography variant="h6" gutterBottom paragraph>
           👋 Hi, I’m Dwarkesh. I'm trying to make a platform that helps people
           identify open problems and create new ideas. There is nothing more
           helpful and impactful to this mission than your feedback. Thank you
