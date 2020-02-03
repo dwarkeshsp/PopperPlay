@@ -24,7 +24,7 @@ PopperPlay is the ever-improving solution. Here, anyone can identify problems wi
 
 Eric Weinstein has explained the inspiring meaning of a [portal](https://www.youtube.com/watch?v=pb_yvBNLjNk) - an idea, a place, an experience that helps us escape our hum-drum lives and shows us how brilliantly interesting the world is. I conjecture that what we feel when we enter a portal is optimism. We are introduced to a beautiful and novel problem and we realize that we can solve it.
 
-But I have found no fun and accessible gateways to open problems in my quest for portals.[^1] So I built PopperPlay. I want to make it easy to go on intellectual adventures and create new knowledge.
+As a college student, I realized that not only was I not solving problems in class, I wasn't even learning how to solve problems. Instead, I was learning how to pretend like I was solving an interesting problem creatively while being neither creative nor interested. So I built PopperPlay. I want to make it easy to go on intellectual adventures and create new knowledge.
 
 Imagine how much fun it would be to identify where existing explanations were inadequate and create new ones. Imagine how much progress could be unleashed if problem-solving was freed from the gatekeeping, bureaucracy, and inertia that currently impinges on it.
 
@@ -66,6 +66,5 @@ Only in this way can we prevent the entrenchment of errors and the suppression o
 
 PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. Errors will be found in the layout and structure of the platform, in missing features, in the algorithms for featuring problems and conjectures, and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjecture solutions upon. That is why **PopperPlay is completely open-source**. I need your [feedback](https://popperplay.com/feedback) on how this platform can better help people identify problems and create new ideas.
 
-[^1]: As a college student, I realized that not only was I not solving problems, I wasn't even learning how to solve problems. Instead, I was learning how to pretend like I was solving an interesting problem creatively while being neither creative nor interested.
-[^2]: Unless the paywall is necessary to sustain your channel of knowledge creation. And even then, the paywall becomes a problem you should solve with a better alternative.
-[^3]: From this are derived further bad questions like, "How do we ensure that our journalistic and academic classes are responsible and informed?", "Who should be allowed to participate in the process of sense-making?", and "How should the gatekeepers be educated?"
+[^1]: Unless the paywall is necessary to sustain your channel of knowledge creation. And even then, the paywall becomes a problem you should solve with a better alternative.
+[^2]: From this are derived further bad questions like, "How do we ensure that our journalistic and academic classes are responsible and informed?", "Who should be allowed to participate in the process of sense-making?", and "How should the gatekeepers be educated?"

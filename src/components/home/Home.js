@@ -145,7 +145,7 @@ function Video() {
           <ReactPlayer
             controls
             playing="true"
-            url="https://www.youtube.com/watch?time_continue=1&v=ffL5ayz6Zk0"
+            url="https://www.youtube.com/watch?v=sD9gTAFDq40"
           />
         </DialogContent>
       </Dialog>
