@@ -1,29 +1,26 @@
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
+import DialogContent from "@material-ui/core/DialogContent";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
+import TimelineIcon from "@material-ui/icons/Timeline";
 import React from "react";
-import { Link } from "react-router-dom";
 import CommentsList from "../conjectures/CommentsList";
 import CommentTextBox from "../conjectures/CommentTextBox";
 import { withFirebase } from "../firebase";
 import ProblemConjecturesList from "../problems/ProblemConjecturesList";
 import { AuthUserContext } from "../session";
-import TwitterIcon from "@material-ui/icons/Twitter";
 import Dialog from "../util/AlertDialog";
-import Fab from "@material-ui/core/Fab";
-import CreatePost from "./CreatePost";
-import ItemInfo from "./ItemInfo";
-import MaterialLink from "@material-ui/core/Link";
-import Markdown from "./Markdown";
-import VoteButton from "./buttons/Vote";
-import EditButton from "./buttons/Edit";
-import Delete from "./buttons/Delete";
-import Graph from "./Graph";
 import TwitterShare from "./buttons/TwitterShare";
+import VoteButton from "./buttons/Vote";
+import CreatePost from "./CreatePost";
+import Graph from "./Graph";
+import ItemInfo from "./ItemInfo";
+import Markdown from "./Markdown";
+import MetaInfoList from "./MetaInfoList";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,34 +47,36 @@ function Item({ item, problem, firebase }) {
   return (
     <React.Fragment>
       {item && (
-        <Container maxWidth="md" className={classes.root}>
-          <Header item={item} problem={problem} firebase={firebase} />
-          <Graph item={item} problem={problem} />
-          <Markdown className={classes.markdown}>{item.details}</Markdown>
-          {problem ? (
-            <PostButton item={item} problem={problem} />
-          ) : (
-            <PostButton item={item} problem={problem} />
-          )}
-          <Typography
-            className={classes.childrenTitle}
-            variant="h5"
-            align="center"
-            gutterBottom
-          >
-            {problem ? "Conjectures" : "Comments"}
-          </Typography>
-          {problem ? (
-            <React.Fragment>
-              <ProblemConjecturesList problem={item} />
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <CommentTextBox conjecture={item} />
-              <CommentsList conjecture={item} />
-            </React.Fragment>
-          )}
-        </Container>
+        <div>
+          <Container maxWidth="md" className={classes.root}>
+            <Header item={item} problem={problem} />
+            <GraphDialog item={item} problem={problem} />
+            <Markdown className={classes.markdown}>{item.details}</Markdown>
+            {problem ? (
+              <PostButton item={item} problem={problem} />
+            ) : (
+              <PostButton item={item} problem={problem} />
+            )}
+            <Typography
+              className={classes.childrenTitle}
+              variant="h5"
+              align="center"
+              gutterBottom
+            >
+              {problem ? "Conjectures" : "Comments"}
+            </Typography>
+            {problem ? (
+              <React.Fragment>
+                <ProblemConjecturesList problem={item} />
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <CommentTextBox conjecture={item} />
+                <CommentsList conjecture={item} />
+              </React.Fragment>
+            )}
+          </Container>
+        </div>
       )}
       {!item && (
         <Grid container justify="center">
@@ -92,6 +91,7 @@ function Header({ item, problem }) {
   return (
     <Grid container>
       <Grid item xs={10}>
+        {!problem && <MetaInfoList refList={item.parentProblems} />}
         <Typography variant="h5" gutterBottom>
           {item.title}
         </Typography>
@@ -142,6 +142,39 @@ function PostButtonBase({ item, problem, firebase }) {
         }
       </AuthUserContext.Consumer>
     </Grid>
+  );
+}
+
+function GraphDialog({ item, problem }) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <Grid container justify="center">
+        <Button
+          variant="text"
+          color="primary"
+          size="large"
+          startIcon={<TimelineIcon />}
+          onClick={handleClickOpen}
+        >
+          See graph
+        </Button>
+      </Grid>
+      <Dialog open={open} onClose={handleClose} maxWidth="xl">
+        <DialogContent>
+          <Graph item={item} problem={problem} />
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
 

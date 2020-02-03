@@ -16,6 +16,7 @@ import { TwitterShareButton } from "react-share";
 import Fab from "@material-ui/core/Fab";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import TwitterShare from "./buttons/TwitterShare";
+import MetaInfoList from "./MetaInfoList";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -94,6 +95,7 @@ export default function ItemCard({ item, problem, noProblemInfo, comment }) {
                       {item.problem.title}
                     </Link>
                   )} */}
+                  {!problem && <MetaInfoList refList={item.parentProblems} />}
                   <Typography component="h2" variant="h6">
                     {title()}
                   </Typography>

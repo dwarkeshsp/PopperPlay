@@ -86,9 +86,7 @@ function Header() {
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
           David Deutsch
         </Typography>
-        <Grid container justify="center">
-          <Video />
-        </Grid>
+        <Video />
         <div className={classes.buttons}>
           <Grid container spacing={2} justify="center">
             <Grid item>
@@ -131,15 +129,18 @@ function Video() {
 
   return (
     <div>
-      <Button
-        variant="text"
-        color="primary"
-        size="large"
-        onClick={handleClickOpen}
-      >
-        <PlayArrowIcon />
-        {" Watch video"}
-      </Button>
+      <Grid container justify="center">
+        <Button
+          variant="text"
+          color="primary"
+          size="large"
+          startIcon={<PlayArrowIcon />}
+          onClick={handleClickOpen}
+        >
+          Watch video
+        </Button>
+      </Grid>
+
       <Dialog open={open} onClose={handleClose} maxWidth="xl">
         <DialogContent>
           <ReactPlayer
@@ -149,53 +150,6 @@ function Video() {
           />
         </DialogContent>
       </Dialog>
-    </div>
-  );
-}
-
-function FeedbackHome() {
-  return (
-    <div style={{ marginTop: "3rem" }}>
-      <Typography variant="h" align="center" color="textPrimary" gutterBottom>
-        Help me improve PopperPlay
-      </Typography>
-      <Typography
-        variant="h5"
-        align="center"
-        color="textSecondary"
-        component="p"
-      >
-        Quickly build an effective pricing table for your potential customers
-        with this layout. It&apos;s built with default Material-UI components
-        with little customization.
-      </Typography>
-      <Grid
-        style={{ marginTop: "2rem" }}
-        container
-        spacing={5}
-        alignItems="flex-end"
-      >
-        <Grid item xs={12} sm={6} md={4}>
-          <Button
-            variant="contained"
-            color="primary"
-            component={RouterLink}
-            to="/problems"
-          >
-            Solve Problems
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            variant="outlined"
-            color="primary"
-            component={RouterLink}
-            to="/conjectures"
-          >
-            Create Conjectures
-          </Button>
-        </Grid>
-      </Grid>
     </div>
   );
 }
