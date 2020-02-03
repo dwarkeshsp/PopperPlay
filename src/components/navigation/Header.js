@@ -10,7 +10,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     justifyContent: "center",
-    backgroundColor: theme.palette.background.default
+    backgroundColor: theme.palette.background.default,
+    marginTop: "0.25rem"
   }
 }));
 

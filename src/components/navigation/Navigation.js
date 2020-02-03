@@ -43,14 +43,14 @@ export default function Pricing() {
             PopperPlay
           </Typography>
           <nav>
-            <Link
+            {/* <Link
               variant="button"
               color="inherit"
               component={RouterLink}
               to="/feedback"
             >
               Feedback
-            </Link>
+            </Link> */}
             <Link
               variant="button"
               color="inherit"

@@ -21,6 +21,7 @@ import { compose } from "recompose";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
 import FacebookIcon from "@material-ui/icons/Facebook";
+import SocialLogin from "./SocialLogin";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -39,12 +40,6 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
-  },
-  socialLogin: {
-    // marginTop: "1rem",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
   }
 }));
 
@@ -91,19 +86,6 @@ function LoginBase({ firebase }) {
           setErrorMessage(error.message);
           alertRef.current.handleOpen();
         });
-    });
-
-    event.preventDefault();
-  };
-
-  const onSubmitTwitter = event => {
-    firebase.doSignInWithTwitter().then(socialAuthUser => {
-      // Create a user in your Firebase Realtime Database too
-      return this.firebase.user(socialAuthUser.user.uid).set({
-        username: socialAuthUser.additionalUserInfo.profile.name,
-        email: socialAuthUser.additionalUserInfo.profile.email,
-        roles: {}
-      });
     });
 
     event.preventDefault();
@@ -160,11 +142,7 @@ function LoginBase({ firebase }) {
               }
               label="Remember me"
             />
-            <div className={classes.socialLogin}>
-              <Button variant="contained" color="primary">
-                <TwitterIcon />
-              </Button>
-            </div>
+            <SocialLogin />
             <Button
               type="submit"
               fullWidth

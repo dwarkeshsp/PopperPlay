@@ -1,29 +1,27 @@
 import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import React from "react";
-import Link from "@material-ui/core/Link";
-import ReactPlayer from "react-player";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { Link as RouterLink } from "react-router-dom";
-import ItemCard from "../util/Card";
 import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import Container from "@material-ui/core/Container";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import React from "react";
+import ReactPlayer from "react-player";
+import { Link as RouterLink } from "react-router-dom";
+import Feedback from "../feedback/Feedback";
 import { withFirebase } from "../firebase";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Vote from "../util/buttons/Vote";
 import ItemInfo from "../util/ItemInfo";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(5, 0, 0)
+    padding: theme.spacing(4, 0, 0)
   },
   buttons: {
     marginTop: theme.spacing(4)
@@ -48,13 +46,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Home() {
+  const classes = useStyles();
+
   return (
-    <div>
-      <Container maxWidth="sm">
-        <Header />
-        {/* <Video /> */}
-      </Container>
-      {/* <Container maxWidth="md"> */}
+    <div className={classes.root}>
+      <Header />
+      <Feedback />
+      {/* <Video /> */}
+
+      {/* <Feedback /> */}
       {/* <Grid container spacing={3} justify="center">
           <Grid item sm={6}> */}
       {/* <Problems /> */}
@@ -63,7 +63,6 @@ export default function Home() {
       {/* <Conjectures /> */}
       {/* </Grid>
         </Grid> */}
-      {/* </Container> */}
       {/* <Footer /> */}
     </div>
   );
@@ -73,51 +72,133 @@ function Header() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Typography variant="h4" align="center" color="textPrimary" gutterBottom>
-        Discovery: first a problem, then conjecture, then criticism, then new
-        problem
-      </Typography>
-      <Typography variant="h5" align="center" color="textSecondary" paragraph>
-        David Deutsch
-      </Typography>
-
-      <div className={classes.buttons}>
-        <Grid container spacing={2} justify="center">
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              component={RouterLink}
-              to="/problems"
-            >
-              Solve Problems
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="outlined"
-              color="primary"
-              component={RouterLink}
-              to="/conjectures"
-            >
-              Create Conjectures
-            </Button>
-          </Grid>
+    <div>
+      <Container maxWidth="sm">
+        <Typography
+          variant="h5"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          Discovery: first a problem, then conjecture, then criticism, then new
+          problem
+        </Typography>
+        <Typography variant="h5" align="center" color="textSecondary" paragraph>
+          David Deutsch
+        </Typography>
+        <Grid container justify="center">
+          <Video />
         </Grid>
-      </div>
+        <div className={classes.buttons}>
+          <Grid container spacing={2} justify="center">
+            <Grid item>
+              <Button
+                variant="contained"
+                color="primary"
+                component={RouterLink}
+                to="/problems"
+              >
+                Solve Problems
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="primary"
+                component={RouterLink}
+                to="/conjectures"
+              >
+                Create Conjectures
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+      </Container>
     </div>
   );
 }
 
-const Video = () => (
-  <ReactPlayer
-    style={{ marginTop: "4rem" }}
-    controls
-    url="https://www.youtube.com/watch?time_continue=1&v=ffL5ayz6Zk0"
-    width="600"
-  />
-);
+function Video() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <Button
+        variant="text"
+        color="primary"
+        size="large"
+        onClick={handleClickOpen}
+      >
+        <PlayArrowIcon />
+        {" Watch video"}
+      </Button>
+      <Dialog open={open} onClose={handleClose} maxWidth="xl">
+        <DialogContent>
+          <ReactPlayer
+            controls
+            playing="true"
+            url="https://www.youtube.com/watch?time_continue=1&v=ffL5ayz6Zk0"
+          />
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+function FeedbackHome() {
+  return (
+    <div style={{ marginTop: "3rem" }}>
+      <Typography variant="h" align="center" color="textPrimary" gutterBottom>
+        Help me improve PopperPlay
+      </Typography>
+      <Typography
+        variant="h5"
+        align="center"
+        color="textSecondary"
+        component="p"
+      >
+        Quickly build an effective pricing table for your potential customers
+        with this layout. It&apos;s built with default Material-UI components
+        with little customization.
+      </Typography>
+      <Grid
+        style={{ marginTop: "2rem" }}
+        container
+        spacing={5}
+        alignItems="flex-end"
+      >
+        <Grid item xs={12} sm={6} md={4}>
+          <Button
+            variant="contained"
+            color="primary"
+            component={RouterLink}
+            to="/problems"
+          >
+            Solve Problems
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            color="primary"
+            component={RouterLink}
+            to="/conjectures"
+          >
+            Create Conjectures
+          </Button>
+        </Grid>
+      </Grid>
+    </div>
+  );
+}
 
 function Footer() {
   const classes = useStyles();

@@ -13,8 +13,8 @@ import CreatePost from "../util/CreatePost";
 
 const useStyles = makeStyles(theme => ({
   pad: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(1.5)
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(4)
   }
 }));
 
@@ -25,7 +25,13 @@ function ListHeader(props) {
 
   return (
     <div className={classes.pad}>
-      <Grid container direction="row" justify="center" alignItems="center">
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        spacing={3}
+      >
         <Grid item>
           <OrderByMenu setOrderBy={props.setOrderBy} />
         </Grid>
@@ -33,37 +39,40 @@ function ListHeader(props) {
           <TagsMenu setValue={props.setTags} variant="outlined" />
         </Grid>
       </Grid>
-      <Grid container spacing={2} justify="center">
-        <div className={classes.pad}>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AddIcon />}
-              onClick={() => alertRef.current.handleOpen()}
-            >
-              {props.problem ? "New problem" : "Create conjecture"}
-            </Button>
-            <AuthUserContext.Consumer>
-              {authUser =>
-                authUser ? (
-                  <CreatePost
-                    ref={alertRef}
-                    firebase={props.firebase}
-                    problem={props.problem}
-                  />
-                ) : (
-                  <Dialog
-                    ref={alertRef}
-                    title="Not logged in"
-                    message={"You must login in order to perform this action."}
-                    button="Okay"
-                  />
-                )
-              }
-            </AuthUserContext.Consumer>
-          </Grid>
-        </div>
+      <Grid
+        style={{ marginTop: "0.5rem" }}
+        container
+        spacing={2}
+        justify="center"
+      >
+        <Grid item>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={() => alertRef.current.handleOpen()}
+          >
+            {props.problem ? "New problem" : "Create conjecture"}
+          </Button>
+          <AuthUserContext.Consumer>
+            {authUser =>
+              authUser ? (
+                <CreatePost
+                  ref={alertRef}
+                  firebase={props.firebase}
+                  problem={props.problem}
+                />
+              ) : (
+                <Dialog
+                  ref={alertRef}
+                  title="Not logged in"
+                  message={"You must login in order to perform this action."}
+                  button="Okay"
+                />
+              )
+            }
+          </AuthUserContext.Consumer>
+        </Grid>
       </Grid>
     </div>
   );

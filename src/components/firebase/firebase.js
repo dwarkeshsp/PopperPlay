@@ -3,7 +3,8 @@ import "firebase/firestore";
 import "firebase/analytics";
 import app from "firebase/app";
 
-import { config } from "./config";
+// import { config } from "./config";
+import { testConfig as config } from "./config";
 
 class Firebase {
   constructor() {

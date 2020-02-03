@@ -1,73 +1,41 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 
 export default function Feedback() {
   return (
-    <div style={{ marginTop: "1rem" }}>
+    <div style={{ marginTop: "3rem", marginBottom: "3rem" }}>
       <Container maxWidth="sm">
-        <Typography variant="h6" gutterBottom paragraph>
+        <Typography variant="h6" align="center" gutterBottom paragraph>
           👋 Hi, I’m Dwarkesh. I'm trying to make a platform that helps people
           identify open problems and create new ideas. There is nothing more
           helpful to this mission than your feedback. Thank you! 🙏
         </Typography>
-
-        {/* <Typography
-          style={{ marginTop: "2rem" }}
-          variant="h5"
-          // align="center"
-          gutterBottom
-          paragraph
-        >
-          To give feedback 📝, please create or solve a problem with the tag
-          "popperplay"
-        </Typography>
-        <Typography variant="body1" gutterBottom paragraph>
-          I want to see if problems with PopperPlay can be solved using
-          PopperPlay. This way, the entire platform can contribute and improve
-          ideas.
-        </Typography>
-        <Typography variant="body1" gutterBottom paragraph>
-          Every problem, comment, and suggestion you have is tremendously
-          helpful at this early stage. Everything is subject to improvement:
-          platform structure, features, philosophy, user interfaces.
-        </Typography>
-        <a
-          href="https://gitlab.com/dwarkeshsp/popperplay/issues"
-          target="_blank"
-        >
-          <Typography
-            style={{ marginTop: "2rem" }}
-            variant="h5"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-            paragraph
-          >
-            🐛 To report a bug or a technical issue, please create an issue on
-            Gitlab (click here).
-          </Typography>
-        </a> */}
-
-        <Typography
-          variant="h6"
-          align="center"
-          color="textSecondary"
-          gutterBottom
-        >
-          Please email me with any suggestions, problems, and questions you have
-        </Typography>
-        <a href="mailto:dwarkesh@popperplay.com" target="_blank">
-          <Typography
-            align="center"
-            variant="h5"
-            color="textPrimary"
-            gutterBottom
-            // style={{ marginBottom: "3rem" }}
-          >
-            dwarkesh@popperplay.com
-          </Typography>
-        </a>
+        <Grid container spacing={2} justify="center">
+          <Grid item>
+            <a href="mailto:dwarkesh@popperplay.com" target="_blank">
+              <Button variant="text" color="primary">
+                Email me
+              </Button>
+            </a>
+          </Grid>
+          <Grid item>
+            <a href="https://calendly.com/dwarkesh/feedback" target="_blank">
+              <Button variant="text" color="primary">
+                Video chat with me
+              </Button>
+            </a>
+          </Grid>
+          <Grid item>
+            <a href="https://twitter.com/PopperPlay" target="_blank">
+              <Button variant="text" color="primary">
+                DM me on Twitter
+              </Button>
+            </a>
+          </Grid>
+        </Grid>
       </Container>
     </div>
   );
