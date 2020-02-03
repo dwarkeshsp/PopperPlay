@@ -142,7 +142,7 @@ function LoginBase({ firebase }) {
               }
               label="Remember me"
             />
-            <SocialLogin />
+            {/* <SocialLogin /> */}
             <Button
               type="submit"
               fullWidth
