@@ -11,14 +11,14 @@ function Problems(props) {
 
   return (
     <div>
-      <Quote />
-      <ListHeader
-        // className={classes.header}
-        setTags={setTags}
-        setOrderBy={setOrderBy}
-        problem
-      />
       <Container maxWidth="md">
+        <Quote />
+        <ListHeader
+          // className={classes.header}
+          setTags={setTags}
+          setOrderBy={setOrderBy}
+          problem
+        />
         <List tags={tags} orderBy={orderBy} problem />
       </Container>
     </div>
@@ -34,8 +34,9 @@ function Quote() {
       <Typography variant="subtitle1" align="center" color="textSecondary">
         Karl Popper
       </Typography> */}
-      <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
-        The raw material for creativity is problems
+      <Typography variant="subtitle1" align="center" color="textPrimary">
+        A problem exists when it seems that some of our theories seem inadequate
+        and worth trying to improve.
       </Typography>
       <Typography variant="subtitle1" align="center" color="textSecondary">
         David Deutsch

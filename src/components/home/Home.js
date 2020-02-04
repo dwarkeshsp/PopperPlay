@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(4, 0, 0)
   },
   buttons: {
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(3)
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -137,12 +137,15 @@ function Video() {
           startIcon={<PlayArrowIcon />}
           onClick={handleClickOpen}
         >
-          Watch video
+          Watch the video
         </Button>
       </Grid>
 
       <Dialog open={open} onClose={handleClose} maxWidth="xl">
         <DialogContent>
+          <Typography variant="subtitle1" align="center">
+            I'm still making the video but in the meantime enjoy some puppers!!!
+          </Typography>
           <ReactPlayer
             controls
             playing="true"

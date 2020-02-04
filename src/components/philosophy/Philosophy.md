@@ -1,48 +1,8 @@
-# Philosophy
+#  Philosophy
 
 <!-- &nbsp; -->
 
 _Many of the following ideas are inspired by David Deutsch and Karl Popper._
-
-## Problem Solving
-
-> All evils are caused by insufficient knowledge.
->
-> David Deutsch
-
-Wherever a conscious being suffers or dies, wherever a truth about the universe remains unknown, wherever we fail to explore, create, and understand - the cause is that we lack the knowledge necessary to solve some problem. Given this fact, our entire civilization should be dedicated to helping people solve problems. Every human being has the capacity to create knowledge, and we should be doing everything we possibly can to utilize their creativity.
-
-But tragically, our institutions fail to help people solve problems. Instead of empowering the entire repertoire of human thought, we only give a select few the resources, information, and platform to create knowledge. This is in and of itself a severe problem because it is handicapping the solution of all other problems.
-
-PopperPlay is the ever-improving solution. Here, anyone can identify problems with prevailing theories. Anyone can create conjectures that tentatively solve these problems. And anyone can subject these conjectures to criticism and improvement. Through this open process of conjecture and refutation, we can enable the creation of new knowledge and thus reduce the suffering, error, and stasis in our civilization.
-
-## Portals
-
-> The possibilities that lie in the future are infinite. When I say ‘It is our duty to remain optimists,’ this includes not only the openness of the future but also that which all of us contribute to it by everything we do: we are all responsible for what the future holds in store. Thus it is our duty, not to prophesy evil but, rather, to fight for a better world.
->
-> Karl Popper, _The Myth of the Framework_
-
-Eric Weinstein has explained the inspiring meaning of a [portal](https://www.youtube.com/watch?v=pb_yvBNLjNk) - an idea, a place, an experience that helps us escape our hum-drum lives and shows us how brilliantly interesting the world is. I conjecture that what we feel when we enter a portal is optimism. We are introduced to a beautiful and novel problem and we realize that we can solve it.
-
-As a college student, I realized that not only was I not solving problems in class, I wasn't even learning how to solve problems. Instead, I was learning how to pretend like I was solving an interesting problem creatively while being neither creative nor interested. So I built PopperPlay. I want to make it easy to go on intellectual adventures and create new knowledge.
-
-Imagine how much fun it would be to identify where existing explanations were inadequate and create new ones. Imagine how much progress could be unleashed if problem-solving was freed from the gatekeeping, bureaucracy, and inertia that currently impinges on it.
-
-PopperPlay houses endless portals in the form of problems. Every problem is the beginning of an infinity of subsequent problems, each more interesting than the last, and each requiring human creativity to solve.
-
-## No Ads or Paywalls
-
-Ads and paywalls are bad solutions to the problem of monetization. I think it's wrong to make people pay to receive or create knowledge.[^2] As a college student, I probably wouldn't be able to afford PopperPlay myself if it was paywalled.
-
-Advertisements are perhaps even worse. They create an incentive to optimize for click-bait and distraction, and they destroy the user experience. It seems like every time I read something online, I am cringing at the sight of popups and banners replacing my article.
-
-But as PopperPlay grows, I will need money to pay for servers and to support the time I am spending in building features and improving the site. I need your ideas about [how I should monetize](https://popperplay.com/problem/Ri7rf6GspvuCuuVL1274).
-
-## Peer to Peer Donations
-
-Here's what I'm considering. People can donate to others who they think are solving interesting problems, and PopperPlay will receive a percentage of each donation.
-
-This way, we can help people escape from existing channels. People will be able to sustain a life of creating knowledge. Creativity and fun no longer need to be shackled by dull problems like day jobs, gatekeeping, and bureaucracy.
 
 ## Popper's Criterion
 
@@ -61,6 +21,46 @@ The only rational way to create progress is to create a platform which satisfies
 Instead of seeking higher authorities of knowledge, we can allow people to identify problems with prevailing explanations, conjecture solutions upon them, and then criticize these tentative guesses. These new explanations will generate even more interesting problems, and we will solve them as well. And we will subject our platform itself to error correction so that we can improve the process of problem-solving and thus better satisfy Popper's Criterion.
 
 Only in this way can we prevent the entrenchment of errors and the suppression of new ideas.
+
+## Portals
+
+> The possibilities that lie in the future are infinite. When I say ‘It is our duty to remain optimists,’ this includes not only the openness of the future but also that which all of us contribute to it by everything we do: we are all responsible for what the future holds in store. Thus it is our duty, not to prophesy evil but, rather, to fight for a better world.
+>
+> Karl Popper, _The Myth of the Framework_
+
+Eric Weinstein has explained the inspiring meaning of a [portal](https://www.youtube.com/watch?v=pb_yvBNLjNk) - it's a problem so novel and so beautiful that in pursuing it we escape our humdrum lives and realize how brilliantly interesting and fun the universe is. I couldn't figure why there isn't a place on the internet where I could go and find the world's most interesting open problems.
+
+Imagine being a mathematician in 1900 when David Hilbert proposed a list of 23 of the biggest open problems in mathematics. Imagine how fun and invigorating pursuing this challenge must have been. Imagine the glee Hilbert himself must have felt in identifying the holes and inadequacies in the knowledge of his time. There is no reason why any of us shouldn't have this kind of infatuated and exploratory relationship with the problems we find interesting. 
+
+As a college student, I realized that not only was I not solving problems in my classes, I wasn't even learning how to solve problems. Instead, I was learning how to pretend like I was solving an interesting problem creatively while being neither creative nor interested. So I built PopperPlay. I want to make it easy to go on intellectual adventures and create new knowledge.
+
+PopperPlay houses endless portals in the form of problems. Every problem is the beginning of an infinity of subsequent problems, each more interesting than the last, and each requiring human creativity to solve.
+
+## Problem Solving
+
+> All evils are caused by insufficient knowledge.
+>
+> David Deutsch
+
+Wherever a conscious being suffers or dies, wherever a truth about the universe remains unknown, wherever we fail to explore, create, and understand - the cause is that we lack the knowledge necessary to solve some problem. Given this fact, our entire civilization should be dedicated to helping people solve problems. Every human being has the capacity to create knowledge, and we should be doing everything we possibly can to utilize their creativity.
+
+But tragically, our institutions fail to help people solve problems. Instead of empowering the entire repertoire of human thought, we only give a select few the resources, information, and platform to create knowledge. This is in and of itself a severe problem because it is handicapping the solution of all other problems.
+
+PopperPlay is the ever-improving solution. Here, anyone can identify problems with prevailing theories. Anyone can create conjectures that tentatively solve these problems. And anyone can subject these conjectures to criticism and improvement. Through this open process of conjecture and refutation, we can enable the creation of new knowledge and thus reduce the suffering, error, and stasis in our civilization.
+
+## No Ads or Paywalls
+
+Ads and paywalls are bad solutions to the problem of monetization. I think it's wrong to make people pay to receive or create knowledge.[^2] As a college student, I probably wouldn't be able to afford PopperPlay myself if it was paywalled.
+
+Advertisements are perhaps even worse. They create an incentive to optimize for click-bait and distraction, and they destroy the user experience. It seems like every time I read something online, I am cringing at the sight of popups and banners replacing my article.
+
+But as PopperPlay grows, I will need money to pay for servers and to support the time I am spending in building features and improving the site. I need your ideas about [how I should monetize](https://popperplay.com/problem/Ri7rf6GspvuCuuVL1274).
+
+## Peer to Peer Donations
+
+Here's what I'm considering. People can donate to others who they think are solving interesting problems, and PopperPlay will receive a percentage of each donation.
+
+This way, we can help people escape from existing channels. People will be able to sustain a life of creating knowledge. Creativity and fun no longer need to be shackled by dull problems like day jobs, gatekeeping, and bureaucracy.
 
 ## Open Source
 

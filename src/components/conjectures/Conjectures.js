@@ -29,7 +29,7 @@ function Quote() {
       <Typography variant="subtitle1" align="center" color="textSecondary">
         Karl Popper
       </Typography> */}
-      <Typography variant="h5" align="center" color="textPrimary" gutterBottom>
+      <Typography variant="subtitle1" align="center" color="textPrimary">
         All rational thought consists of conjecture and criticism
       </Typography>
       <Typography variant="subtitle1" align="center" color="textSecondary">

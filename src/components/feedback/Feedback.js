@@ -9,7 +9,7 @@ import VideoCallIcon from "@material-ui/icons/VideoCall";
 
 export default function Feedback() {
   return (
-    <div style={{ marginTop: "3rem", marginBottom: "3rem" }}>
+    <div style={{ marginTop: "4rem", marginBottom: "3rem" }}>
       <Container maxWidth="sm">
         <Typography variant="h6" align="center" gutterBottom paragraph>
           👋 Hi, I’m Dwarkesh. I'm trying to make a platform that helps people
@@ -17,38 +17,34 @@ export default function Feedback() {
           helpful and impactful to this mission than your feedback. Thank you
           for any suggestions and questions you have for me! 🙏
         </Typography>
-        <Grid container spacing={3} justify="center">
-          <Grid item>
-            <a href="mailto:dwarkesh@popperplay.com" target="_blank">
-              <Button variant="text" color="primary" startIcon={<EmailIcon />}>
-                Email me
-              </Button>
-            </a>
-          </Grid>
-          <Grid item>
-            <a href="https://twitter.com/PopperPlay" target="_blank">
-              <Button
-                variant="text"
-                color="primary"
-                startIcon={<TwitterIcon />}
-              >
-                DM me
-              </Button>
-            </a>
-          </Grid>
-          <Grid item>
-            <a href="https://calendly.com/dwarkesh/feedback" target="_blank">
-              <Button
-                variant="text"
-                color="primary"
-                startIcon={<VideoCallIcon />}
-              >
-                Video chat with me
-              </Button>
-            </a>
-          </Grid>
-        </Grid>
+        <Contact />
       </Container>
     </div>
   );
 }
+
+const Contact = () => (
+  <Grid container spacing={3} justify="center">
+    <Grid item>
+      <a href="mailto:dwarkesh@popperplay.com" target="_blank">
+        <Button variant="text" color="primary" startIcon={<EmailIcon />}>
+          Email me
+        </Button>
+      </a>
+    </Grid>
+    <Grid item>
+      <a href="https://calendly.com/dwarkesh/feedback" target="_blank">
+        <Button variant="text" color="primary" startIcon={<VideoCallIcon />}>
+          Video chat with me
+        </Button>
+      </a>
+    </Grid>
+    <Grid item>
+      <a href="https://twitter.com/PopperPlay" target="_blank">
+        <Button variant="text" color="primary" startIcon={<TwitterIcon />}>
+          DM me
+        </Button>
+      </a>
+    </Grid>
+  </Grid>
+);
