@@ -13,28 +13,31 @@ import MUIRichTextEditor from "mui-rte";
 import React from "react";
 import TagsMenu from "../tags/TagsMenu";
 import ProblemsMenu from "../problems/ProblemsMenu";
-import { firestore } from "firebase";
 
 const { forwardRef, useImperativeHandle } = React;
 
 const CreatePost = forwardRef(
   ({ firebase, problem, problemItem, conjectureItem }, ref) => {
     const [title, setTitle] = React.useState("");
-    const [tags, setTags] = React.useState([]);
+    const [tags, setTags] = React.useState(
+      problemItem ? problemItem.tags : conjectureItem ? conjectureItem.tags : []
+    );
     const [details, setDetails] = React.useState("");
     const [valid, setValid] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [fullScreen, setFullScreen] = React.useState(true);
     // only for conjectures
     const [parentProblemTitle, setParentProblemTitle] = React.useState("");
-    const [parentProblems, setParentProblems] = React.useState([]);
+    // const [parentProblems, setParentProblems] = React.useState([]);
 
     const MINTITLELENGTH = 1;
 
     React.useEffect(() => {
       let valid =
         title.length >= MINTITLELENGTH &&
-        (problemItem || parentProblemTitle.length >= MINTITLELENGTH);
+        (problemItem ||
+          conjectureItem ||
+          parentProblemTitle.length >= MINTITLELENGTH);
       setValid(valid);
     }, [title, parentProblemTitle]);
 
@@ -46,15 +49,18 @@ const CreatePost = forwardRef(
 
     function handleClose() {
       setTitle("");
-      // setParentProblemTitle("");
-      setTags([]);
+      setParentProblemTitle("");
       setDetails("");
       setValid(false);
+      if (!problemItem && !conjectureItem) {
+        setTags([]);
+      }
       setOpen(false);
     }
 
     async function postProblemBase(
       problemTitle,
+      problemDetails,
       parentConjectures,
       childConjectures
     ) {
@@ -62,7 +68,7 @@ const CreatePost = forwardRef(
       const person = firebase.currentPerson().displayName;
       const problemRef = await firebase.problems().add({
         title: problemTitle,
-        details: details,
+        details: problemDetails,
         tags: tags,
         created: timestamp,
         lastModified: timestamp,
@@ -93,7 +99,7 @@ const CreatePost = forwardRef(
       const parentConjectures = conjectureItem
         ? [firebase.db.doc(`conjectures/${conjectureItem.id}`)]
         : [];
-      await postProblemBase(title, parentConjectures, []);
+      await postProblemBase(title, details, parentConjectures, []);
       handleClose();
     }
 
@@ -139,7 +145,7 @@ const CreatePost = forwardRef(
       if (problemItem) {
         problemIDs = problemItem.id;
       } else {
-        problemIDs = await postProblemBase(parentProblemTitle, [], []);
+        problemIDs = await postProblemBase(parentProblemTitle, "", [], []);
       }
       await postConjectureBase([problemIDs]);
 
@@ -232,7 +238,7 @@ const CreatePost = forwardRef(
             />
             <TagsMenu
               setValue={setTags}
-              defaultValue={problemItem ? problemItem.tags : []}
+              defaultValue={tags}
               variant="outlined"
             />
             <Typography variant="caption">
@@ -269,7 +275,7 @@ const Editor = ({ setDetails }) => {
         // "highlight",
         "undo",
         "redo",
-        // "link",
+        "link",
         "numberList",
         "bulletList",
         "quote",

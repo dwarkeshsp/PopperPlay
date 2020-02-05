@@ -95,7 +95,11 @@ export default function ItemCard({ item, problem, noProblemInfo, comment }) {
                       {item.problem.title}
                     </Link>
                   )} */}
-                  {!problem && <MetaInfoList refList={item.parentProblems} />}
+                  {problem ? (
+                    <MetaInfoList refList={item.parentConjectures} />
+                  ) : (
+                    <MetaInfoList refList={item.parentProblems} />
+                  )}
                   <Typography component="h2" variant="h6">
                     {title()}
                   </Typography>
