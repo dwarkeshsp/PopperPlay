@@ -43,20 +43,20 @@ function VoteButton({ item, firebase, problem, comment }) {
     if (voteIconColor === "default") {
       setVoteIconColor("primary");
       // increment votes and add user to item voters
-      firebase.conjecture(item.problem.id, id).update({
+      firebase.conjecture(id).update({
         votes: firebase.firestore.FieldValue.increment(1),
         votedBy: firebase.arrayUnion(firebase.currentPerson().displayName)
       });
       // add item to votedBy by user
       firebase.person(firebase.currentPerson().displayName).update({
         conjecturesVoted: firebase.arrayUnion(
-          firebase.db.doc("problems/" + item.problem.id + "/conjectures/" + id)
+          firebase.db.doc("/conjectures/" + id)
         )
       });
     } else {
       // reverse
       setVoteIconColor("default");
-      firebase.conjecture(item.problem.id, id).update({
+      firebase.conjecture(id).update({
         votes: firebase.firestore.FieldValue.increment(-1),
         votedBy: firebase.firestore.FieldValue.arrayRemove(
           firebase.currentPerson().displayName
@@ -64,7 +64,7 @@ function VoteButton({ item, firebase, problem, comment }) {
       });
       firebase.person(firebase.currentPerson().displayName).update({
         conjecturesVoted: firebase.firestore.FieldValue.arrayRemove(
-          firebase.db.doc("problems/" + item.problem.id + "/conjectures/" + id)
+          firebase.db.doc("/conjectures/" + id)
         )
       });
     }
