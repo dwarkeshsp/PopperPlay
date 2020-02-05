@@ -48,7 +48,7 @@ function ProblemConjecturesList({ problem, firebase }) {
   return (
     <div>
       {conjectures.map(conjecture => (
-        <Card item={conjecture} noProblemInfo />
+        <Card item={conjecture} />
       ))}
       <BottomScrollListener onBottom={lazyLoad} />
     </div>

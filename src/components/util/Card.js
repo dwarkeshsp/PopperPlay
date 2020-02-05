@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ItemCard({ item, problem, noProblemInfo, comment }) {
+export default function ItemCard({ item, problem }) {
   const classes = useStyles();
 
   function title() {
@@ -70,15 +70,7 @@ export default function ItemCard({ item, problem, noProblemInfo, comment }) {
   return (
     <div>
       <RouterLink
-        to={
-          problem
-            ? {
-                pathname: "/problem/" + item.id
-              }
-            : {
-                pathname: "/conjecture/" + item.id
-              }
-        }
+        to={problem ? "/problem/" + item.id : "/conjecture/" + item.id}
         style={{ textDecoration: "none" }}
       >
         <div>
@@ -86,44 +78,22 @@ export default function ItemCard({ item, problem, noProblemInfo, comment }) {
             <Card className={classes.card} elevation={5}>
               <div className={classes.cardDetails}>
                 <CardContent>
-                  {/* {!problem && !noProblemInfo && (
-                    <Link
-                      component="h3"
-                      variant="subtitle1"
-                      color="textSecondary"
-                    >
-                      {item.problem.title}
-                    </Link>
-                  )} */}
-                  {problem ? (
-                    <MetaInfoList refList={item.parentConjectures} />
-                  ) : (
-                    <MetaInfoList refList={item.parentProblems} />
-                  )}
+                  <MetaInfoList
+                    refList={
+                      problem ? item.parentConjectures : item.parentProblems
+                    }
+                  />
                   <Typography component="h2" variant="h6">
                     {title()}
                   </Typography>
                   <ItemInfo item={item} />
-                  {!comment && (
-                    <Markdown className={classes.markdown}>
-                      {details()}
-                    </Markdown>
-                  )}
+                  <Markdown className={classes.markdown}>{details()}</Markdown>
                 </CardContent>
               </div>
-              {!comment && (
-                <CardActions disableSpacing>
-                  {/* <Button
-                    variant="text"
-                    color="primary"
-                    // startIcon={<BuildIcon />}
-                  >
-                    {problem ? "Solve" : "Improve"}
-                  </Button> */}
-                  <TwitterShare item={item} problem={problem} />
-                  <VoteButton item={item} problem={problem} />
-                </CardActions>
-              )}
+              <CardActions disableSpacing>
+                <TwitterShare item={item} problem={problem} />
+                <VoteButton item={item} problem={problem} />
+              </CardActions>
             </Card>
           </CardActionArea>
         </div>
