@@ -4,6 +4,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import React from "react";
 import { withFirebase } from "../firebase";
 import { useHistory } from "react-router-dom";
+import Fab from "@material-ui/core/Fab";
 
 const useStyles = makeStyles(theme => ({
   socialLogin: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SocialLogin({ firebase }) {
+function SocialLogin({ firebase, twitterMessage }) {
   let history = useHistory();
 
   async function onSubmitTwitter(event) {
@@ -54,43 +55,17 @@ function SocialLogin({ firebase }) {
 
     history.goBack();
 
-    // console.log(
-    //   "name",
-    //   socialAuthUser.additionalUserInfo.profile.name,
-    //   "email",
-    //   socialAuthUser.additionalUserInfo.profile.email,
-    //   "displayname",
-    //   socialAuthUser.user.displayName,
-    //   "username",
-    //   socialAuthUser.additionalUserInfo.username,
-    //   socialAuthUser
-    // );
-    // await firebase.person.set({});
-
-    // socialAuthUser,
-    // socialAuthUser.additionalUserInfo.username,
-    // socialAuthUser.user.displayName
-
-    // Create a user in your Firebase Realtime Database too
-    // return = firebase.user(socialAuthUser.user.uid).set({
-    //   username: socialAuthUser.additionalUserInfo.profile.name,
-    //   email: socialAuthUser.additionalUserInfo.profile.email,
-    //   roles: {}
-    // });
-
     event.preventDefault();
   }
+
   const classes = useStyles();
+
   return (
     <div className={classes.socialLogin}>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={onSubmitTwitter}
-        startIcon={<TwitterIcon />}
-      >
-        Twitter
-      </Button>
+      <Fab variant="extended" color="primary" onClick={onSubmitTwitter}>
+        <TwitterIcon style={{ marginRight: "0.5rem" }} />
+        {twitterMessage ? twitterMessage : "Twitter"}
+      </Fab>
     </div>
   );
 }

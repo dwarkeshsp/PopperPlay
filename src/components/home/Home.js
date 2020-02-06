@@ -18,6 +18,7 @@ import Feedback from "../feedback/Feedback";
 import { withFirebase } from "../firebase";
 import Vote from "../util/buttons/Vote";
 import ItemInfo from "../util/ItemInfo";
+import SocialLogin from "../login/SocialLogin";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -109,6 +110,9 @@ function Header() {
                 Create Conjectures
               </Button>
             </Grid>
+          </Grid>
+          <Grid style={{ marginTop: "2rem" }} container justify="center">
+            <SocialLogin twitterMessage="Sign up with twitter" />
           </Grid>
         </div>
       </Container>
