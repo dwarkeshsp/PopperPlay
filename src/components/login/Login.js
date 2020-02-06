@@ -1,6 +1,5 @@
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Checkbox from "@material-ui/core/Checkbox";
 import Container from "@material-ui/core/Container";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -14,13 +13,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import TwitterIcon from "@material-ui/icons/Twitter";
 import React from "react";
 import { Link as RouterLink, useHistory } from "react-router-dom";
-import { compose } from "recompose";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
-import FacebookIcon from "@material-ui/icons/Facebook";
 import SocialLogin from "./SocialLogin";
 
 const useStyles = makeStyles(theme => ({
@@ -35,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.O
     marginTop: theme.spacing(1)
   },
   submit: {

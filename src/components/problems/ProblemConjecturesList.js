@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import { withFirebase } from "../firebase";

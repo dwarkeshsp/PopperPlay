@@ -1,8 +1,6 @@
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
 import Container from "@material-ui/core/Container";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,9 +10,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import React from "react";
 import { Link as RouterLink, useHistory, withRouter } from "react-router-dom";
 import { compose } from "recompose";
-import SocialLogin from "./SocialLogin";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
+import SocialLogin from "./SocialLogin";
 
 const useStyles = makeStyles(theme => ({
   paper: {

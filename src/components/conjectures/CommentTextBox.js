@@ -1,12 +1,11 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import { withFirebase } from "../firebase";
 import Button from "@material-ui/core/Button";
+import InputBase from "@material-ui/core/InputBase";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
+import { withFirebase } from "../firebase";
 import { AuthUserContext } from "../session";
 import Dialog from "../util/AlertDialog";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = makeStyles(theme => ({
   root: {

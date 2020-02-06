@@ -1,10 +1,9 @@
-import Button from "@material-ui/core/Button";
+import Fab from "@material-ui/core/Fab";
 import { makeStyles } from "@material-ui/core/styles";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import React from "react";
-import { withFirebase } from "../firebase";
 import { useHistory } from "react-router-dom";
-import Fab from "@material-ui/core/Fab";
+import { withFirebase } from "../firebase";
 
 const useStyles = makeStyles(theme => ({
   socialLogin: {

@@ -1,21 +1,18 @@
 import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import TextField from "@material-ui/core/TextField";
+import ReplyIcon from "@material-ui/icons/Reply";
 import clsx from "clsx";
 import React from "react";
-import BottomScrollListener from "react-bottom-scroll-listener";
 import { withFirebase } from "../firebase";
-import ReplyIcon from "@material-ui/icons/Reply";
-import VoteButton from "../util/buttons/Vote";
 import ItemInfo from "../util/ItemInfo";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
   root: {
