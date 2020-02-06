@@ -16,7 +16,7 @@ export default function TwitterShare({ item, problem }) {
           <TwitterIcon />
         </Fab>
       }
-      title={item.title + " - " + item.creator + " on PopperPlay.com"}
+      title={item.title + " - " + item.creator + " on PopperPlay"}
       hashtags={item.tags}
     />
   );

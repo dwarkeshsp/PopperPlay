@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import React from "react";
 import { Link as RouterLink, useHistory, withRouter } from "react-router-dom";
 import { compose } from "recompose";
+import SocialLogin from "./SocialLogin";
 import { withFirebase } from "../firebase";
 import Dialog from "../util/AlertDialog";
 
@@ -114,11 +115,7 @@ function SignUpBase(props) {
             email: email,
             uid: authUser.user.uid,
             created: timestamp,
-            lastSignin: timestamp,
-            votes: 0,
-            subscribers: 0,
-            subscribedBy: [],
-            subscribedTo: []
+            lastSignin: timestamp
           },
           { merge: true }
         );
@@ -146,7 +143,7 @@ function SignUpBase(props) {
             Sign up
           </Typography>
           <form className={classes.form} noValidate>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} style={{ marginBottom: "1rem" }}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
@@ -244,6 +241,7 @@ function SignUpBase(props) {
                 />
               </Grid> */}
             </Grid>
+            <SocialLogin />
             <Button
               type="submit"
               fullWidth

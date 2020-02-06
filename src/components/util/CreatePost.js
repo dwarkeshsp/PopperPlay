@@ -37,6 +37,7 @@ const CreatePost = forwardRef(
         title.length >= MINTITLELENGTH &&
         (problemItem ||
           conjectureItem ||
+          problem ||
           parentProblemTitle.length >= MINTITLELENGTH);
       setValid(valid);
     }, [title, parentProblemTitle]);
