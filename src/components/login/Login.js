@@ -138,7 +138,6 @@ function LoginBase({ firebase }) {
               }
               label="Remember me"
             />
-            <SocialLogin />
             <Button
               type="submit"
               fullWidth
@@ -150,7 +149,7 @@ function LoginBase({ firebase }) {
             >
               Sign In
             </Button>
-            <Grid container>
+            <Grid container style={{ marginBottom: "1rem" }}>
               <Grid item xs>
                 <ForgotPassword />
               </Grid>
@@ -160,6 +159,7 @@ function LoginBase({ firebase }) {
                 </Link>
               </Grid>
             </Grid>
+            <SocialLogin />
           </form>
         </div>
       </Container>

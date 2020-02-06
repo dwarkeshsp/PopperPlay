@@ -141,7 +141,7 @@ function SignUpBase(props) {
             Sign up
           </Typography>
           <form className={classes.form} noValidate>
-            <Grid container spacing={2} style={{ marginBottom: "1rem" }}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
@@ -239,7 +239,6 @@ function SignUpBase(props) {
                 />
               </Grid> */}
             </Grid>
-            <SocialLogin />
             <Button
               type="submit"
               fullWidth
@@ -251,7 +250,7 @@ function SignUpBase(props) {
             >
               Sign Up
             </Button>
-            <Grid container justify="flex-end">
+            <Grid container justify="flex-end" style={{ marginBottom: "1rem" }}>
               <Grid item>
                 <Link
                   href="#"
@@ -263,6 +262,7 @@ function SignUpBase(props) {
                 </Link>
               </Grid>
             </Grid>
+            <SocialLogin />
           </form>
         </div>
       </Container>
