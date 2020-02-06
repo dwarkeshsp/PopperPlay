@@ -117,8 +117,12 @@ function CommentCardBase({ comment, firebase }) {
       level: level,
       tags: comment.tags
     });
-    await firebase.person(person).update({
+    firebase.person(person).update({
       comments: firebase.arrayUnion(commentRef)
+    });
+    const conjectureID = comment.path.split("/")[1];
+    firebase.conjecture(conjectureID).update({
+      comments: firebase.firestore.FieldValue.increment(1)
     });
     setValue("");
     setReplying(false);

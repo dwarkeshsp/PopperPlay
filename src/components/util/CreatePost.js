@@ -122,7 +122,8 @@ const CreatePost = forwardRef(
         parentProblems: parentProblemsID,
         childProblems: [],
         parentConjectures: [],
-        childConjectures: []
+        childConjectures: [],
+        comments: 0
       });
       problemIDs.map(problemID =>
         firebase.problem(problemID).update({

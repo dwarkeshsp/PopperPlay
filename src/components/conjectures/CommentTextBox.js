@@ -44,8 +44,11 @@ function CommentTextBox({ conjecture, firebase }) {
       level: 0,
       tags: conjecture.tags
     });
-    await firebase.person(person).update({
+    firebase.person(person).update({
       comments: firebase.arrayUnion(commentRef)
+    });
+    firebase.conjecture(conjecture.id).update({
+      comments: firebase.firestore.FieldValue.increment(1)
     });
     setValue("");
   }

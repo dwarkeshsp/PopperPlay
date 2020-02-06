@@ -31,6 +31,24 @@ export default function ItemInfo({ item }) {
       >
         {" votes "}
       </Typography>
+      {item.comments !== undefined && (
+        <React.Fragment>
+          <Typography
+            variant="body1"
+            className={classes.inline}
+            style={{ textDecoration: "none" }}
+          >
+            {item.comments}
+          </Typography>
+          <Typography
+            variant="body2"
+            className={classes.inline}
+            style={{ textDecoration: "none" }}
+          >
+            {" comments "}
+          </Typography>
+        </React.Fragment>
+      )}
       <Typography
         variant="body1"
         // className={classes.inline}
