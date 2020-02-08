@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Comments from "./comments/Comments";
 import Conjecture from "./conjectures/Conjecture";
 import Conjectures from "./conjectures/Conjectures";
 import Feedback from "./feedback/Feedback";
@@ -42,6 +43,9 @@ function App() {
           </Route>
           <Route path="/problem/:id">
             <Problem />
+          </Route>
+          <Route path="/comments">
+            <Comments />
           </Route>
           <Route path="/people">
             <People />

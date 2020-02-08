@@ -156,6 +156,9 @@ class Firebase {
         "/comments/" +
         commentID
     );
+
+  comments = () => this.db.collectionGroup("comments");
+
   collection = path => this.db.collection(path);
   commentStartAfterQuery = (orderBy, LOADSIZE, lastDoc, path) =>
     this.collection(path)

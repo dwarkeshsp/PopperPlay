@@ -5,6 +5,7 @@ import BuildSharpIcon from "@material-ui/icons/BuildSharp";
 import WbIncandescentSharpIcon from "@material-ui/icons/WbIncandescentSharp";
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import CommentIcon from "@material-ui/icons/Comment";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,6 +30,8 @@ function Header(props) {
       setValue(0);
     } else if (firstLevelPath === "conjectures") {
       setValue(1);
+    } else if (firstLevelPath === "comments") {
+      setValue(2);
     } else {
       setValue(-1);
     }
@@ -55,6 +58,12 @@ function Header(props) {
           icon={<WbIncandescentSharpIcon />}
           component={Link}
           to="/conjectures"
+        />
+        <BottomNavigationAction
+          label="Comments"
+          icon={<CommentIcon />}
+          component={Link}
+          to="/comments"
         />
       </BottomNavigation>
     </React.Fragment>
