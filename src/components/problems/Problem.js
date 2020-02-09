@@ -18,13 +18,14 @@ function Problem({ firebase }) {
         if (doc.exists) {
           const data = doc.data();
           data.id = problemID;
+          data.problem = true;
           setProblem(data);
         }
       })
       .catch(error => console.log(error));
   }, []);
 
-  return <Item item={problem} problemID={problemID} problem />;
+  return <Item item={problem} />;
 }
 
 export default withFirebase(Problem);

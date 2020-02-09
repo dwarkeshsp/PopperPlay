@@ -78,13 +78,12 @@ export default function ItemCard({ item }) {
             <Card className={classes.card} elevation={5}>
               <div className={classes.cardDetails}>
                 <CardContent>
-                  <MetaInfoList
-                    refList={
-                      item.problem
-                        ? item.parentConjectures
-                        : item.parentProblems
-                    }
-                  />
+                  {item.problem && (
+                    <MetaInfoList refList={item.parentConjectures} />
+                  )}
+                  {item.conjecture && (
+                    <MetaInfoList refList={item.parentProblems} />
+                  )}
                   <Typography component="h2" variant="h6">
                     {title()}
                   </Typography>
@@ -93,7 +92,7 @@ export default function ItemCard({ item }) {
                 </CardContent>
               </div>
               <CardActions disableSpacing>
-                <TwitterShare item={item} />
+                {/* <TwitterShare item={item} /> */}
                 <VoteButton item={item} />
               </CardActions>
             </Card>

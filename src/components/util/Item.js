@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Item({ item, problem, firebase }) {
+export default function Item({ item }) {
   const classes = useStyles();
 
   return (
@@ -49,27 +49,27 @@ function Item({ item, problem, firebase }) {
       {item && (
         <div>
           <Container maxWidth="md" className={classes.root}>
-            <Header item={item} problem={problem} />
-            <GraphDialog item={item} problem={problem} />
+            <Header item={item} />
+            <GraphDialog item={item} />
             <Markdown className={classes.markdown}>{item.details}</Markdown>
-            {problem ? (
-              <PostButton item={item} problem={problem} />
-            ) : (
-              <PostButton item={item} problem={problem} />
-            )}
+
+            <PostButton item={item} />
+
             <Typography
               className={classes.childrenTitle}
               variant="h5"
               align="center"
               gutterBottom
             >
-              {problem ? "Conjectures" : "Comments"}
+              {item.problem && "Conjectures"}
+              {item.conjecture && "Comments"}
             </Typography>
-            {problem ? (
+            {item.problem && (
               <React.Fragment>
                 <ProblemConjecturesList problem={item} />
               </React.Fragment>
-            ) : (
+            )}
+            {item.conjecture && (
               <React.Fragment>
                 <CommentTextBox conjecture={item} />
                 <CommentsList conjecture={item} />
@@ -87,11 +87,12 @@ function Item({ item, problem, firebase }) {
   );
 }
 
-function Header({ item, problem }) {
+function Header({ item }) {
   return (
     <Grid container>
       <Grid item xs={10}>
-        {!problem && <MetaInfoList refList={item.parentProblems} />}
+        {item.problem && <MetaInfoList refList={item.parentConjectures} />}
+        {item.conjecture && <MetaInfoList refList={item.parentProblems} />}
         <Typography variant="h5" gutterBottom>
           {item.title}
         </Typography>
@@ -100,14 +101,14 @@ function Header({ item, problem }) {
       <Grid item xs={2} align="right">
         {/* <Delete item={item} problem={problem} /> */}
         {/* <EditButton item={item} problem={problem} /> */}
-        <TwitterShare item={item} problem={problem} />
-        <VoteButton item={item} problem={problem} />
+        <TwitterShare item={item} />
+        <VoteButton item={item} />
       </Grid>
     </Grid>
   );
 }
 
-function PostButtonBase({ item, problem, firebase }) {
+function PostButtonBase({ item, firebase }) {
   const classes = useStyles();
   const alertRef = React.useRef();
 
@@ -119,7 +120,7 @@ function PostButtonBase({ item, problem, firebase }) {
         startIcon={<AddIcon />}
         onClick={() => alertRef.current.handleOpen()}
       >
-        {problem ? "conjecture" : "problem"}
+        {item.problem ? "conjecture" : "problem"}
       </Button>
       <AuthUserContext.Consumer>
         {authUser =>
@@ -127,9 +128,9 @@ function PostButtonBase({ item, problem, firebase }) {
             <CreatePost
               ref={alertRef}
               firebase={firebase}
-              problemItem={problem ? item : null}
-              conjectureItem={problem ? null : item}
-              problem={!problem}
+              problemItem={item.problem ? item : null}
+              conjectureItem={item.conjecture ? item : null}
+              problem={!item.problem}
             />
           ) : (
             <Dialog
@@ -145,7 +146,7 @@ function PostButtonBase({ item, problem, firebase }) {
   );
 }
 
-function GraphDialog({ item, problem }) {
+function GraphDialog({ item }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -171,7 +172,7 @@ function GraphDialog({ item, problem }) {
       </Grid>
       <Dialog open={open} onClose={handleClose} maxWidth="xl">
         <DialogContent>
-          <Graph item={item} problem={problem} />
+          <Graph item={item} />
         </DialogContent>
       </Dialog>
     </div>
@@ -179,5 +180,3 @@ function GraphDialog({ item, problem }) {
 }
 
 const PostButton = withFirebase(PostButtonBase);
-
-export default withFirebase(Item);

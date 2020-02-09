@@ -18,6 +18,7 @@ function Conjecture({ firebase }) {
         if (doc.exists) {
           const data = doc.data();
           data.id = conjectureID;
+          data.conjecture = true;
           setConjecture(data);
         }
       })
