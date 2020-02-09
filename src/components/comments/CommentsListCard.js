@@ -52,53 +52,53 @@ function CommentCard({ comment, firebase }) {
 
   return (
     <div style={{ marginBottom: "1rem" }}>
-      {/* <Link
+      <Link
         to={"/conjecture/" + conjectureID}
         style={{ textDecoration: "none" }}
-      > */}
-      <Card elevation={4}>
-        <CardActionArea>
-          <CardContent onClick={() => setExpanded(!expanded)}>
-            <MetaInfoList refList={[conjectureRef]} type="conjecture" />
-            <ItemInfo item={comment} />
-            <Typography>{comment.content}</Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            {/* <Delete item={comment} comment /> */}
-            {/* <VoteButton item={comment} comment /> */}
-            {!replying && (
-              <IconButton
-                aria-label="comment"
-                onClick={() => setReplying(true)}
-              >
-                <ReplyIcon />
-              </IconButton>
-            )}
-            {replying && (
-              <React.Fragment>
-                <TextField
-                  id="reply"
-                  label="Reply"
-                  multiline
-                  rowsMax="10"
-                  value={value}
-                  fullWidth
-                  onChange={event => setValue(event.target.value)}
-                />
+      >
+        <Card elevation={4}>
+          <CardActionArea>
+            <CardContent onClick={() => setExpanded(!expanded)}>
+              <MetaInfoList refList={[conjectureRef]} type="conjecture" />
+              <ItemInfo item={comment} />
+              <Typography>{comment.content}</Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              {/* <Delete item={comment} comment /> */}
+              {/* <VoteButton item={comment} comment /> */}
+              {!replying && (
                 <IconButton
                   aria-label="comment"
-                  onClick={post}
-                  color="primary"
-                  disabled={!value}
+                  onClick={() => setReplying(true)}
                 >
                   <ReplyIcon />
                 </IconButton>
-              </React.Fragment>
-            )}
-          </CardActions>
-        </CardActionArea>
-      </Card>
-      {/* </Link> */}
+              )}
+              {replying && (
+                <React.Fragment>
+                  <TextField
+                    id="reply"
+                    label="Reply"
+                    multiline
+                    rowsMax="10"
+                    value={value}
+                    fullWidth
+                    onChange={event => setValue(event.target.value)}
+                  />
+                  <IconButton
+                    aria-label="comment"
+                    onClick={post}
+                    color="primary"
+                    disabled={!value}
+                  >
+                    <ReplyIcon />
+                  </IconButton>
+                </React.Fragment>
+              )}
+            </CardActions>
+          </CardActionArea>
+        </Card>
+      </Link>
     </div>
   );
 }

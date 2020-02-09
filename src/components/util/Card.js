@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.caption
   },
   card: {
+    display: "flex",
     marginBottom: "1rem"
   },
   cardDetails: {
