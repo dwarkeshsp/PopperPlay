@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ItemCard({ item, problem }) {
+export default function ItemCard({ item }) {
   const classes = useStyles();
 
   function title() {
@@ -70,7 +70,7 @@ export default function ItemCard({ item, problem }) {
   return (
     <div>
       <RouterLink
-        to={problem ? "/problem/" + item.id : "/conjecture/" + item.id}
+        to={item.problem ? "/problem/" + item.id : "/conjecture/" + item.id}
         style={{ textDecoration: "none" }}
       >
         <div>
@@ -80,7 +80,9 @@ export default function ItemCard({ item, problem }) {
                 <CardContent>
                   <MetaInfoList
                     refList={
-                      problem ? item.parentConjectures : item.parentProblems
+                      item.problem
+                        ? item.parentConjectures
+                        : item.parentProblems
                     }
                   />
                   <Typography component="h2" variant="h6">
@@ -91,8 +93,8 @@ export default function ItemCard({ item, problem }) {
                 </CardContent>
               </div>
               <CardActions disableSpacing>
-                <TwitterShare item={item} problem={problem} />
-                <VoteButton item={item} problem={problem} />
+                <TwitterShare item={item} />
+                <VoteButton item={item} />
               </CardActions>
             </Card>
           </CardActionArea>

@@ -3,8 +3,8 @@ import "firebase/firestore";
 import "firebase/analytics";
 import app from "firebase/app";
 
-import { config } from "./config";
-// import { testConfig as config } from "./config";
+// import { config } from "./config";
+import { testConfig as config } from "./config";
 
 class Firebase {
   constructor() {
@@ -129,18 +129,22 @@ class Firebase {
       .get();
 
   // *** Query API ***
-  query = (orderBy, LOADSIZE, problem) =>
-    problem
-      ? this.problemsQuery(orderBy, LOADSIZE)
-      : this.conjecturesQuery(orderBy, LOADSIZE);
-  tagsQuery = (orderBy, LOADSIZE, tags, problem) =>
-    problem
-      ? this.problemsTagsQuery(orderBy, LOADSIZE, tags)
-      : this.conjecturesTagsQuery(orderBy, LOADSIZE, tags);
-  startAfterQuery = (orderBy, LOADSIZE, lastDoc, problem) =>
-    problem
-      ? this.problemsStartAfterQuery(orderBy, LOADSIZE, lastDoc)
-      : this.conjecturesStartAfterQuery(orderBy, LOADSIZE, lastDoc);
+  query = (orderBy, LOADSIZE, type) => {
+    if (type === "problem") return this.problemsQuery(orderBy, LOADSIZE);
+    if (type === "conjecture") return this.conjecturesQuery(orderBy, LOADSIZE);
+  };
+  tagsQuery = (orderBy, LOADSIZE, tags, type) => {
+    if (type === "problem")
+      return this.problemsTagsQuery(orderBy, LOADSIZE, tags);
+    if (type === "conjecture")
+      return this.conjecturesTagsQuery(orderBy, LOADSIZE, tags);
+  };
+  startAfterQuery = (orderBy, LOADSIZE, lastDoc, type) => {
+    if (type === "problem")
+      return this.problemsStartAfterQuery(orderBy, LOADSIZE, lastDoc);
+    if (type === "conjecture")
+      return this.conjecturesStartAfterQuery(orderBy, LOADSIZE, lastDoc);
+  };
 
   // *** Tag API ***
   tag = tagID => this.db.doc(`tags/${tagID}`);

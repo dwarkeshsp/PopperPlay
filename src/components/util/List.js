@@ -5,7 +5,7 @@ import BottomScrollListener from "react-bottom-scroll-listener";
 import { withFirebase } from "../firebase";
 import Card from "./Card";
 
-function List({ firebase, tags, orderBy, problem }) {
+function List({ firebase, tags, orderBy, type }) {
   const [items, setItems] = React.useState([]);
   const [lastDoc, setLastDoc] = React.useState(null);
   const [filtering, setFiltering] = React.useState(false);
@@ -14,7 +14,10 @@ function List({ firebase, tags, orderBy, problem }) {
 
   const updateData = querySnapshot => {
     const data = querySnapshot.docs.map(doc => doc.data());
-    querySnapshot.docs.map((doc, index) => (data[index].id = doc.id));
+    querySnapshot.docs.map((doc, index) => {
+      data[index]["id"] = doc.id;
+      data[index][type] = true;
+    });
     setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
     return data;
   };
@@ -23,20 +26,18 @@ function List({ firebase, tags, orderBy, problem }) {
   React.useEffect(() => {
     if (!filtering) {
       firebase
-        .query(orderBy, LOADSIZE, problem)
+        .query(orderBy, LOADSIZE, type)
         .then(querySnapshot => {
           const data = updateData(querySnapshot);
           setItems(data);
         })
         .catch(error => console.log(error));
     } else {
-      firebase
-        .tagsQuery(orderBy, LOADSIZE, tags, problem)
-        .then(querySnapshot => {
-          const data = updateData(querySnapshot);
-          setItems(data);
-          setFiltering(true);
-        });
+      firebase.tagsQuery(orderBy, LOADSIZE, tags, type).then(querySnapshot => {
+        const data = updateData(querySnapshot);
+        setItems(data);
+        setFiltering(true);
+      });
     }
   }, [orderBy]);
 
@@ -44,7 +45,7 @@ function List({ firebase, tags, orderBy, problem }) {
   React.useEffect(() => {
     if (tags.length) {
       firebase
-        .tagsQuery(orderBy, LOADSIZE, tags, problem)
+        .tagsQuery(orderBy, LOADSIZE, tags, type)
         .then(querySnapshot => {
           const data = updateData(querySnapshot);
           setItems(data);
@@ -54,7 +55,7 @@ function List({ firebase, tags, orderBy, problem }) {
     } else if (filtering) {
       // go back to default view
       firebase
-        .query(orderBy, LOADSIZE, problem)
+        .query(orderBy, LOADSIZE, type)
         .then(querySnapshot => {
           const data = updateData(querySnapshot);
           setItems(data);
@@ -67,7 +68,7 @@ function List({ firebase, tags, orderBy, problem }) {
   function lazyLoad() {
     if (lastDoc) {
       firebase
-        .startAfterQuery(orderBy, LOADSIZE, lastDoc, problem)
+        .startAfterQuery(orderBy, LOADSIZE, lastDoc, type)
         .then(querySnapshot => {
           const data = updateData(querySnapshot);
           setItems(items.concat(data));
@@ -80,7 +81,7 @@ function List({ firebase, tags, orderBy, problem }) {
   return (
     <div>
       {items.map(item => (
-        <Card item={item} problem={problem} />
+        <Card item={item} />
       ))}
       <BottomScrollListener onBottom={lazyLoad} />
       <Grid container justify="center">

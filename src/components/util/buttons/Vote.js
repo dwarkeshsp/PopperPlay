@@ -6,7 +6,7 @@ import { withFirebase } from "../../firebase";
 import { AuthUserContext } from "../../session";
 import Dialog from "../AlertDialog";
 
-function VoteButton({ item, firebase, problem, comment }) {
+function VoteButton({ item, firebase }) {
   const { votedBy, id } = item;
   const alertRef = React.useRef();
   const [voteIconColor, setVoteIconColor] = React.useState("default");
@@ -28,13 +28,9 @@ function VoteButton({ item, firebase, problem, comment }) {
 
   // *** Not synced across devices
   function vote() {
-    if (problem) {
-      voteProblem();
-    } else if (comment) {
-      voteComment();
-    } else {
-      voteConjecture();
-    }
+    if (item.problem) voteProblem();
+    if (item.conjecture) voteConjecture();
+    if (item.comment) voteComment();
   }
 
   function voteComment() {}

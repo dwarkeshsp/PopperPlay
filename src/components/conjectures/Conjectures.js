@@ -12,8 +12,12 @@ export default function Conjectures() {
     <div>
       <Container maxWidth="md">
         <Quote />
-        <ListHeader setTags={setTags} setOrderBy={setOrderBy} />
-        <List tags={tags} orderBy={orderBy} />
+        <ListHeader
+          setTags={setTags}
+          setOrderBy={setOrderBy}
+          type="conjecture"
+        />
+        <List tags={tags} orderBy={orderBy} type="conjecture" />
       </Container>
     </div>
   );

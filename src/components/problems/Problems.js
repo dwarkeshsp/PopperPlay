@@ -13,13 +13,8 @@ function Problems(props) {
     <div>
       <Container maxWidth="md">
         <Quote />
-        <ListHeader
-          // className={classes.header}
-          setTags={setTags}
-          setOrderBy={setOrderBy}
-          problem
-        />
-        <List tags={tags} orderBy={orderBy} problem />
+        <ListHeader setTags={setTags} setOrderBy={setOrderBy} type="problem" />
+        <List tags={tags} orderBy={orderBy} problem type="problem" />
       </Container>
     </div>
   );

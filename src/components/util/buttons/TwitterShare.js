@@ -3,11 +3,11 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import React from "react";
 import { TwitterShareButton } from "react-share";
 
-export default function TwitterShare({ item, problem }) {
+export default function TwitterShare({ item }) {
   return (
     <TwitterShareButton
       url={
-        problem
+        item.problem
           ? "https://popperplay.com/problem/" + item.id
           : "https://popperplay.com/conjecture/" + item.id
       }

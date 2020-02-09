@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ListHeader(props) {
+function ListHeader({ firebase, setTags, setOrderBy, type }) {
   const classes = useStyles();
 
   const alertRef = React.useRef();
@@ -33,10 +33,10 @@ function ListHeader(props) {
         spacing={3}
       >
         <Grid item>
-          <OrderByMenu setOrderBy={props.setOrderBy} />
+          <OrderByMenu setOrderBy={setOrderBy} />
         </Grid>
         <Grid item>
-          <TagsMenu setValue={props.setTags} variant="outlined" />
+          <TagsMenu setValue={setTags} variant="outlined" />
         </Grid>
       </Grid>
       <Grid
@@ -52,15 +52,16 @@ function ListHeader(props) {
             startIcon={<AddIcon />}
             onClick={() => alertRef.current.handleOpen()}
           >
-            {props.problem ? "New problem" : "Create conjecture"}
+            {type === "problem" && "New problem"}
+            {type === "conjecture" && "Create conjecture"}
           </Button>
           <AuthUserContext.Consumer>
             {authUser =>
               authUser ? (
                 <CreatePost
+                  firebase={firebase}
                   ref={alertRef}
-                  firebase={props.firebase}
-                  problem={props.problem}
+                  problem={type === "problem"}
                 />
               ) : (
                 <Dialog
