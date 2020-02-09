@@ -46,15 +46,17 @@ function ListHeader({ firebase, setTags, setOrderBy, type }) {
         justify="center"
       >
         <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<AddIcon />}
-            onClick={() => alertRef.current.handleOpen()}
-          >
-            {type === "problem" && "New problem"}
-            {type === "conjecture" && "Create conjecture"}
-          </Button>
+          {type !== "comment" && (
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}
+              onClick={() => alertRef.current.handleOpen()}
+            >
+              {type === "problem" && "New problem"}
+              {type === "conjecture" && "Create conjecture"}
+            </Button>
+          )}
           <AuthUserContext.Consumer>
             {authUser =>
               authUser ? (

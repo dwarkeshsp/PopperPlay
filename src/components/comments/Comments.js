@@ -3,7 +3,6 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import List from "../util/List";
 import ListHeader from "../util/ListHeader";
-import { withFirebase } from "../firebase";
 
 export default function Conjectures() {
   const [tags, setTags] = React.useState([]);
@@ -13,7 +12,7 @@ export default function Conjectures() {
     <div>
       <Container maxWidth="md">
         <Quote />
-        <ListHeader setTags={setTags} setOrderBy={setOrderBy} />
+        <ListHeader setTags={setTags} setOrderBy={setOrderBy} type="comment" />
         <List tags={tags} orderBy={orderBy} type="comment" />
       </Container>
     </div>

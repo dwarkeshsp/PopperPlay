@@ -86,12 +86,6 @@ class Firebase {
   // *** Problem API ***
   problem = problemID => this.db.doc(`problems/${problemID}`);
   problems = () => this.db.collection("problems");
-  problemsQuery = (orderBy, LOADSIZE) =>
-    this.problems()
-      .orderBy(orderBy, "desc")
-      .limit(LOADSIZE)
-      .get();
-
   problemsTagsQuery = (orderBy, LOADSIZE, tags) =>
     this.problems()
       .where("tags", "array-contains-any", tags)
@@ -110,11 +104,6 @@ class Firebase {
   conjecture = conjectureID => this.db.doc("/conjectures/" + conjectureID);
   conjectures = () => this.db.collection("conjectures");
 
-  conjecturesQuery = (orderBy, LOADSIZE) =>
-    this.conjectures()
-      .orderBy(orderBy, "desc")
-      .limit(LOADSIZE)
-      .get();
   conjecturesTagsQuery = (orderBy, LOADSIZE, tags) =>
     this.conjectures()
       .where("tags", "array-contains-any", tags)
@@ -128,40 +117,48 @@ class Firebase {
       .limit(LOADSIZE)
       .get();
 
+  // *** Comments API ***
+  comment = (conjectureID, commentID) =>
+    this.db.doc("/conjectures/" + conjectureID + "/comments/" + commentID);
+  comments = () => this.db.collectionGroup("comments");
+
   // *** Query API ***
   query = (orderBy, LOADSIZE, type) => {
-    if (type === "problem") return this.problemsQuery(orderBy, LOADSIZE);
-    if (type === "conjecture") return this.conjecturesQuery(orderBy, LOADSIZE);
+    let collection;
+    if (type === "problem") collection = this.problems();
+    if (type === "conjecture") collection = this.conjectures();
+    if (type === "comment") collection = this.comments();
+    return collection
+      .orderBy(orderBy, "desc")
+      .limit(LOADSIZE)
+      .get();
   };
   tagsQuery = (orderBy, LOADSIZE, tags, type) => {
-    if (type === "problem")
-      return this.problemsTagsQuery(orderBy, LOADSIZE, tags);
-    if (type === "conjecture")
-      return this.conjecturesTagsQuery(orderBy, LOADSIZE, tags);
+    let collection;
+    if (type === "problem") collection = this.problems();
+    if (type === "conjecture") collection = this.conjectures();
+    if (type === "comment") collection = this.comments();
+    return collection
+      .where("tags", "array-contains-any", tags)
+      .orderBy(orderBy, "desc")
+      .limit(LOADSIZE)
+      .get();
   };
   startAfterQuery = (orderBy, LOADSIZE, lastDoc, type) => {
-    if (type === "problem")
-      return this.problemsStartAfterQuery(orderBy, LOADSIZE, lastDoc);
-    if (type === "conjecture")
-      return this.conjecturesStartAfterQuery(orderBy, LOADSIZE, lastDoc);
+    let collection;
+    if (type === "problem") collection = this.problems();
+    if (type === "conjecture") collection = this.conjectures();
+    if (type === "comment") collection = this.comments();
+    return collection
+      .orderBy(orderBy, "desc")
+      .startAfter(lastDoc)
+      .limit(LOADSIZE)
+      .get();
   };
 
   // *** Tag API ***
   tag = tagID => this.db.doc(`tags/${tagID}`);
   tags = () => this.db.collection("tags");
-
-  // *** Comments API ***
-  comment = (problemID, conjectureID, commentID) =>
-    this.db.doc(
-      "problems/" +
-        problemID +
-        "/conjectures/" +
-        conjectureID +
-        "/comments/" +
-        commentID
-    );
-
-  comments = () => this.db.collectionGroup("comments");
 
   collection = path => this.db.collection(path);
   commentStartAfterQuery = (orderBy, LOADSIZE, lastDoc, path) =>
