@@ -4,7 +4,7 @@ import React from "react";
 import { withFirebase } from "../firebase";
 import Card from "./Card";
 import Button from "@material-ui/core/Button";
-import CommentCard from "../comments/CommentCard";
+import CommentsListCard from "../comments/CommentsListCard";
 
 function List({ firebase, tags, orderBy, type }) {
   const [items, setItems] = React.useState([]);
@@ -83,7 +83,7 @@ function List({ firebase, tags, orderBy, type }) {
     <div>
       {items.map(item =>
         type === "comment" ? (
-          <CommentCard comment={item} />
+          <CommentsListCard comment={item} />
         ) : (
           <Card item={item} />
         )

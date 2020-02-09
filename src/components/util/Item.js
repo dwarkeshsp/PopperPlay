@@ -91,8 +91,12 @@ function Header({ item }) {
   return (
     <Grid container>
       <Grid item xs={10}>
-        {item.problem && <MetaInfoList refList={item.parentConjectures} />}
-        {item.conjecture && <MetaInfoList refList={item.parentProblems} />}
+        {item.problem && (
+          <MetaInfoList refList={item.parentConjectures} type="conjecture" />
+        )}
+        {item.conjecture && (
+          <MetaInfoList refList={item.parentProblems} type="problem" />
+        )}
         <Typography variant="h5" gutterBottom>
           {item.title}
         </Typography>

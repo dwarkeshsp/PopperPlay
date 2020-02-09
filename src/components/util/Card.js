@@ -31,7 +31,6 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.caption
   },
   card: {
-    display: "flex",
     marginBottom: "1rem"
   },
   cardDetails: {
@@ -75,14 +74,20 @@ export default function ItemCard({ item }) {
       >
         <div>
           <CardActionArea component="a" href="#">
-            <Card className={classes.card} elevation={5}>
+            <Card className={classes.card} elevation={4}>
               <div className={classes.cardDetails}>
                 <CardContent>
                   {item.problem && (
-                    <MetaInfoList refList={item.parentConjectures} />
+                    <MetaInfoList
+                      refList={item.parentConjectures}
+                      type="conjecture"
+                    />
                   )}
                   {item.conjecture && (
-                    <MetaInfoList refList={item.parentProblems} />
+                    <MetaInfoList
+                      refList={item.parentProblems}
+                      type="problem"
+                    />
                   )}
                   <Typography component="h2" variant="h6">
                     {title()}

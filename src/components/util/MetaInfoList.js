@@ -2,7 +2,7 @@ import MaterialLink from "@material-ui/core/Link";
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function MetaInfoList({ refList }) {
+export default function MetaInfoList({ refList, type }) {
   const [items, setItems] = React.useState([]);
 
   React.useEffect(() => {
@@ -21,7 +21,10 @@ export default function MetaInfoList({ refList }) {
   return (
     <div>
       {items.map(item => (
-        <Link to={"/problem/" + item.id} style={{ textDecoration: "none" }}>
+        <Link
+          to={"/" + type + "/" + item.id}
+          style={{ textDecoration: "none" }}
+        >
           <MaterialLink variant="subtitle1" color="textSecondary" gutterBottom>
             {item.title}
           </MaterialLink>
