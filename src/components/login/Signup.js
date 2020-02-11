@@ -115,7 +115,7 @@ function SignUpBase(props) {
             created: timestamp,
             lastSignin: timestamp,
             newNotifications: 0,
-            notifications: 0
+            notifications: []
           },
           { merge: true }
         );

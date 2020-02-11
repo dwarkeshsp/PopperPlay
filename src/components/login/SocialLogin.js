@@ -49,7 +49,7 @@ function SocialLogin({ firebase, twitterMessage }) {
         created: timestamp,
         lastSignin: timestamp,
         newNotifications: 0,
-        notifications: 0
+        notifications: []
       });
 
       await socialAuthUser.user.updateProfile({
