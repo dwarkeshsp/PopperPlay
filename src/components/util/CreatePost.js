@@ -17,7 +17,6 @@ import ProblemsMenu from "../problems/ProblemsMenu";
 const { forwardRef, useImperativeHandle } = React;
 
 const CreatePost = forwardRef((props, ref) => {
-  console.log(props);
   const { firebase, problem, problemItem, conjectureItem } = props;
 
   const [title, setTitle] = React.useState("");

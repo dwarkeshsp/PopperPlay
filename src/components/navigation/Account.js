@@ -3,7 +3,7 @@ import Fab from "@material-ui/core/Fab";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withFirebase } from "../firebase";
 import Badge from "@material-ui/core/Badge";
@@ -21,8 +21,19 @@ export default function Account() {
 }
 
 function LoggedInBase({ firebase }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [name, setName] = useState(firebase.currentPerson().displayName);
+  const [newNotifications, setNewNotifications] = useState(0);
   const open = Boolean(anchorEl);
+
+  useEffect(() => {
+    firebase
+      .person(name)
+      .get()
+      .then(
+        doc => doc.exists && setNewNotifications(doc.data().newNotifications)
+      );
+  }, []);
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -32,17 +43,19 @@ function LoggedInBase({ firebase }) {
     setAnchorEl(null);
   };
 
+  async function notifications() {}
+
   return (
     <div>
       <Fab variant="extended" color="primary" onClick={handleMenu}>
         <Badge
-          badgeContent={4}
+          badgeContent={newNotifications}
           color="secondary"
           style={{ marginRight: "0.5rem" }}
         >
           <AccountCircle />
         </Badge>
-        {firebase.currentPerson().displayName}
+        {name}
       </Fab>
       <Menu
         id="menu-appbar"
