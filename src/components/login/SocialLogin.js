@@ -35,11 +35,14 @@ function SocialLogin({ firebase, twitterMessage }) {
       );
     } else {
       const name = socialAuthUser.additionalUserInfo.profile.name.split(" ");
+      const spaceIndex = name.indexOf(" ");
+      const firstName = name.substring(0, spaceIndex);
+      const lastName = name.substring(spaceIndex + 1);
       const email = socialAuthUser.additionalUserInfo.profile.email;
 
       await firebase.person(socialAuthUser.additionalUserInfo.username).set({
-        firstName: name[0],
-        lastName: name[1],
+        firstName: firstName,
+        lastName: lastName,
         username: socialAuthUser.additionalUserInfo.username,
         email: email ? email : "",
         uid: socialAuthUser.user.uid,

@@ -6,6 +6,8 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import React from "react";
 import { Link } from "react-router-dom";
 import { withFirebase } from "../firebase";
+import Badge from "@material-ui/core/Badge";
+import { useHistory } from "react-router-dom";
 import { AuthUserContext } from "../session";
 
 export default function Account() {
@@ -33,7 +35,13 @@ function LoggedInBase({ firebase }) {
   return (
     <div>
       <Fab variant="extended" color="primary" onClick={handleMenu}>
-        <AccountCircle style={{ marginRight: "0.5rem" }} />
+        <Badge
+          badgeContent={4}
+          color="secondary"
+          style={{ marginRight: "0.5rem" }}
+        >
+          <AccountCircle />
+        </Badge>
         {firebase.currentPerson().displayName}
       </Fab>
       <Menu
@@ -51,10 +59,28 @@ function LoggedInBase({ firebase }) {
         open={open}
         onClose={handleClose}
       >
-        {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem> */}
-        <SignOut />
+        <MenuItems />
       </Menu>
+    </div>
+  );
+}
+
+function MenuItemsBase({ firebase }) {
+  const history = useHistory();
+
+  return (
+    <div>
+      <MenuItem onClick={() => history.push("/notifications")}>
+        Notifications
+      </MenuItem>
+      <MenuItem
+        onClick={() =>
+          history.push("/person/" + firebase.currentPerson().displayName)
+        }
+      >
+        Profile
+      </MenuItem>
+      <MenuItem onClick={firebase.doSignOut}>Sign Out</MenuItem>
     </div>
   );
 }
@@ -72,10 +98,6 @@ function NotLoggedIn() {
   );
 }
 
-function SignOutBase(props) {
-  return <MenuItem onClick={props.firebase.doSignOut}>Sign Out</MenuItem>;
-}
-
 const LoggedIn = withFirebase(LoggedInBase);
 
-const SignOut = withFirebase(SignOutBase);
+const MenuItems = withFirebase(MenuItemsBase);

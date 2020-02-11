@@ -18,6 +18,7 @@ import { withAuthentication } from "./session";
 import Tag from "./tags/Tag";
 import Tags from "./tags/Tags";
 import NotFound from "./util/pages/NotFound";
+import Notifications from "./notifications/Notifications";
 
 function App() {
   return (
@@ -59,14 +60,14 @@ function App() {
           <Route path="/tag/:tag">
             <Tag />
           </Route>
-          <Route path="/feedback">
-            <Feedback />
-          </Route>
           <Route path="/signup">
             <Signup />
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/notifications">
+            <Notifications />
           </Route>
           <Route exact path="*">
             <NotFound />

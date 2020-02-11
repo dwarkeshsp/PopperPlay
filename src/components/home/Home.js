@@ -164,7 +164,7 @@ function Video() {
 }
 
 const Update = () => (
-  <Container maxWidth="md">
+  <Container maxWidth="md" style={{ marginBottom: "3rem" }}>
     <Typography variant="h5" align="center" paragraph>
       Thanks to your feedback, I will be pushing Version 3 this Friday!
     </Typography>
