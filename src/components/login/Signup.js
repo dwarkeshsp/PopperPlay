@@ -113,7 +113,9 @@ function SignUpBase(props) {
             email: email,
             uid: authUser.user.uid,
             created: timestamp,
-            lastSignin: timestamp
+            lastSignin: timestamp,
+            newNotifications: 0,
+            notifications: 0
           },
           { merge: true }
         );

@@ -47,7 +47,9 @@ function SocialLogin({ firebase, twitterMessage }) {
         email: email ? email : "",
         uid: socialAuthUser.user.uid,
         created: timestamp,
-        lastSignin: timestamp
+        lastSignin: timestamp,
+        newNotifications: 0,
+        notifications: 0
       });
 
       await socialAuthUser.user.updateProfile({
