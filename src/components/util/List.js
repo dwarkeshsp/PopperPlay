@@ -88,7 +88,7 @@ function List({ firebase, tags, orderBy, type }) {
           <Card item={item} />
         )
       )}
-      {items.length && (
+      {items.length > 0 && (
         <Grid container justify="center" style={{ marginBottom: "2rem" }}>
           <Button color="primary" onClick={lazyLoad}>
             load more

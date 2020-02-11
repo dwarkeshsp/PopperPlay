@@ -54,6 +54,7 @@ export default function Home() {
     <div className={classes.root}>
       <Header />
       <Feedback />
+      <Update />
       {/* <Video /> */}
 
       {/* <Feedback /> */}
@@ -75,7 +76,7 @@ function Header() {
 
   return (
     <div>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <Typography
           variant="h5"
           align="center"
@@ -161,6 +162,26 @@ function Video() {
     </div>
   );
 }
+
+const Update = () => (
+  <Container maxWidth="md">
+    <Typography variant="h5" align="center" paragraph>
+      Thanks to your feedback, I will be pushing Version 3 this Friday!
+    </Typography>
+    <Typography variant="h6" align="center" color="textSecondary" gutterBottom>
+      What's new:
+    </Typography>
+    <Typography variant="h6" align="center">
+      - User profiles with bio and posts by user
+    </Typography>
+    <Typography variant="h6" align="center">
+      - Notifications when someone responds to your post
+    </Typography>
+    <Typography variant="h6" align="center">
+      - Comments will become conjectures with parent conjectures
+    </Typography>
+  </Container>
+);
 
 // function Footer() {
 //   const classes = useStyles();

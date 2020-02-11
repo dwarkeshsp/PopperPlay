@@ -10,7 +10,7 @@ import React from "react";
 export default function Feedback() {
   return (
     <div style={{ marginTop: "4rem", marginBottom: "3rem" }}>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <Typography variant="h6" align="center" gutterBottom paragraph>
           👋 Hi, I’m Dwarkesh. I'm trying to make a platform that helps people
           identify open problems and create new ideas. There is nothing more
