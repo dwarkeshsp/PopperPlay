@@ -31,6 +31,16 @@ export default function ItemInfo({ item }) {
       >
         {" votes "}
       </Typography>
+      <Typography
+        variant="body1"
+        className={classes.inline}
+        color="primary"
+        component={Link}
+        to={"/person/" + item.creator}
+        // style={{ textDecoration: "none" }}
+      >
+        {item.creator + " "}
+      </Typography>
       {item.comments !== undefined && (
         <React.Fragment>
           <Typography
@@ -49,16 +59,7 @@ export default function ItemInfo({ item }) {
           </Typography>
         </React.Fragment>
       )}
-      <Typography
-        variant="body1"
-        // className={classes.inline}
-        color="textPrimary"
-        component={Link}
-        to={"/person/" + item.creator}
-        // style={{ textDecoration: "none" }}
-      >
-        {item.creator}
-      </Typography>
+
       <Typography
         variant="body2"
         className={classes.inline}

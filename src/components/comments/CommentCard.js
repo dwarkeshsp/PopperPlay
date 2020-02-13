@@ -12,6 +12,7 @@ import clsx from "clsx";
 import React from "react";
 import { withFirebase } from "../firebase";
 import ItemInfo from "../util/ItemInfo";
+import VoteButton from "../util/buttons/Vote";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -87,7 +88,6 @@ function CommentCard({ comment, firebase }) {
         </CardContent>
         <CardActions disableSpacing>
           {/* <Delete item={comment} comment /> */}
-          {/* <VoteButton item={comment} comment /> */}
           {!replying && (
             <IconButton aria-label="comment" onClick={() => setReplying(true)}>
               <ReplyIcon />
@@ -114,6 +114,7 @@ function CommentCard({ comment, firebase }) {
               </IconButton>
             </React.Fragment>
           )}
+          <VoteButton item={comment} />
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded

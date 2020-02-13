@@ -11,6 +11,9 @@ import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
   appBar: {
     borderBottom: `1px solid ${theme.palette.divider}`
   },
@@ -22,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     textDecoration: "none"
   },
   philosophy: {
-    margin: theme.spacing(2)
+    marginRight: theme.spacing(1)
   }
 }));
 
@@ -30,9 +33,14 @@ export default function Pricing() {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="static" color="default" className={classes.appBar}>
+      <AppBar
+        position="static"
+        color="default"
+        className={classes.appBar}
+        elevation={0}
+      >
         <Toolbar className={classes.toolbar}>
           <Typography
             variant="h5"
@@ -62,6 +70,7 @@ export default function Pricing() {
             >
               Philosophy
             </Link>
+
             {/* <Link
               variant="button"
               color="textPrimary"
@@ -71,6 +80,7 @@ export default function Pricing() {
               Support
             </Link> */}
           </nav>
+          <Account />
           {/* <Button
             href="#"
             color="primary"
@@ -79,9 +89,8 @@ export default function Pricing() {
           >
             Login
           </Button> */}
-          <Account />
         </Toolbar>
       </AppBar>
-    </React.Fragment>
+    </div>
   );
 }
