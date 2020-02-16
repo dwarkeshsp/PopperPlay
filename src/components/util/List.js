@@ -18,7 +18,6 @@ function List({ firebase, tags, orderBy, type }) {
     querySnapshot.docs.map((doc, index) => {
       data[index]["id"] = doc.id;
       data[index][type] = true;
-      console.log(doc.ref.path);
     });
     setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
     return data;

@@ -121,9 +121,16 @@ exports.allcommentnotifications = functions.https.onRequest(
     const query = await db.collectionGroup("comments").get();
     query.forEach(doc => {
       const data = doc.data();
-      const conjectureID = doc.ref.path.split("/")[1];
-      const conjectureRef = db.doc("conjectures/" + conjectureID);
-      notifyParent([conjectureRef], doc.ref, data.creator);
+      path = data.path;
+      // - "/comments"
+      const parentPath = path.substring(0, data.path.length - 9);
+      console.log("parentPath: " + parentPath);
+      const parentRef = db.doc(parentPath);
+      const commentPath = path + doc.id;
+      console.log("commentPath: " + commentPath);
+      const commentRef = db.doc(commentPath);
+
+      notifyParent([parentRef], commentRef, data.creator);
     });
   }
 );
