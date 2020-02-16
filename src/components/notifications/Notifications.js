@@ -7,7 +7,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 
-export default function Account() {
+export default function Notifications() {
   return (
     <div>
       <AuthUserContext.Consumer>
@@ -23,7 +23,9 @@ function NotificationsLoggedInBase({ firebase }) {
   const [notifications, setNotifications] = useState([]);
   const [newNotifications, setNewNotifications] = useState(0);
 
-  useEffect(() => getNotifications(), []);
+  useEffect(() => {
+    getNotifications();
+  }, []);
 
   async function getNotifications() {
     async function refData(ref) {

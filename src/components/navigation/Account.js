@@ -22,7 +22,6 @@ export default function Account() {
 }
 
 function LoggedInBase({ firebase }) {
-  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const [name, setName] = useState(firebase.currentPerson().displayName);
   const [newNotifications, setNewNotifications] = useState(0);
@@ -47,14 +46,13 @@ function LoggedInBase({ firebase }) {
 
   return (
     <div>
-      <IconButton
-        style={{ marginRight: "1rem" }}
-        onClick={() => history.push("/notifications/")}
-      >
-        <Badge badgeContent={newNotifications} color="primary">
-          <NotificationsIcon />
-        </Badge>
-      </IconButton>
+      <Link to="notifications">
+        <IconButton style={{ marginRight: "1rem" }}>
+          <Badge badgeContent={newNotifications} color="primary">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+      </Link>
       <Fab variant="extended" color="primary" onClick={handleMenu}>
         <AccountCircle style={{ marginRight: "0.5rem" }} />
         {name}
