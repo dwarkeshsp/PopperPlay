@@ -43,8 +43,6 @@ function LoggedInBase({ firebase }) {
     setAnchorEl(null);
   };
 
-  async function notifications() {}
-
   return (
     <div>
       <Fab variant="extended" color="primary" onClick={handleMenu}>

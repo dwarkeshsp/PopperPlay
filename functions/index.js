@@ -15,9 +15,9 @@ function notifyParent(parentRefArray, childRef, childCreator) {
   parentRefArray.forEach(async item => {
     const doc = await item.get();
     data = doc.data();
-    // if (childCreator !== data.creator) {
-    notify(data.creator, childRef);
-    // }
+    if (childCreator !== data.creator) {
+      notify(data.creator, childRef);
+    }
     console.log("parent data", data);
   });
 }
