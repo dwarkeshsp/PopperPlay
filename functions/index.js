@@ -3,6 +3,39 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
 
+async function notify(person, itemRef) {
+  console.log(person, itemRef);
+  await db.doc("people/" + person).update({
+    newNotifications: admin.firestore.FieldValue.increment(1),
+    notifications: admin.firestore.FieldValue.arrayUnion(itemRef)
+  });
+}
+
+function notifyParent(parentRefArray, childRef, childCreator) {
+  parentRefArray.forEach(async item => {
+    const doc = await item.get();
+    data = doc.data();
+    // if (childCreator !== data.creator) {
+    notify(data.creator, childRef);
+    // }
+    console.log("parent data", data);
+  });
+}
+
+function genericComment(snapshot, context) {
+  const data = snapshot.data();
+  path = data.path;
+  // - "/comments"
+  const parentPath = path.substring(0, data.path.length - 9);
+  console.log("parentPath: " + parentPath);
+  const parentRef = db.doc(parentPath);
+  const id = context.params.comment;
+  const commentPath = path + id;
+  console.log("commentPath: " + commentPath);
+  const commentRef = db.doc(commentPath);
+  notifyParent([parentRef], commentRef, data.creator);
+}
+
 exports.notifyParentOfProblem = functions.firestore
   .document("/problems/{problem}")
   .onCreate((snapshot, context) => {
@@ -65,39 +98,6 @@ exports.notifyParentOfComment6 = functions.firestore
   .onCreate((snapshot, context) => {
     genericComment(snapshot, context);
   });
-
-function genericComment(snapshot, context) {
-  const data = snapshot.data();
-  const path = data.path.substring(0, data.path.length - 9);
-  const commentRef = db.doc(path);
-  console.log(snapshot, context, path);
-  const commentRefArray = commentRef.path.split("/");
-  let parentPath = "";
-  for (let i = 0; i < commentRefArray.length - 2; i++) {
-    parentPath += commentRefArray[i] + "/";
-  }
-  const parentRef = db.doc(parentPath);
-  notifyParent([parentRef], commentRef, data.creator);
-}
-
-function notifyParent(parentRefArray, childRef, childCreator) {
-  parentRefArray.forEach(async item => {
-    const doc = await item.get();
-    data = doc.data();
-    // if (childCreator !== data.creator) {
-    notify(data.creator, childRef);
-    // }
-    console.log("parent data", data);
-  });
-}
-
-async function notify(person, itemRef) {
-  console.log(person, itemRef);
-  await db.doc("people/" + person).update({
-    newNotifications: admin.firestore.FieldValue.increment(1),
-    notifications: admin.firestore.FieldValue.arrayUnion(itemRef)
-  });
-}
 
 exports.allnotifications = functions.https.onRequest(async (req, resp) => {
   const query = await db.collection("/problems").get();
