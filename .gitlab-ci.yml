@@ -13,4 +13,4 @@ deploy_production:
     - npm install -g firebase-tools
     - npm install
     - npm run build
-    - firebase deploy --token $FIREBASE_TOKEN
+    - firebase deploy --token $FIREBASE_TOKEN --only hosting
