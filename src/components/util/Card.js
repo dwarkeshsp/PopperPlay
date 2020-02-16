@@ -1,21 +1,14 @@
-import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import BuildIcon from "@material-ui/icons/Build";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Markdown from "../util/Markdown";
 import VoteButton from "./buttons/Vote";
 import ItemInfo from "./ItemInfo";
-import { TwitterShareButton } from "react-share";
-import Fab from "@material-ui/core/Fab";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import TwitterShare from "./buttons/TwitterShare";
 import MetaInfoList from "./MetaInfoList";
 
 const useStyles = makeStyles(theme => ({
@@ -42,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ItemCard({ item }) {
+export default function ItemCard({ item, highlight }) {
   const classes = useStyles();
 
   function title() {
@@ -75,7 +68,11 @@ export default function ItemCard({ item }) {
       >
         <div>
           <CardActionArea component="a" href="#">
-            <Card className={classes.card} elevation={4}>
+            <Card
+              className={classes.card}
+              style={highlight ? { backgroundColor: "LightGray" } : {}}
+              elevation={4}
+            >
               <div className={classes.cardDetails}>
                 <CardContent>
                   {item.problem && (

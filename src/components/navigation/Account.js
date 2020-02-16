@@ -1,13 +1,14 @@
+import Badge from "@material-ui/core/Badge";
 import Button from "@material-ui/core/Button";
 import Fab from "@material-ui/core/Fab";
+import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { withFirebase } from "../firebase";
-import Badge from "@material-ui/core/Badge";
-import { useHistory } from "react-router-dom";
 import { AuthUserContext } from "../session";
 
 export default function Account() {
@@ -21,6 +22,7 @@ export default function Account() {
 }
 
 function LoggedInBase({ firebase }) {
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const [name, setName] = useState(firebase.currentPerson().displayName);
   const [newNotifications, setNewNotifications] = useState(0);
@@ -45,14 +47,16 @@ function LoggedInBase({ firebase }) {
 
   return (
     <div>
-      <Fab variant="extended" color="primary" onClick={handleMenu}>
-        <Badge
-          badgeContent={newNotifications}
-          color="secondary"
-          style={{ marginRight: "0.5rem" }}
-        >
-          <AccountCircle />
+      <IconButton
+        style={{ marginRight: "1rem" }}
+        onClick={() => history.push("/notifications/")}
+      >
+        <Badge badgeContent={newNotifications} color="primary">
+          <NotificationsIcon />
         </Badge>
+      </IconButton>
+      <Fab variant="extended" color="primary" onClick={handleMenu}>
+        <AccountCircle style={{ marginRight: "0.5rem" }} />
         {name}
       </Fab>
       <Menu
@@ -81,9 +85,6 @@ function MenuItemsBase({ firebase }) {
 
   return (
     <div>
-      <MenuItem onClick={() => history.push("/notifications")}>
-        Notifications
-      </MenuItem>
       <MenuItem
         onClick={() =>
           history.push("/person/" + firebase.currentPerson().displayName)

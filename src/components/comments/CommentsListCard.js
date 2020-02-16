@@ -16,7 +16,7 @@ import ItemInfo from "../util/ItemInfo";
 import MetaInfoList from "../util/MetaInfoList";
 import CardActionArea from "@material-ui/core/CardActionArea";
 
-function CommentCard({ comment, firebase }) {
+function CommentCard({ comment, highlight, firebase }) {
   const [expanded, setExpanded] = React.useState(true);
   const [replying, setReplying] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -56,7 +56,10 @@ function CommentCard({ comment, firebase }) {
         to={"/conjecture/" + conjectureID}
         style={{ textDecoration: "none" }}
       >
-        <Card elevation={4}>
+        <Card
+          elevation={4}
+          style={highlight ? { backgroundColor: "LightGray" } : {}}
+        >
           <CardActionArea>
             <CardContent onClick={() => setExpanded(!expanded)}>
               <MetaInfoList refList={[conjectureRef]} type="conjecture" />
