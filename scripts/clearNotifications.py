@@ -12,11 +12,9 @@ try:
     docs = people_ref.get()
     for doc in docs:
         print('Doc Data:{}'.format(doc.to_dict()))
-        print('id: ', doc.id)
         person_ref = people_ref.document(doc.id)
         person_ref.update({
-            "newNotifications": 0,
-            "notifications": []
+            "photoURL": ""
         })
 except google.cloud.exceptions.NotFound:
     print('Missing data')

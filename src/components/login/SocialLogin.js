@@ -44,6 +44,8 @@ function SocialLogin({ firebase, twitterMessage }) {
         firstName: firstName,
         lastName: lastName,
         username: socialAuthUser.additionalUserInfo.username,
+        bio: "",
+        photoURL: "",
         email: email ? email : "",
         uid: socialAuthUser.user.uid,
         created: timestamp,

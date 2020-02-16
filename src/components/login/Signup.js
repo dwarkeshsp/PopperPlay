@@ -110,6 +110,8 @@ function SignUpBase(props) {
             firstName: firstName,
             lastName: lastName,
             username: username,
+            bio: "",
+            photoURL: "",
             email: email,
             uid: authUser.user.uid,
             created: timestamp,
