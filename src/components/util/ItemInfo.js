@@ -39,7 +39,7 @@ export default function ItemInfo({ item }) {
         to={"/person/" + item.creator}
         // style={{ textDecoration: "none" }}
       >
-        {item.creator + " "}
+        {item.creator}
       </Typography>
       {item.comments !== undefined && (
         <React.Fragment>
@@ -48,7 +48,7 @@ export default function ItemInfo({ item }) {
             className={classes.inline}
             style={{ textDecoration: "none" }}
           >
-            {item.comments}
+            {" " + item.comments}
           </Typography>
           <Typography
             variant="body2"

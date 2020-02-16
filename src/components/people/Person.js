@@ -54,34 +54,31 @@ function PostsBase({ username, firebase }) {
         });
       }
 
-      const problemsQuery = await firebase
-        .problems()
-        .where("creator", "==", username)
-        .orderBy("created", "desc")
-        .get();
+      const query = ref =>
+        ref
+          .where("creator", "==", username)
+          .orderBy("created", "desc")
+          .get();
+
+      const problemsQuery = await query(firebase.problems());
       getItemData(problemsQuery, "problem");
-      const conjecturesQuery = await firebase
-        .conjectures()
-        .where("creator", "==", username)
-        .orderBy("created", "desc")
-        .get();
+      const conjecturesQuery = await query(firebase.conjectures());
       getItemData(conjecturesQuery, "conjecture");
-      const commentsQuery = await firebase
-        .comments()
-        .where("creator", "==", username)
-        .orderBy("created", "desc")
-        .get();
+      const commentsQuery = await query(firebase.comments());
       getItemData(commentsQuery, "comment");
     }
+
     const tempPosts = [];
     getContent()
-      .then(() => tempPosts.sort((a, b) => a.created < b.created))
+      .then(() =>
+        tempPosts.sort((a, b) => a.created.seconds < b.created.seconds)
+      )
       .then(() => setPosts(tempPosts));
   }, []);
 
   console.log(posts);
   return (
-    <Container maxWidth="md" style={{ marginTop: "1rem" }}>
+    <Container maxWidth="md" style={{ marginTop: "2rem" }}>
       {posts.map(post =>
         post.comment ? (
           <CommentsListCard comment={post} />
@@ -95,7 +92,7 @@ function PostsBase({ username, firebase }) {
 
 const Bio = ({ person }) => (
   <Container maxWidth="sm" style={{ marginTop: "1rem" }}>
-    <Grid container alignItems="center" spacing={3}>
+    <Grid container alignItems="center">
       <Grid item sm={2}>
         <Avatar
           src={person.photoURL}
