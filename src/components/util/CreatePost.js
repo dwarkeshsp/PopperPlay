@@ -34,12 +34,12 @@ const CreatePost = forwardRef((props, ref) => {
   const MINTITLELENGTH = 1;
 
   React.useEffect(() => {
-    let valid =
-      title.length >= MINTITLELENGTH &&
-      (problemItem ||
-        conjectureItem ||
-        problem ||
-        parentProblemTitle.length >= MINTITLELENGTH);
+    let valid = title.length >= MINTITLELENGTH;
+    // &&
+    // (problemItem ||
+    //   conjectureItem ||
+    //   problem ||
+    //   parentProblemTitle.length >= MINTITLELENGTH);
     setValid(valid);
   }, [title, parentProblemTitle]);
 
@@ -144,13 +144,14 @@ const CreatePost = forwardRef((props, ref) => {
   }
 
   async function postConjecture() {
-    let problemIDs;
+    let problemIDs = [];
     if (problemItem) {
-      problemIDs = problemItem.id;
-    } else {
-      problemIDs = await postProblemBase(parentProblemTitle, "", [], []);
+      problemIDs = [problemItem.id];
+    } else if (parentProblemTitle.length > 0) {
+      const problemID = await postProblemBase(parentProblemTitle, "", [], []);
+      problemIDs = [problemID];
     }
-    await postConjectureBase([problemIDs]);
+    await postConjectureBase(problemIDs);
 
     handleClose();
   }
@@ -210,7 +211,6 @@ const CreatePost = forwardRef((props, ref) => {
                 problems page.
               </DialogContentText>
               <TextField
-                required
                 multiline
                 helperText={
                   parentProblemTitle.length < MINTITLELENGTH &&
@@ -218,7 +218,7 @@ const CreatePost = forwardRef((props, ref) => {
                 }
                 margin="dense"
                 id="title"
-                label="Problem Title"
+                label="Problem being solved (optional)"
                 fullWidth
                 onChange={event => setParentProblemTitle(event.target.value)}
               />
