@@ -89,7 +89,7 @@ function Header() {
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
           David Deutsch
         </Typography>
-        <Video />
+        {/* <Video /> */}
         <div className={classes.buttons}>
           <Grid container spacing={2} justify="center">
             <Grid item>
