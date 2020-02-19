@@ -6,11 +6,14 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import TwitterIcon from "@material-ui/icons/Twitter";
 import React from "react";
 import ReactPlayer from "react-player";
 import { Link as RouterLink } from "react-router-dom";
+import { TwitterShareButton } from "react-share";
 import Feedback from "../feedback/Feedback";
 import SocialLogin from "../login/SocialLogin";
+import { AuthUserContext } from "../session";
 
 // import Vote from "../util/buttons/Vote";
 // import ItemInfo from "../util/ItemInfo";
@@ -53,8 +56,9 @@ export default function Home() {
   return (
     <div className={classes.root}>
       <Header />
+      <Share />
       <Feedback />
-      <Update />
+      {/* <Update /> */}
       {/* <Video /> */}
 
       {/* <Feedback /> */}
@@ -113,14 +117,39 @@ function Header() {
               </Button>
             </Grid>
           </Grid>
-          <Grid style={{ marginTop: "2rem" }} container justify="center">
-            <SocialLogin twitterMessage="Sign up with twitter" />
-          </Grid>
+          <TwitterLogin />
         </div>
       </Container>
     </div>
   );
 }
+
+const TwitterLogin = () => (
+  <Grid style={{ marginTop: "2rem" }} container justify="center">
+    <SocialLogin twitterMessage="Sign up with twitter" />
+  </Grid>
+);
+
+const Share = () => (
+  <Grid style={{ marginTop: "2rem" }} container justify="center">
+    <TwitterShareButton
+      url={"popperplay.com"}
+      children={
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<TwitterIcon />}
+          color="secondary"
+        >
+          Spread the word!
+        </Button>
+      }
+      title={
+        "Yonder across the internet, I have discovered PopperPlay.com!! It's a platform where people can post open problems and the conjectures about how to solve them.\nPopperPlay helps people create new ideas and identify the inadequacies in our prevailing theories. Check it out!!!"
+      }
+    />
+  </Grid>
+);
 
 function Video() {
   const [open, setOpen] = React.useState(false);
