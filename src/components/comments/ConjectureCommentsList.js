@@ -13,7 +13,7 @@ function CommentsList({ conjecture, firebase }) {
   React.useEffect(() => {
     firebase
       .collection(path)
-      .orderBy(orderBy, "desc")
+      .orderBy(orderBy)
       // .limit(LOADSIZE)
       .get()
       .then(querySnapshot => {

@@ -12,6 +12,7 @@ import clsx from "clsx";
 import React from "react";
 import { withFirebase } from "../firebase";
 import ItemInfo from "../util/ItemInfo";
+import MetaInfoList from "../util/MetaInfoList";
 import VoteButton from "../util/buttons/Vote";
 
 const useStyles = makeStyles(theme => ({
@@ -50,7 +51,8 @@ function CommentCard({ comment, firebase }) {
   const [expanded, setExpanded] = React.useState(true);
   const [replying, setReplying] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const margin = (comment.level * 2).toString() + "rem";
+  const marginLeft = (comment.level * 2).toString() + "rem";
+  const marginBottom = comment.conjectureRef ? "1rem" : "0rem";
 
   async function post() {
     const path = comment.path + comment.id + "/comments/";
@@ -80,9 +82,13 @@ function CommentCard({ comment, firebase }) {
   }
 
   return (
-    <div style={{ marginLeft: margin }}>
-      <Card className={classes.card} raised={comment.level}>
+    <div style={{ marginLeft: marginLeft, marginBottom: marginBottom }}>
+      <Card className={classes.card} raised={comment.level} elevation={4}>
         <CardContent onClick={() => setExpanded(!expanded)}>
+          {comment.conjectureRef && (
+            <MetaInfoList refList={[comment.conjectureRef]} type="conjecture" />
+          )}
+
           <ItemInfo item={comment} />
           <Typography>{comment.content}</Typography>
         </CardContent>
@@ -143,7 +149,7 @@ function ChildrenBase({ comment, expanded, firebase }) {
   React.useEffect(() => {
     firebase
       .collection(path)
-      .orderBy(orderBy, "desc")
+      .orderBy(orderBy)
       .limit(LOADSIZE)
       .get()
       .then(querySnapshot => {

@@ -4,7 +4,7 @@ import React from "react";
 import { withFirebase } from "../firebase";
 import Card from "./Card";
 import Button from "@material-ui/core/Button";
-import CommentsListCard from "../comments/CommentsListCard";
+import CommentsListCard from "../comments/CommentCard";
 
 function List({ firebase, tags, orderBy, type }) {
   const [items, setItems] = React.useState([]);
@@ -18,6 +18,10 @@ function List({ firebase, tags, orderBy, type }) {
     querySnapshot.docs.map((doc, index) => {
       data[index]["id"] = doc.id;
       data[index][type] = true;
+      if (type === "comment") {
+        const conjectureID = data[index].path.split("/")[1];
+        data[index].conjectureRef = firebase.conjecture(conjectureID);
+      }
     });
     setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
     return data;
