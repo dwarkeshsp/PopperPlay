@@ -22,7 +22,7 @@ function CommentCard({ comment, highlight, firebase }) {
   const [value, setValue] = React.useState("");
 
   const conjectureID = comment.path.split("/")[1];
-  const conjectureRef = firebase.db.doc("conjectures/" + conjectureID);
+  const conjectureRef = firebase.conjecture(conjectureID);
 
   async function post() {
     const path = comment.path + comment.id + "/comments/";

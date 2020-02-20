@@ -121,13 +121,14 @@ class Firebase {
   comment = (conjectureID, commentID) =>
     this.db.doc("/conjectures/" + conjectureID + "/comments/" + commentID);
   comments = () => this.db.collectionGroup("comments");
+  firstLevelComments = () => this.comments().where("level", "==", 0);
 
   // *** Query API ***
   query = (orderBy, LOADSIZE, type) => {
     let collection;
     if (type === "problem") collection = this.problems();
     if (type === "conjecture") collection = this.conjectures();
-    if (type === "comment") collection = this.comments();
+    if (type === "comment") collection = this.firstLevelComments();
     return collection
       .orderBy(orderBy, "desc")
       .limit(LOADSIZE)
@@ -137,7 +138,7 @@ class Firebase {
     let collection;
     if (type === "problem") collection = this.problems();
     if (type === "conjecture") collection = this.conjectures();
-    if (type === "comment") collection = this.comments();
+    if (type === "comment") collection = this.firstLevelComments();
     return collection
       .where("tags", "array-contains-any", tags)
       .orderBy(orderBy, "desc")
@@ -148,7 +149,7 @@ class Firebase {
     let collection;
     if (type === "problem") collection = this.problems();
     if (type === "conjecture") collection = this.conjectures();
-    if (type === "comment") collection = this.comments();
+    if (type === "comment") collection = this.firstLevelComments();
     return collection
       .orderBy(orderBy, "desc")
       .startAfter(lastDoc)
