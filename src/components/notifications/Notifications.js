@@ -76,20 +76,18 @@ function NotificationsLoggedInBase({ firebase }) {
 }
 
 function Message({ notification }) {
-  const { type, creator, level } = notification;
+  const { creator, problem, conjecture, comment, level } = notification;
 
   let parentType;
 
-  if (type === "conjecture") {
+  if (conjecture) {
     parentType = "problem";
   }
-  if (type === "problem" || (type === "comment" && level === 0)) {
+  if (problem || (comment && level === 0)) {
     parentType = "conjecture";
   } else {
     parentType = "comment";
   }
-
-  console.log(type, parentType);
 
   return (
     <Typography>{creator + " responded to your " + parentType}</Typography>
