@@ -6,6 +6,7 @@ import Card from "../util/Card";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
 
 export default function Notifications() {
   return (
@@ -52,21 +53,49 @@ function NotificationsLoggedInBase({ firebase }) {
 
   return (
     <div>
-      <Container maxWidth="md">
-        {notifications.map((notification, index) =>
-          notification.comment ? (
-            <CommentsListCard
-              comment={notification}
-              highlight={index < newNotifications}
-            />
-          ) : (
-            <Card item={notification} highlight={index < newNotifications} />
-          )
-        )}
+      <Typography align="center" variant="h2">
+        Notifications
+      </Typography>
+      <Container maxWidth="md" style={{ marginTop: "1rem" }}>
+        {notifications.map((notification, index) => (
+          <React.Fragment>
+            <Message notification={notification} />
+            {notification.comment ? (
+              <CommentsListCard
+                comment={notification}
+                highlight={index < newNotifications}
+              />
+            ) : (
+              <Card item={notification} highlight={index < newNotifications} />
+            )}
+          </React.Fragment>
+        ))}
       </Container>
     </div>
   );
 }
+
+function Message({ notification }) {
+  const { type, creator, level } = notification;
+
+  let parentType;
+
+  if (type === "conjecture") {
+    parentType = "problem";
+  }
+  if (type === "problem" || (type === "comment" && level === 0)) {
+    parentType = "conjecture";
+  } else {
+    parentType = "comment";
+  }
+
+  console.log(type, parentType);
+
+  return (
+    <Typography>{creator + " responded to your " + parentType}</Typography>
+  );
+}
+
 function NotificationsNotLoggedIn() {
   return (
     <Grid container justify="center" style={{ marginTop: "2.5rem" }}>

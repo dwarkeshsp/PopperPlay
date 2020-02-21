@@ -88,7 +88,6 @@ function CommentCard({ comment, firebase }) {
           {comment.conjectureRef && (
             <MetaInfoList refList={[comment.conjectureRef]} type="conjecture" />
           )}
-
           <ItemInfo item={comment} />
           <Typography>{comment.content}</Typography>
         </CardContent>

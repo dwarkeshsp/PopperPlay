@@ -55,7 +55,7 @@ function CommentCard({ comment, highlight, firebase }) {
       <Link
         to={"/conjecture/" + conjectureID}
         style={{ textDecoration: "none" }}
-      > 
+      >
         <Card
           elevation={4}
           style={highlight ? { backgroundColor: "LightGray" } : {}}
