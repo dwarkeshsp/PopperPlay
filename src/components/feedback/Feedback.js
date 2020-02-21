@@ -9,13 +9,13 @@ import React from "react";
 
 export default function Feedback() {
   return (
-    <div style={{ marginTop: "4rem", marginBottom: "3rem" }}>
+    <div style={{ marginTop: "6rem", marginBottom: "3rem" }}>
       <Container maxWidth="md">
         <Typography variant="h6" align="center" gutterBottom paragraph>
-          👋 Hi, I’m Dwarkesh. I'm trying to make a platform that helps people
-          identify open problems and create new ideas. There is nothing more
-          helpful and impactful to this mission than your feedback. Thank you
-          for any suggestions and questions you have for me! 🙏
+          👋 Hi, I’m Dwarkesh. I'm building PopperPlay to help people create new
+          ideas and identify the inadequacies in our prevailing theories. There
+          is nothing more helpful to this mission than your feedback. Thank you
+          for any suggestions and criticism you have for me! 🙏
         </Typography>
         <Contact />
       </Container>

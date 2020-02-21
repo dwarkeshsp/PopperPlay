@@ -47,14 +47,14 @@ function LoggedInBase({ firebase }) {
   return (
     <div>
       <Link to="notifications">
-        <IconButton style={{ marginRight: "1rem" }}>
+        <IconButton style={{ marginRight: "0.5rem" }}>
           <Badge badgeContent={newNotifications} color="primary">
             <NotificationsIcon />
           </Badge>
         </IconButton>
       </Link>
       <Fab variant="extended" color="primary" onClick={handleMenu}>
-        <AccountCircle style={{ marginRight: "0.5rem" }} />
+        <AccountCircle style={{ marginRight: "0.25rem" }} />
         {name}
       </Fab>
       <Menu

@@ -52,43 +52,7 @@ export default function Pricing() {
           >
             PopperPlay
           </Typography>
-          <nav>
-            {/* <Link
-              variant="button"
-              color="inherit"
-              component={RouterLink}
-              to="/feedback"
-            >
-              Feedback
-            </Link> */}
-            <Link
-              variant="button"
-              color="inherit"
-              className={classes.philosophy}
-              component={RouterLink}
-              to="/philosophy"
-            >
-              Philosophy
-            </Link>
-
-            {/* <Link
-              variant="button"
-              color="textPrimary"
-              href="#"
-              className={classes.link}
-            >
-              Support
-            </Link> */}
-          </nav>
           <Account />
-          {/* <Button
-            href="#"
-            color="primary"
-            variant="outlined"
-            className={classes.link}
-          >
-            Login
-          </Button> */}
         </Toolbar>
       </AppBar>
     </div>
