@@ -10,7 +10,7 @@ _Many of the following ideas are inspired by David Deutsch and Karl Popper._
 >
 > Karl Popper, _Knowledge without Authority_
 
-Colleges, news, and social media are in crisis. They are turning dogmatic, dishonest, and tribal. The source of this trouble is that we have been using the wrong criterion to judge institutions that help create knowledge. The prevailing approach focuses on sources, asking, "Which authority should we trust?"[^3]
+Academia, journalism, and social media are in crisis. They are turning dogmatic, authoritarian, and tribal. The source of this trouble is that we have been using the wrong criterion to judge institutions that help create knowledge. The prevailing approach focuses on sources, asking, "Which authority should we trust?"[^1]
 
 This question is based on the same mistakes as the predominant question in political philosophy, "Who should rule?". The philosopher Karl Popper pointed out that that since all rulers are fallible, and since they will all make mistakes, we will never find the perfect ruler who, once appointed, will dissolve problems once and for all. Similarly, there is no source of information that is free from error and bias. If we believe that we found such a source, we become prone to believing assertions that could not survive open criticism. Furthermore, there is no rational way to resolve disputes between sources claiming to justify their own credibility. Instead, disagreements must be settled by irrational appeals to authority. Failing that, violence must be used.
 
@@ -28,9 +28,9 @@ Only in this way can we prevent the entrenchment of errors and the suppression o
 >
 > Karl Popper, _The Myth of the Framework_
 
-Eric Weinstein has explained the inspiring meaning of a [portal](https://www.youtube.com/watch?v=pb_yvBNLjNk) - it's a problem so novel and so beautiful that in pursuing it we escape our humdrum lives and realize how brilliantly interesting and fun the universe is. I couldn't figure why there isn't a place on the internet where I could go and find the world's most interesting open problems.
+Eric Weinstein has explained the inspiring meaning of a [portal](https://www.youtube.com/watch?v=pb_yvBNLjNk) - it's a problem so novel and beautiful that in pursuing it we escape our humdrum lives and realize how brilliantly interesting and fun the universe is. I couldn't figure why there isn't a place on the internet where I could go and find the world's most interesting open problems.
 
-Imagine being a mathematician in 1900 when David Hilbert proposed a list of 23 of the biggest open problems in mathematics. Imagine how fun and invigorating pursuing this challenge must have been. Imagine the glee Hilbert himself must have felt in identifying the holes and inadequacies in the knowledge of his time. There is no reason why any of us shouldn't have this kind of infatuated and exploratory relationship with the problems we find interesting. 
+Imagine being a mathematician in 1900 when David Hilbert proposed a list of 23 of the biggest open problems in mathematics. Imagine how fun and invigorating pursuing this challenge must have been. Imagine the glee Hilbert himself must have felt in identifying the inadequacies in the knowledge of his time. There is no reason why any of us shouldn't have this kind of infatuated and exploratory relationship with the problems we find interesting. 
 
 As a college student, I realized that not only was I not solving problems in my classes, I wasn't even learning how to solve problems. Instead, I was learning how to pretend like I was solving an interesting problem creatively while being neither creative nor interested. So I built PopperPlay. I want to make it easy to go on intellectual adventures and create new knowledge.
 
@@ -66,5 +66,5 @@ This way, we can help people escape from existing channels. People will be able 
 
 PopperPlay is inspired by the philosophy of critical rationalism, but countless errors have been made in instantiating this theory. Errors will be found in the layout and structure of the platform, in missing features, in the algorithms for featuring problems and conjectures, and even in the philosophy you are reading right now. These problems cannot be solved unless they are accessible by all to identify and conjecture solutions upon. That is why **PopperPlay is completely open-source**. I need your [feedback](https://popperplay.com/feedback) on how this platform can better help people identify problems and create new ideas.
 
-[^1]: Unless the paywall is necessary to sustain your channel of knowledge creation. And even then, the paywall becomes a problem you should solve with a better alternative.
-[^2]: From this are derived further bad questions like, "How do we ensure that our journalistic and academic classes are responsible and informed?", "Who should be allowed to participate in the process of sense-making?", and "How should the gatekeepers be educated?"
+[^1]: From this are derived further bad questions like, "How do we ensure that our journalistic and academic classes are responsible and informed?", "Who should be allowed to participate in the process of sense-making?", and "How should the gatekeepers be educated?"
+[^2]: Unless the paywall is necessary to sustain your channel of knowledge creation. And even then, the paywall becomes a problem you should solve with a better alternative.

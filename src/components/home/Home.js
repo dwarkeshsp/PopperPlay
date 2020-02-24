@@ -21,10 +21,10 @@ export default function Home() {
     <Container maxWidth="md">
       <Quote />
       <Philosophy />
+      <TwitterLogin />
       <Buttons />
       <Description />
       <Share />
-      {/* <TwitterLogin /> */}
       <Feedback />
     </Container>
   );
@@ -62,7 +62,7 @@ const Description = () => (
 );
 
 const Buttons = () => (
-  <div style={{ marginTop: "2rem" }}>
+  <div style={{ marginTop: "3rem" }}>
     <Grid container spacing={2} justify="center">
       <Grid item>
         <Button

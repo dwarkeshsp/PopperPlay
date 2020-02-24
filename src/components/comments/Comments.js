@@ -23,10 +23,11 @@ function Quote() {
   return (
     <div>
       <Typography variant="subtitle1" align="center" color="textPrimary">
-        All rational thought consists of conjecture and criticism
+        Rational criticism compares rival theories with the aim of finding which
+        of them offers the best explanations
       </Typography>
       <Typography variant="subtitle1" align="center" color="textSecondary">
-        Karl Popper
+        David Deutsch
       </Typography>
     </div>
   );
