@@ -14,7 +14,7 @@ Academia, journalism, and social media are in crisis. They are turning dogmatic,
 
 This question is based on the same mistakes as the predominant question in political philosophy, "Who should rule?". The philosopher Karl Popper pointed out that that since all rulers are fallible, and since they will all make mistakes, we will never find the perfect ruler who, once appointed, will dissolve problems once and for all. Similarly, there is no source of information that is free from error and bias. If we believe that we found such a source, we become prone to believing assertions that could not survive open criticism. Furthermore, there is no rational way to resolve disputes between sources claiming to justify their own credibility. Instead, disagreements must be settled by irrational appeals to authority. Failing that, violence must be used.
 
-When we ask, "Who should we trust?", we are expecting explanationless progress. We are trying to predict future success from raw data like the qualifications and track record of news organizations and academic journals. But this is not an explanation for why we should expect progress to continue despite lacking a system of error correction.
+When we ask, "Who should we trust?", we are expecting explanationless progress. We are trying to predict future success from raw data like the qualifications and track record of news organizations and academic journals. But this is not an explanation for why we should expect progress to continue without the support of a system of error correction.
 
 The only rational way to create progress is to create a platform which satisfies Popper's criterion: _Does the system facilitate the correction of errors and the creation of new ideas?_
 
@@ -30,7 +30,7 @@ Only in this way can we prevent the entrenchment of errors and the suppression o
 
 Eric Weinstein has explained the inspiring meaning of a [portal](https://www.youtube.com/watch?v=pb_yvBNLjNk) - it's a problem so novel and beautiful that in pursuing it we escape our humdrum lives and realize how brilliantly interesting and fun the universe is. I couldn't figure why there isn't a place on the internet where I could go and find the world's most interesting open problems.
 
-Imagine being a mathematician in 1900 when David Hilbert proposed a list of 23 of the biggest open problems in mathematics. Imagine how fun and invigorating pursuing this challenge must have been. Imagine the glee Hilbert himself must have felt in identifying the inadequacies in the knowledge of his time. There is no reason why any of us shouldn't have this kind of infatuated and exploratory relationship with the problems we find interesting. 
+Imagine being a mathematician in 1900 when David Hilbert proposed a list of 23 of the biggest open problems in the field. Imagine how fun and invigorating pursuing this challenge must have been. Imagine the glee Hilbert himself must have felt in identifying the inadequacies in the knowledge of his time. There is no reason why any of us shouldn't have this kind of infatuated and exploratory relationship with the problems we find interesting. 
 
 As a college student, I realized that not only was I not solving problems in my classes, I wasn't even learning how to solve problems. Instead, I was learning how to pretend like I was solving an interesting problem creatively while being neither creative nor interested. So I built PopperPlay. I want to make it easy to go on intellectual adventures and create new knowledge.
 
