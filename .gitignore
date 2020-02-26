@@ -22,6 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.vscode/launch.json
 scripts/popper-play-firebase-adminsdk-hv8g5-daefbe70e6.json
 .firebase/hosting.YnVpbGQ.cache
+.vscode/launch.json
+.vscode/settings.json
