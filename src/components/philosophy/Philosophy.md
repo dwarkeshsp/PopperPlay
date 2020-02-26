@@ -4,24 +4,6 @@
 
 _Many of the following ideas are inspired by David Deutsch and Karl Popper._
 
-## Popper's Criterion
-
-> The question about the sources of our knowledge ... has always been asked in the spirit of: ‘What are the best sources of our knowledge - the most reliable ones, those which will not lead us into error, and those to which we can and must turn, in case of doubt, as the last court of appeal?’ I propose to assume, instead, that no such ideal sources exist - no more than ideal rulers - and that all ‘sources’ are liable to lead us into error at times. And I propose to replace, therefore, the question of the sources of our knowledge by the entirely different question: 'How can we hope to detect and eliminate error?'
->
-> Karl Popper, _Knowledge without Authority_
-
-Academia, journalism, and social media are in crisis. They are turning dogmatic, authoritarian, and tribal. The source of this trouble is that we have been using the wrong criterion to judge institutions that help create knowledge. The prevailing approach focuses on sources, asking, "Which authority should we trust?"[^1]
-
-This question is based on the same mistakes as the predominant question in political philosophy, "Who should rule?". The philosopher Karl Popper pointed out that that since all rulers are fallible, and since they will all make mistakes, we will never find the perfect ruler who, once appointed, will dissolve problems once and for all. Similarly, there is no source of information that is free from error and bias. If we believe that we found such a source, we become prone to believing assertions that could not survive open criticism. Furthermore, there is no rational way to resolve disputes between sources claiming to justify their own credibility. Instead, disagreements must be settled by irrational appeals to authority. Failing that, violence must be used.
-
-When we ask, "Who should we trust?", we are expecting explanationless progress. We are trying to predict future success from raw data like the qualifications and track record of news organizations and academic journals. But this is not an explanation for why we should expect progress to continue without the support of a system of error correction.
-
-The only rational way to create progress is to create a platform which satisfies Popper's criterion: _Does the system facilitate the correction of errors and the creation of new ideas?_
-
-Instead of seeking higher authorities of knowledge, we can allow people to identify problems with prevailing explanations, conjecture solutions upon them, and then criticize these tentative guesses. These new explanations will generate even more interesting problems, and we will solve them as well. And we will subject our platform itself to error correction so that we can improve the process of problem-solving and thus better satisfy Popper's Criterion.
-
-Only in this way can we prevent the entrenchment of errors and the suppression of new ideas.
-
 ## Portals
 
 > The possibilities that lie in the future are infinite. When I say ‘It is our duty to remain optimists,’ this includes not only the openness of the future but also that which all of us contribute to it by everything we do: we are all responsible for what the future holds in store. Thus it is our duty, not to prophesy evil but, rather, to fight for a better world.
@@ -47,6 +29,24 @@ Wherever a conscious being suffers or dies, wherever a truth about the universe 
 But tragically, our institutions fail to help people solve problems. Instead of empowering the entire repertoire of human thought, we only give a select few the resources, information, and platform to create knowledge. This is in and of itself a severe problem because it is handicapping the solution of all other problems.
 
 PopperPlay is the ever-improving solution. Here, anyone can identify problems with prevailing theories. Anyone can create conjectures that tentatively solve these problems. And anyone can subject these conjectures to criticism and improvement. Through this open process of conjecture and refutation, we can enable the creation of new knowledge and thus reduce the suffering, error, and stasis in our civilization.
+
+## Popper's Criterion
+
+> The question about the sources of our knowledge ... has always been asked in the spirit of: ‘What are the best sources of our knowledge - the most reliable ones, those which will not lead us into error, and those to which we can and must turn, in case of doubt, as the last court of appeal?’ I propose to assume, instead, that no such ideal sources exist - no more than ideal rulers - and that all ‘sources’ are liable to lead us into error at times. And I propose to replace, therefore, the question of the sources of our knowledge by the entirely different question: 'How can we hope to detect and eliminate error?'
+>
+> Karl Popper, _Knowledge without Authority_
+
+Academia, journalism, and social media are in crisis. They are turning dogmatic, authoritarian, and tribal. The source of this trouble is that we have been using the wrong criterion to judge institutions that help create knowledge. The prevailing approach focuses on sources, asking, "Which authority should we trust?"[^1]
+
+This question is based on the same mistakes as the predominant question in political philosophy, "Who should rule?". The philosopher Karl Popper pointed out that that since all rulers are fallible, and since they will all make mistakes, we will never find the perfect ruler who, once appointed, will dissolve problems once and for all. Similarly, there is no source of information that is free from error and bias. If we believe that we found such a source, we become prone to believing assertions that could not survive open criticism. Furthermore, there is no rational way to resolve disputes between sources claiming to justify their own credibility. Instead, disagreements must be settled by irrational appeals to authority. Failing that, violence must be used.
+
+When we ask, "Who should we trust?", we are expecting explanationless progress. We are trying to predict future success from raw data like the qualifications and track record of news organizations and academic journals. But this is not an explanation for why we should expect progress to continue without the support of a system of error correction.
+
+The only rational way to create progress is to create a platform which satisfies Popper's criterion: _Does the system facilitate the correction of errors and the creation of new ideas?_
+
+Instead of seeking higher authorities of knowledge, we can allow people to identify problems with prevailing explanations, conjecture solutions upon them, and then criticize these tentative guesses. These new explanations will generate even more interesting problems, and we will solve them as well. And we will subject our platform itself to error correction so that we can improve the process of problem-solving and thus better satisfy Popper's Criterion.
+
+Only in this way can we prevent the entrenchment of errors and the suppression of new ideas.
 
 ## No Ads or Paywalls
 
