@@ -31,11 +31,14 @@ def print_links(page):
         print("%s: %s" % (title, links[title]))
 
 
-print_sections(page.sections)
+# print_sections(page.sections)
 
-print_categories(page)
+# print_categories(page)
 
-print_categories(page)
+# print_links(page)
 
 # markdown = Tomd(html.text).markdown
 # print(markdown)
+# print(page.text)
+
+print(page.categories)
