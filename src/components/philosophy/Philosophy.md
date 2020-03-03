@@ -28,11 +28,9 @@ Ads and paywalls are bad solutions to the problem of monetization. I think it's 
 
 Advertisements are perhaps even worse. They create an incentive to optimize for click-bait and distraction, and they destroy the user experience. It seems like every time I read something online, I am cringing at the sight of popups and banners replacing my article.
 
-But as PopperPlay grows, I will need money to pay for servers and to support the time I am spending in building features and improving the site. I need your ideas about [how I should monetize](https://popperplay.com/problem/Ri7rf6GspvuCuuVL1274).
-
 ## Peer to Peer Donations
 
-Here's what I'm considering. People can donate to others who they think are solving interesting problems, and PopperPlay will receive a percentage of each donation.
+Eventually, people will be able to donate to others who they think are solving interesting problems, and PopperPlay will receive a percentage of each donation.
 
 This way, we can help people escape from existing channels. People will be able to sustain a life of creating knowledge. Creativity and fun no longer need to be shackled by dull problems like day jobs, gatekeeping, and bureaucracy.
 
