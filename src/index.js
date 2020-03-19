@@ -1,9 +1,10 @@
+import { blue, pink } from "@material-ui/core/colors";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import Firebase, { FirebaseContext } from "./components/firebase";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { blue, pink } from "@material-ui/core/colors";
+import * as serviceWorker from "./serviceWorker";
 
 const theme = createMuiTheme({
   palette: {
@@ -20,3 +21,5 @@ ReactDOM.render(
   </FirebaseContext.Provider>,
   document.getElementById("root")
 );
+
+serviceWorker.register();
