@@ -21,6 +21,7 @@ import Graph from "./Graph";
 import ItemInfo from "./ItemInfo";
 import Markdown from "./Markdown";
 import MetaInfoList from "./MetaInfoList";
+import ReactPlayer from "react-player";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,7 +35,8 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.body1
   },
   create: {
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: "1rem"
   },
   childrenTitle: {
     marginTop: "1rem"
@@ -52,9 +54,8 @@ export default function Item({ item }) {
             <Header item={item} />
             <GraphDialog item={item} />
             <Markdown className={classes.markdown}>{item.details}</Markdown>
-
+            <Videos text={item.details} />
             <PostButton item={item} />
-
             <Typography
               className={classes.childrenTitle}
               variant="h5"
@@ -148,6 +149,14 @@ function PostButtonBase({ item, firebase }) {
       </AuthUserContext.Consumer>
     </Grid>
   );
+}
+
+function Videos({ text }) {
+  const link = text.match(
+    /(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/
+  );
+  console.log(link);
+  return <ReactPlayer url={link[0]} />;
 }
 
 function GraphDialog({ item }) {

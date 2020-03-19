@@ -15,7 +15,7 @@ async function updateTime(collectionName) {
   query.docs.map(doc => {
     const created = doc.data().created;
     const newTimestamp = new admin.firestore.Timestamp(
-      created.seconds + 2572464,
+      1584657306,
       created.nanoseconds
     );
     collection.doc(doc.id).update({ created: newTimestamp });
@@ -31,7 +31,7 @@ async function updateCommentsTime() {
   query.docs.map(doc => {
     const created = doc.data().created;
     const newTimestamp = new admin.firestore.Timestamp(
-      created.seconds + 2572464,
+      1584657306,
       created.nanoseconds
     );
     db.doc(doc.data().path + doc.id).update({ created: newTimestamp });
