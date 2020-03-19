@@ -10,10 +10,11 @@ export default function MetaInfoList({ refList, type }) {
     Promise.all(
       refList.map(async item => {
         const doc = await item.get();
-        items.push({
-          title: doc.data().title,
-          id: doc.id
-        });
+        if (doc.data() !== undefined)
+          items.push({
+            title: doc.data().title,
+            id: doc.id
+          });
       })
     ).then(() => setItems(items));
   }, []);
