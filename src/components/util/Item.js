@@ -155,7 +155,6 @@ function Videos({ text }) {
   const link = text.match(
     /(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/
   );
-  console.log(link);
   return <ReactPlayer url={link[0]} />;
 }
 
