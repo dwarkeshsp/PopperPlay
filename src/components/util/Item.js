@@ -53,8 +53,8 @@ export default function Item({ item }) {
           <Container maxWidth="md" className={classes.root}>
             <Header item={item} />
             <GraphDialog item={item} />
-            <Markdown className={classes.markdown}>{item.details}</Markdown>
             <Videos text={item.details} />
+            <Markdown className={classes.markdown}>{item.details}</Markdown>
             <PostButton item={item} />
             <Typography
               className={classes.childrenTitle}
@@ -155,7 +155,7 @@ function Videos({ text }) {
   const link = text.match(
     /(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/
   );
-  return <ReactPlayer url={link[0]} />;
+  return link && <ReactPlayer url={link[0]} />;
 }
 
 function GraphDialog({ item }) {
