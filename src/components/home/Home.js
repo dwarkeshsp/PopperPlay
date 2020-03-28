@@ -21,10 +21,10 @@ export default function Home() {
     <Container maxWidth="md">
       <Quote />
       <Philosophy />
-      <TwitterLogin />
       <Buttons />
-      <Description />
-      <Share />
+      {/* <TwitterLogins /> */}
+      {/* <Description /> */}
+      {/* <Share /> */}
       <Feedback />
     </Container>
   );
@@ -33,7 +33,7 @@ export default function Home() {
 const Quote = () => (
   <React.Fragment>
     <Typography
-      style={{ marginTop: "2rem" }}
+      style={{ marginTop: "4rem" }}
       variant="h5"
       align="center"
       gutterBottom
@@ -89,7 +89,7 @@ const Buttons = () => (
 );
 
 const TwitterLogin = () => (
-  <Grid style={{ marginTop: "2rem" }} container justify="center">
+  <Grid style={{ marginTop: "4rem" }} container justify="center">
     <SocialLogin twitterMessage="Sign up with twitter" />
   </Grid>
 );
