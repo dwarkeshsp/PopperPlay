@@ -26,7 +26,7 @@ export default function Feedback() {
 const Contact = () => (
   <Grid container spacing={3} justify="center">
     <Grid item>
-      <a href="mailto:dwarkesh@popperplay.com" target="_blank">
+      <a href="mailto:dwarkesh.sanjay.patel@gmail.com" target="_blank">
         <Button variant="text" color="primary" startIcon={<EmailIcon />}>
           Email me
         </Button>
